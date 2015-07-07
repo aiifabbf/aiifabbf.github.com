@@ -4,7 +4,7 @@
     
     <url>
      <loc>None/</loc>
-     <lastmod>2015-07-06</lastmod>
+     <lastmod>2015-07-07</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -13,13 +13,13 @@
         
     <url>
      <loc>None/essays/sound-of-moonlight/</loc>
-     <lastmod>2015-07-06</lastmod>
+     <lastmod>2015-07-07</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>None/essays/after-the-exam/</loc>
-     <lastmod>2015-07-06</lastmod>
+     <lastmod>2015-07-07</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -28,8 +28,14 @@
     
         
     <url>
+     <loc>None/research/how-i-built-this-blog/</loc>
+     <lastmod>2015-07-07</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
      <loc>None/research/creation-of-a-gui-toolkit/</loc>
-     <lastmod>2015-07-06</lastmod>
+     <lastmod>2015-07-07</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -38,7 +44,7 @@
     
     <url>
      <loc>None/about/</loc>
-     <lastmod>2015-07-06</lastmod>
+     <lastmod>2015-07-07</lastmod>
      <changefreq>daily</changefreq>
     </url>
     

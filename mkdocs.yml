@@ -5,6 +5,8 @@ pages:
         - 在职高听到月光奏鸣曲: essays/sound-of-moonlight.md
         - 高考之后: essays/after-the-exam.md
     - 研究:
+        - 我怎么搭建这个博客的: research/how-i-built-this-blog.md
         - 创造图形界面接口: research/creation-of-a-gui-toolkit.md
     - 关于: about.md
 theme_dir: "theme.benjamin"
+copyright: "© 2015 blog.benjamin"
