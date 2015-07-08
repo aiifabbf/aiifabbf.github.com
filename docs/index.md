@@ -1,8 +1,8 @@
 # 最近更新 >
 
-## [研究/我怎么搭建这个博客的](research/how-i-built-this-blog)
-
 ## [研究/创造图形界面接口](research/creation-of-a-gui-toolkit)
+
+## [研究/我怎么搭建这个博客的](research/how-i-built-this-blog)
 
 ## [随笔/在职高听到月光奏鸣曲](essays/sound-of-moonlight)
 
