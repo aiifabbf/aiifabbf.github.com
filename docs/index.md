@@ -1,6 +1,6 @@
 # 最近更新 >
 
-## [研究/创造图形界面接口](research/creation-of-a-gui-toolkit)
+## [研究/创造图形界面库](research/creation-of-a-gui-toolkit)
 
 ## [研究/我怎么搭建这个博客的](research/how-i-built-this-blog)
 
