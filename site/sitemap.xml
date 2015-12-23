@@ -12,12 +12,6 @@
     
         
     <url>
-     <loc>None/research/x11-protocol-reveals/</loc>
-     <lastmod>2015-12-23</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
      <loc>None/essays/one-sixteenth/</loc>
      <lastmod>2015-12-23</lastmod>
      <changefreq>daily</changefreq>
@@ -38,6 +32,12 @@
     
 
     
+        
+    <url>
+     <loc>None/research/x11-protocol-reveals/</loc>
+     <lastmod>2015-12-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
         
     <url>
      <loc>None/research/creation-of-a-gui-toolkit/</loc>
