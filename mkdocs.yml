@@ -2,6 +2,7 @@ site_name: "Canon & Baroque"
 pages:
     - 最近: index.md
     - 随笔: 
+        - X11协议的研究: research/x11-protocol-reveals.md
         - 十六分之一: essays/one-sixteenth.md
         - 在职高听到月光奏鸣曲: essays/sound-of-moonlight.md
         - 高考之后: essays/after-the-exam.md

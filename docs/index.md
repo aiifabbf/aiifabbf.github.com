@@ -1,5 +1,7 @@
 # 最近更新 >
 
+## [研究/X11协议的研究*未完*](research/x11-protocol-reveals)
+
 ## [随笔/十六分之一*未完*](essays/one-sixteenth)
 
 ## [研究/创造图形界面库*未完*](research/creation-of-a-gui-toolkit)
