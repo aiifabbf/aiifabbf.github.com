@@ -65,7 +65,6 @@
 }
 </style>
 
-请求
 <div class="bar" style="text-align: left;">
     <div class="bar" style="background-color: #000000; width: 15%;">opcode 8 bits</div>
     <div class="bar" style="background-color: #4d4d4d; width: 30%;">length field 16 bits</div>
@@ -73,38 +72,224 @@
     <div class="bar" style="background-color: #aaaaaa; width: 40%;"></div>
 </div>
 <div class="bar" style="color: black;">
-    All (length depends)
+    请求 (length depends)
 </div>
 
-回应
 <div class="bar" style="text-align: left;">
     <div class="bar" style="background-color: #000000; width: 60%;">length field 32 bits</div>
     <div class="bar" style="background-color: #808080; width: 40%;">LSB sequence 16 bits</div>
 </div>
 <div class="bar" style="color: black;">
-    All (often 32 bytes = 128 bits)
+    回应 (often 32 bytes = 128 bits)
 </div>
 
-错误
 <div class="bar" style="text-align: left;">
     <div class="bar" style="background-color: #000000; width: 15%;">error code 8 bits</div>
     <div class="bar" style="background-color: #808080; width: 85%;">maj, min opcodes & LSB sequence 16 bits</div>
 </div>
 <div class="bar" style="color: black;">
-    All 32 bytes
+    错误 32 bytes
 </div>
 
-事件
 <div class="bar" style="text-align: left;">
     <div class="bar" style="background-color: #000000; width: 15%;">type code 8 bits</div>
     <div class="bar" style="background-color: #808080; width: 85%;">LSB sequence 16 bits & rest</div>
 </div>
 <div class="bar" style="color: black;">
-    All 32 bytes
+    事件 32 bytes
 </div>
 
 **上面译文的准确性有待核实。*
 
 ## 数据类型
+
+- LISTofFOO
+    
+    > A type name of the form LISTofFOO means a counted list of elements of type FOO. The size of the length field may vary (it is not necessarily the same size as a FOO), and in some cases, it may be implicit. It is fully specified in Appendix B. Except where explicitly noted, zero-length lists are legal.
+
+    差不多是一串子元素都是FOO类型的数组
+
+- BITMASK & LISTofVALUE
+
+    > The types BITMASK and LISTofVALUE are somewhat special. Various requests contain arguments of the form: 
+
+    > value-mask: BITMASK 
+
+    > value-list: LISTofVALUE 
+
+    > These are used to allow the client to specify a subset of a heterogeneous collection of optional arguments. The value-mask specifies which arguments are to be provided; each such argument is assigned a unique bit position. The representation of the BITMASK will typically contain more bits than there are defined arguments. The unused bits in the value-mask must be zero (or the server generates a Value error). The value-list contains one value for each bit set to 1 in the mask, from least significant to most significant bit in the mask. Each value is represented with four bytes, but the actual value occupies only the least significant bytes as required. The values of the unused bytes do not matter. 
+
+    没有太看明白。
+
+- OR
+    
+    或-w-
+
+- WINDOW, PIXMAP, CURSOR, FONT, GCONTEXT, DRAWABLE, FONTABLE, ATOM, VISUALID
+
+    > 32-bit value (top three bits guaranteed to be zero)
+
+    都是32位长的，高3位一定是零；
+
+    DRAWABLE指WINDOW或者PIXMAP；
+
+    FONTABLE指FONT或GCONTEXT;
+
+- VALUE
+
+    > 32-bit quantity (used only in LISTofVALUE) 
+
+    后面看到了再说吧。
+
+- BYTE 
+    
+    > 8-bit value
+
+    相当于1 char。
+
+- INT8, INT16, INT32
+    
+    > 8-bit signed integer
+
+    > 16-bit signed integer
+
+    > 32-bit signed integer
+
+    分别相当于1 signed char, 1 signed short, 1 signed int。
+
+- CARD8, CARD16, CARD32
+
+    > 8-bit unsigned integer
+
+    > 16-bit unsigned integer
+
+    > 32-bit unsinged integer
+
+    分别相当于1 unsigned char, 1 unsigned short, 1 unsigned int。
+
+- TIMESTAMP
+
+    > CARD32
+
+    就是CARD32，相当于1 unsigned int。
+
+下面的就有点迷乱了……
+
+- BITGRAVITY
+
+    > { Forget, Static, NorthWest, North, NorthEast, West, Center, East, SouthWest, South, SouthEast } 
+
+    *位引力?*
+
+- WINGRAVITY
+
+    > { Unmap, Static, NorthWest, North, NorthEast, West, Center, East, SouthWest, South, SouthEast }
+
+    *窗口引力?*
+
+- BOOL
+    
+    布尔类型，True或False。
+
+- EVENT
+
+    > { KeyPress, KeyRelease, OwnerGrabButton, ButtonPress, ButtonRelease, EnterWindow, LeaveWindow, PointerMotion, PointerMotionHint, Button1Motion, Button2Motion, Button3Motion, Button4Motion, Button5Motion, ButtonMotion, Exposure, VisibilityChange, StructureNotify, ResizeRedirect, SubstructureNotify, SubstructureRedirect, FocusChange, PropertyChange, ColormapChange, KeymapState }
+    
+    事件类型
+
+- POINTEREVENT
+
+    > { ButtonPress, ButtonRelease, EnterWindow, LeaveWindow, PointerMotion, PointerMotionHint, Button1Motion, Button2Motion, Button3Motion, Button4Motion, Button5Motion, ButtonMotion, KeymapState } 
+    
+    鼠标事件。奇怪，和EVENT有一些重叠。
+
+- DEVICEEVENT
+
+    > { KeyPress, KeyRelease, ButtonPress, ButtonRelease, PointerMotion, Button1Motion, Button2Motion, Button3Motion, Button4Motion, Button5Motion, ButtonMotion }
+
+    设备事件。还是奇怪。
+
+- KEYSYM
+    
+    > 32-bit value (top three bits guaranteed to be zero)
+
+    键盘上敲击某个键会传回这个键代表的序列号。这个KEYSYM我猜是不带状态的，也就是说按住shift或者ctrl这种组合键的时候产生的键值应该是一样的。*待确认*
+
+    32位长，高三位一定是零，和WINDOW那些一样。
+
+- KEYCODE, BUTTON
+    
+    > CARD8
+
+    也就是1 unsigned char。
+
+- KEYMASK
+    
+    > { Shift, Lock, Control, Mod1, Mod2, Mod3, Mod4, Mod5 }
+
+    来了，这个就是组合键了。然而Mod……并不懂，看到了再说吧。
+
+- BUTMASK
+
+    > { Button1, Button2, Button3, Button4, Button5 } 
+
+    鼠标上竟然有五个键……我觉得应该不是这样，gtk里有类似的可以设定事件中鼠标事件返回的数组长度，也就是说一次返回多少个键的状态。我猜这里是类似的意思。*待确认*
+
+- KEYBUTMASK
+
+    KEYMASK 或者 BUTMASK
+
+- CHAR2B
+
+    > [byte1, byte2: CARD8]
+
+    一个2字节的组，子元素是两个CARD8，也就是两个unsigned char。
+
+- STRING8, STRING 16
+
+    > LISTofCARD8
+
+    > LISTofCHAR2B
+
+    分别是子元素为CARD8（unsigned char）和子元素为CHAR2B（两个unsigned char）的组。
+
+- POINT
+
+    > [x, y: INT16]
+
+    子元素为两个INT16，相当于两个signed short。表示屏幕上的点。
+
+- RECTANGLE
+
+    > [x, y: INT16, 
+
+    > width, height: CARD16]
+
+    表示一个矩形。
+
+    x和y是矩形的左上角坐标，用两个INT16、也就是两个signed short表示，尺寸用两个CARD16、也就是两个unsigned short表示。
+
+    坐标用signed short是为了有负坐标的缘故吧。这样的话，矩形就能放在窗口外面了。
+
+- ARC
+    
+    > [x, y: INT16,
+
+    > width, height: CARD16,
+
+    > angle1, angle2: INT16]
+
+    ARC又不知道是什么东西了……和矩形很类似，然而多了两个angle。求知情人士告知。
+
+- HOST
+
+    > [family: { Internet, InternetV6, ServerInterpreted, DECnet, Chaos } 
+
+    > address: LISTofBYTE]
+
+    忘了说了，花括号是指这里面的某一个。
+
+    这个应该是指主机（我猜是X Server）与客户端通讯使用的协议族。UNIX上的socket里也有这些参数，目的是定义TCP或UDP、IPv4或IPv6，还有一个我印象很深刻的是本机通讯，AF_UNIX，可以用于服务器和客户端都在同一台机器上运行的情况，算作进程间通讯吧。
+
 
 *未完*
