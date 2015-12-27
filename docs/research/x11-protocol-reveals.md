@@ -19,32 +19,33 @@
 
 > Every request contains an 8-bit major opcode  and a 16-bit length field  expressed in units of four bytes. Every request consists of four bytes of a header (containing the major opcode, the length field, and a data byte) followed by zero or more additional bytes of data. The length field defines the total length of the request, including the header. The length field in a request must equal the minimum length required to contain the request. If the specified length is smaller or larger than the required length, an error is generated. Unused bytes in a request are not required to be zero. Major opcodes 128 through 255 are reserved for extensions.  Extensions are intended to contain multiple requests, so extension requests typically have an additional minor opcode encoded in the second data byte in the request header. However, the placement and interpretation of this minor opcode and of all other fields in extension requests are not defined by the core protocol. Every request on a given connection is implicitly assigned a sequence number,  starting with one, that is used in replies, errors, and events. 
 
-> 请求的格式
+- 请求的格式
 
-> 请求包含一个4字节长度的头（里面有一个8位的主操作码、一个16位的长度域和数据字节），头后面跟着其他数据或零。长度域表示的是包含头的**整个**请求的长度，长度域必须等于这种请求类型指定的最小长度，如果小了或者大了会出错。请求中没用到的字节可以不为零。128到255的主操作码是为扩展预留的。因为扩展是要包含多个请求的，所以扩展请求往往在请求头的第二个数据字节里带有附加的副操作码。然而，核心协议没有定义副操作码的放置位置和解释方法，也没有定义扩展请求里任何其他东西。在现有的连接上传输的每个请求会被显式地分配一个从1开始排列的序列号，这个序号用于后续传输回应、错误和事件。
+    请求包含一个4字节长度的头（里面有一个8位的主操作码、一个16位的长度域和数据字节），头后面跟着其他数据或零。长度域表示的是包含头的**整个**请求的长度，长度域必须等于这种请求类型指定的最小长度，如果小了或者大了会出错。请求中没用到的字节可以不为零。128到255的主操作码是为扩展预留的。因为扩展是要包含多个请求的，所以扩展请求往往在请求头的第二个数据字节里带有附加的副操作码。然而，核心协议没有定义副操作码的放置位置和解释方法，也没有定义扩展请求里任何其他东西。在现有的连接上传输的每个请求会被显式地分配一个从1开始排列的序列号，这个序号用于后续传输回应、错误和事件。
 
 > Reply Format
 
 > Every reply contains a 32-bit length field expressed in units of four bytes. Every reply consists of 32 bytes followed by zero or more additional bytes of data, as specified in the length field. Unused bytes within a reply are not guaranteed to be zero. Every reply also contains the least significant 16 bits of the sequence number of the corresponding request. 
 
-> 回应的格式
+- 回应的格式
 
-> 回应包含一个4字节长度的头，头里面是32位的长度域。回应由32字节的数据和长度域中指定的其他数据或零组成。在回应中没用到的字节不保证一定是零。回应也包含最低位16位长度的序列号，该序列号对应着刚刚的请求。
+    回应包含一个4字节长度的头，头里面是32位的长度域。回应由32字节的数据和长度域中指定的其他数据或零组成。在回应中没用到的字节不保证一定是零。回应也包含最低位16位长度的序列号，该序列号对应着刚刚的请求。
 
 > Error Format
+
 > Error reports are 32 bytes long. Every error includes an 8-bit error code.  Error codes 128 through 255 are reserved for extensions.    Every error also includes the major and minor opcodes of the failed request and the least significant 16 bits of the sequence number of the request. For the following errors (see section 4), the failing resource ID is also returned: Colormap, Cursor, Drawable, Font, GContext, IDChoice, Pixmap and Window. For Atom errors, the failing atom is returned. For Value errors, the failing value is returned. Other core errors return no additional data. Unused bytes within an error are not guaranteed to be zero. 
 
-> 错误的格式
+- 错误的格式
 
-> 错误都是32字节长度，包含8位的错误码。128到255的错误码是为扩展保留的。错误还包含对应错误请求的主副操作号、以及请求序列号中最低16位。对于*颜色映射?*、光标、可画对象、字体、图形上下文、*标示选择?*、位图、窗口来说，错误对应的资源标识也会返回；对于*原子?*、值错误，错误的原子、值也会分别返回。其他核心协议定义的错误不返回其他附加数据。在错误中没用到的字节不一定保证是零。
+    错误都是32字节长度，包含8位的错误码。128到255的错误码是为扩展保留的。错误还包含对应错误请求的主副操作号、以及请求序列号中最低16位。对于*颜色映射?*、光标、可画对象、字体、图形上下文、*标示选择?*、位图、窗口来说，错误对应的资源标识也会返回；对于*原子?*、值错误，错误的原子、值也会分别返回。其他核心协议定义的错误不返回其他附加数据。在错误中没用到的字节不一定保证是零。
 
 > Event Format
 
 > Events are 32 bytes long. Unused bytes within an event are not guaranteed to be zero. Every event contains an 8-bit type code. The most significant bit in this code is set if the event was generated from a SendEvent request.  Event codes 64 through 127 are reserved for extensions, although the core protocol does not define a mechanism for selecting interest in such events.    Every core event (with the exception of KeymapNotify) also contains the least significant 16 bits of the sequence number of the last request issued by the client that was (or is currently being) processed by the server.
 
-> 事件的格式
+- 事件的格式
 
-> 事件都是32字节长度。没用到的字节不一定保证是零。事件中包含一个8位的类型码，如果事件是从SendEvent请求产生的，那么这个类型码中的最高位会被设置。64到127的事件码是为扩展预留的，虽然核心协议中没有定义一种机制，使得扩展从这些事件里挑选自己感兴趣的内容。核心事件（除了KeymapNotify）也包含X服务器处理过或正在处理的此客户端发送的前一个请求对应的序列号的最低16位。
+    事件都是32字节长度。没用到的字节不一定保证是零。事件中包含一个8位的类型码，如果事件是从SendEvent请求产生的，那么这个类型码中的最高位会被设置。64到127的事件码是为扩展预留的，虽然核心协议中没有定义一种机制，使得扩展从这些事件里挑选自己感兴趣的内容。核心事件（除了KeymapNotify）也包含X服务器处理过或正在处理的此客户端发送的前一个请求对应的序列号的最低16位。
 
 这个文档写的还是蛮无聊的……有一些句子感觉有歧义，比如定语后置修饰的对象。我这边用下图示法给大家演示下吧。
 
@@ -291,5 +292,116 @@
 
     这个应该是指主机（我猜是X Server）与客户端通讯使用的协议族。UNIX上的socket里也有这些参数，目的是定义TCP或UDP、IPv4或IPv6，还有一个我印象很深刻的是本机通讯，AF_UNIX，可以用于服务器和客户端都在同一台机器上运行的情况，算作进程间通讯吧。
 
+## 错误
+
+> In general, when a request terminates with an error, the request has no side effects (that is, there is no partial execution). The only requests for which this is not true are ChangeWindowAttributes, ChangeGC, PolyText8, PolyText16, FreeColors, StoreColors and ChangeKeyboardControl.
+
+> 一般来说当某个请求造成错误的时候，不会产生副作用（也就是说不会有部分执行的情况），然而ChangeWindowAttributes, ChangeGC, PolyText8, PolyText16, FreeColors, StoreColors and ChangeKeyboardControl这些请求出错时会产生副作用。
+
+错误的类型有以下几种
+
+- Access
+
+      > An attempt is made to grab a key/button combination already grabbed by another client. An attempt is made to free a colormap entry not allocated by the client or to free an entry in a colormap that was created with all entries writable. An attempt is made to store into a read-only or an unallocated colormap entry. An attempt is made to modify the access control list from other than the local host (or otherwise authorized client). An attempt is made to select an event type that only one client can select at a time when another client has already selected it. 
+
+      简单来说是访问错误。比如取得其他客户端已经取得的键位组合、释放根本没有分配的颜色映射表记录、释放某个带有全是可写入记录的颜色映射表中的某个记录、存储到某个只读或未分配的颜色映射表记录、修改非本地主机（或授权的客户端）的访问控制列表、选择关心具有排他性的事件类型\*。
+      
+      **指某种只能同时由一个客户端关心的事件类型，例如输入焦点只能由一个客户端掌握。*
+
+- Alloc
+
+    >  The server failed to allocate the requested resource. Note that the explicit listing of Alloc errors in request only covers allocation errors at a very coarse level and is not intended to cover all cases of a server running out of allocation space in the middle of service. The semantics when a server runs out of allocation space are left unspecified, but a server may generate an Alloc error on any request for this reason, and clients should be prepared to receive such errors and handle or discard them.
+
+    当服务器无法分配某个请求的资源时会触发这个错误。关于这个错误的触发条件相当模糊，所以没有包含服务器在服务期间遇到的空间耗尽的所有情况。核心协议没有定义具体触发条件，*但是？*所以服务器可能因此对任何一个请求返回一个Alloc错误，客户端应该随时做好接受到这个错误的准备，可以选择解决或忽略它。
+
+- Atom, Colormap, Cursor, Drawable, Font, GContext, Pixmap, Window
+
+    > A value for a FOO argument does not name a defined FOO.
+
+    > 对应FOO参数的值没有*给出一个定义好的FOO？*
+
+    **FOO代指上面给出的类型。*
+
+    没看懂。
+
+    对于Font类型的错误还加了一条
+
+    > A value for a FONTABLE argument does not name a defined FONT or a defined GCONTEXT.
+
+    还是没看懂。
+
+- IDChoice
+
+    > The value chosen for a resource identifier either is not included in the range assigned to the client or is already in use.
+
+    > 选为资源标识的值要么不在服务器为此客户端分配的区域中，要么已经在使用中了。
+
+    我觉得这里的意思是，X Server会给不同的客户端请求的资源分配标识符，但是给每个客户端分配的标识符范围是一定的。
+
+    **我认为这里意思不是越界访问，也就是客户端之间私下交换资源标识然后由其他客户端代为访问。我以前看过的文档里好像讲过X Server并不会检查资源的从属。*
+
+    **待确认*
+
+- Implementation
+
+    > The server does not implement some aspect of the request. A server that generates this error for a core request is deficient. As such, this error is not listed for any of the requests, but clients should be prepared to receive such errors and handle or discard them. 
+
+    服务器没有实现请求的一些功能。说明服务器有缺陷。客户端要自己准备应对的方案。
+
+    哈哈，这个我最喜欢了。
+
+    **为什么会有功能没有实现？因为历史上（现在其实也是）X Server的实现有很多，不单只是现在大多GNU/Linux带的Xorg X Server。关于有哪些X Server可以看维基。*
+
+- Length
+
+    > The length of a request is shorter or longer than that required to minimally contain the arguments. The length of a request exceeds the maximum length accepted by the server.
+
+    > 请求的长度短于或长于所要求的能够充分包含参数的长度、或者超过服务器所能接受的最大长度。
+
+    请求的长度不符合要求。
+
+- Match
+
+    > An **InputOnly\*** window is used as a DRAWABLE. In a graphics request, the GCONTEXT argument does not have the same root and depth as the destination DRAWABLE argument. Some argument (or pair of arguments) has the correct type and range, but it fails to match in some other way required by the request. 
+
+    > 一个只允许输入的窗口用作可绘制对象；在图像请求中，GCONTEXT参数没有与目标绘制对象有相同的祖先和颜色深度；有些参数（或参数对）有正确的类型和范围，但是无法匹配该请求的某些要求。
+
+    **原文如此*
+
+- Name
+
+    > A font or color of the specified name does not exist.
+
+    > 指定的字体或颜色不存在。
+
+- Request
+
+    > The major or minor opcode does not specify a valid request.
+
+    > 主或副操作码没有指定有效的请求。
+
+- Value
+
+    > Some numeric value falls outside the range of values accepted by the request. Unless a specific range is specified for an argument, the full range defined by the argument's type is accepted. Any argument defined as a set of alternatives typically can generate this error (due to the encoding).
+
+    > 有些数值超越了请求所能接受的范围。除非为某个参数指定特定的范围，由参数类型定义的整个范围都是能被接受的。任何被定义为一组替代选择的参数都可能造成这个错误（由于编码问题）。
+
+还是有很多地方没有看明白。不过以后做实现的时候再查其他文档吧。
+
+## 键盘
+
+> A KEYCODE represents a physical (or logical) key.   Keycodes lie in the inclusive range [8,255]. A keycode value carries no intrinsic information, although server implementors may attempt to encode geometry information (for example, matrix) to be interpreted in a server-dependent fashion. The mapping between keys and keycodes cannot be changed using the protocol.
+
+> 键位码代表物理（或逻辑）上的一个键。键位码严格限制在区间[8, 255]中。键位码值本身不携带内在信息，然而具体到X Server的实现上来说，有些服务器可能会以依赖具体服务器的方式尝试将坐标信息编码（例如矩阵）。键和键位码之间的映射不能通过X11协议改变。
+
+这里的KEYCODE是真正反映键盘上键的东西，不依赖具体语言、地区，只是忠实的反映出“你按下了键盘上的那个键”，应该只是个反应键在键盘上位置的数字。
+
+> A KEYSYM is an encoding of a symbol on the cap of a key.   The set of defined KEYSYMs include the character sets Latin-1, Latin-2, Latin-3, Latin-4, Kana, Arabic, Cyrillic, Greek, Tech, Special, Publish, APL, Hebrew, Thai, and Korean as well as a set of symbols common on keyboards (Return, Help, Tab, and so on). KEYSYMs with the most significant bit (of the 29 bits) set are reserved as vendor-specific.
+
+> 键位标识是对键盖上标识的一种编码。定义好的键位标识组包括拉丁1、拉丁2、拉丁3、拉丁4、日文假名、阿拉伯、斯拉夫、希腊、*Tech?*、特殊字符、制表符、APL、希伯来、泰语、韩语，以及键盘上一些常见的键（回车、帮助、制表等等）。最高位（总共29位）设定好的键位标识是为特制键盘保留的。
+
+这里开始键盘就不再只是个单纯的键位坐标表了，其中的每个键都开始有了含义。
+
+*12/27更新，昨天我生日！*
 
 *未完*
