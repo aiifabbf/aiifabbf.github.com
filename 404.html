@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html id="app">
+<head>
+    <title>{{ SITE.title === "" ? "Canon & Baroque" : SITE.title + " - Canon & Baroque" }}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--link href="https://cdn.bootcss.com/uikit/2.24.3/css/uikit.min.css" rel="stylesheet"-->
+    <link href="https://cdn.bootcss.com/materialize/0.97.8/css/materialize.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.min.css" rel="stylesheet">
+
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/materialize/0.97.8/js/materialize.min.js"></script>
+    <script src="https://cdn.bootcss.com/page.js/1.7.1/page.js"></script>
+    <script src="https://cdn.bootcss.com/vue/1.0.26/vue.min.js"></script>
+    <script src="https://cdn.bootcss.com/marked/0.3.6/marked.min.js"></script>
+    <style>
+        html {
+            font-family: "roboto", "Open Sans", "Noto Sans CJK SC", "Source Han Sans SC", "SimHei", Sans;
+        }
+
+        ::selection {
+            background: #b3d4fc;
+            text-shadow: none;
+        }
+
+        .material-icons {
+            font-family: 'Material Icons'!important;
+        }
+
+        p {
+            font-weight: 400;
+        }
+
+        .blink {
+            animation: blink-animation 1s ease infinite;
+        }
+
+        .card-image .card-title {
+            text-shadow: black 0 0 75px;
+        }
+
+        /* changes according to google material design specs */
+        .card .card-content, .card .card-image .card-title {
+            padding: 16px;
+        }
+
+        .card .card-action {
+            padding: 8px;
+        }
+
+        .card .card-action button {
+            padding: 0 8px;
+        }
+
+        @keyframes blink-animation {
+            0% {
+                opacity: 1;
+            }
+            49% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            99% {
+                opacity: 0;
+            }
+        }
+
+        .bounce-transition {
+            transition: all .3s ease;
+        }
+
+        .bounce-leave, .bounce-enter {
+            transform: scale(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="progress white" style="position: fixed; top: 0; margin: 0;" v-show="states.loading">
+        <div class="indeterminate orange accent-4"></div>
+    </div>
+    <header id="top">
+        <div class="container">
+            <h1 class="orange-text text-darken-2">Hi. <span class="blink">│</span></h1>
+            <p><a href="/" class="black-text"><strong>Canon & Baroque</strong></a> with <a class="tooltipped orange-text text-darken-2" data-position="right" data-tooltip="About me" data-delay=20 href="/about">Benjamin Shi</a></p>
+        </div>
+    </header>
+
+    <main v-show="!states.loading">
+        <component v-if="view[0] === 'index'" is="POSTS" :posts="posts" :sort-by="INDEX.sortPostsBy" :sort-asc="INDEX.sortPostsAsc"></component>
+        <component v-if="view[0] === 'post'" is="POST" :post="post" transition="bounce"></component>
+
+        <div v-if="view[0] === 'notFound'" translate="bounce">
+            <div class="container">
+                <h1>???</h1>
+                <h1>并没有找到这篇文章。</h1>
+                <p>假使这种无中生有的事……</p>
+            </div>
+        </div>
+
+        <div v-if="view[0] === 'about'" transition="bounce">
+            <article class="container">
+                <section>
+                    <p><strong>About Me</strong></p>
+                    <p>Benjamin Shi</p>
+                    <p>EE大二</p>
+                    <p><a href="{{ 'mailto: aiifabbf#outlook.com'.replace('#', '@') }}">{{ "aiifabbf#outlook.com".replace("#", "@") }}</a></p>
+                    <p><a href="https://github.com/aiifabbf">Github主页</a></p>
+                </section>
+                <section>
+                    <p><strong>About This Site</strong></p>
+                    <p style="white-space: pre-line;">想来也好久没有写博客了。唔好像有一年了_(:3 」∠)_。（还不是因为懒么）
+                        最近又加了一个web方面的组织，又燃起了探索web的兴趣。
+                        所以这真是个历史的轮回……
+                        最近在玩Material Design, vue.js, page.js总之一些很新奇的玩意，博客就会变成游乐的主要场所_(:3 」∠)_。
+                        那么我一个上海市委书记怎么跑到……我一个EE的怎么来凑web的热闹了呢？
+                    </p>
+                </section>
+                <section>
+                    <p><strong>Contact</strong></p>
+                    <p style="white-space: pre-line;">留言什么的我还在探索……毕竟现在改成了完全的前台模板和前台路由（别说你没发现）。
+                    所以不知道以前的Disqus还能不能用。
+                    所以你们还是发邮件吧。
+                    </p>
+                </section>
+            </article>
+        </div>
+    </main>
+
+    <template id="postsTemplate">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m6 l4" v-for="i of posts | orderBy sortBy sortAsc?1:-1" transition="bounce">
+                    <div class="card" v-on:click="page('/posts/' + i.title)" style="cursor: pointer;">
+                        <div class="card-image" v-if="i.heroImg !== undefined" style="background-image: url({{ i.heroImg }}); background-size: cover; background-position: center center; min-height: 300px;">
+                            <span class="card-title">
+                                {{ i.title }}
+                            </span>
+                        </div>
+
+                        <div class="card-content">
+                            <span class="card-title" v-if="i.heroImg === undefined">
+                                {{ i.title }}
+                            </span>
+                            <div>
+                                <div class="chip" v-for="tag of i.tags">
+                                    {{ tag }}
+                                </div>
+                            </div>
+                            <div>
+                                {{ i.outline }}
+                            </div>
+                        </div>
+                        <div class="card-action">
+                            <button class="waves-effect btn-flat orange-text">
+                                阅读
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="postTemplate">
+        <div class="container">
+            <div class="card">
+                <!--div class="card-image" v-if="post.heroImg !== undefined" style="background-image: url({{ post.heroImg }}); background-size: cover; background-position: center center; min-height: 300px;">
+                </div-->
+                <div class="card-content">
+                    {{{ post.content | marked }}}
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <footer>
+    </footer>
+
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large waves-effect waves-light red" href="javascript: $(window).scrollTop(0);"><i class="material-icons">keyboard_arrow_up</i></a>
+    </div>
+
+    <script>
+    Vue.component("POSTS", {
+        template: "#postsTemplate",
+        props: {
+            "posts": {
+                default: [],
+            },
+            "sortBy": {
+                default: "",
+            },
+            "sortAsc":{
+                default: true,
+            },
+        },
+        data: function() {
+            return {
+
+            }
+        },
+        methods: {
+            page: page,
+        },
+
+        ready: function() {
+            console.log(this);
+        },
+    });
+
+    Vue.component("POST", {
+        template: "#postTemplate",
+        props: {
+            "post": {
+                default: "",
+            },
+        },
+        filters: {
+            marked: marked,
+        },
+    });
+
+    function requestJSON(url, method, obj) {
+        if(method === undefined) {
+            var method = "get";
+        }
+        if(obj === undefined) {
+            var obj = "";
+        } else {
+            var obj = JSON.stringify(obj);
+        }
+        return $.ajax({
+            url: url,
+            type: method,
+            contentType: "application/json",
+            dataType: "json",
+            data: obj,
+        });
+    };
+    
+    function getPosts() {
+        return requestJSON("/posts.json");
+    };
+
+    $(document).ready(function() {
+        app = new Vue({
+            el: "#app",
+            data: {
+                view: [],
+                states: {
+                    loading: true,
+                    notFound: false,
+                },
+                posts: [],
+                post: {},
+
+                // view specific
+                SITE: {
+                    title: "",
+                },
+                INDEX: {
+                    sortPostsBy: "timestamp",
+                    sortPostsAsc: false, // if true, posts show ascendingly.
+                }
+            },
+            filters: {
+                marked: marked,
+            },
+            ready: function() {
+                getPosts().done(function(data) {
+                    app.posts = data;
+                });
+            }
+        });
+
+        page("/", function(ctx, next) {
+            app.view = ["index"];
+            app.SITE.title = "";
+        });
+
+        page("/posts/:id", function(ctx, next) {
+            var id = ctx.params.id;
+            if(ctx.state.id === id) {
+                app.view = ["post"];
+                app.SITE.title = id;
+                return;
+            }
+            getPosts().done(function(data) {
+                app.posts = data;
+            }).done(function(data) {
+                var post = app.posts.filter(function(x) {
+                    if(x.title === id) {
+                        return true;
+                    }
+                })[0];
+                if(post === undefined) {
+                    next(); // aborted
+                    return;
+                };
+                app.post = post; // 'post' is the post currently being read.
+                $.ajax({url: post.url}).done(function(data) {
+                    post["content"] = data;
+                }).fail(function() {
+                    next();
+                    return;
+                }).complete(function() {
+                    app.view = ["post"];
+                    app.SITE.title = id;
+                });
+                ctx.state.id = id;
+                ctx.save();
+            });
+        });
+
+        page("/about", function(ctx, next) {
+            app.view = ["about"];
+            app.SITE.title = "About Benjamin";
+        })
+
+        page("*", function(ctx, next) {
+            console.log("post not found");
+            app.states.notFound = true;
+            app.view = ["notFound"];
+        })
+
+        page.start();
+
+        $(document).ajaxStart(function() {
+            app.states.loading = true;
+        });
+        $(document).ajaxStop(function() {
+            app.states.loading = false;
+        });
+        $(window).load(function() {
+            app.states.loading = false;
+        });
+    });
+        
+    </script>
+</body>
+</html>
