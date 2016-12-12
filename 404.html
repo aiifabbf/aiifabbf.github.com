@@ -94,7 +94,7 @@
         <div v-if="view[0] === 'notFound'" translate="bounce">
             <div class="container">
                 <h1>???</h1>
-                <h1>并没有找到这篇文章。</h1>
+                <p>并没有找到这篇文章。</p>
                 <p>假使这种无中生有的事……</p>
             </div>
         </div>
@@ -165,12 +165,10 @@
 
     <template id="postTemplate">
         <div class="container">
-            <div class="card">
+            <div class="card-panel">
                 <!--div class="card-image" v-if="post.heroImg !== undefined" style="background-image: url({{ post.heroImg }}); background-size: cover; background-position: center center; min-height: 300px;">
                 </div-->
-                <div class="card-content">
-                    {{{ post.content | marked }}}
-                </div>
+                {{{ post.content | marked }}}
             </div>
         </div>
     </template>
