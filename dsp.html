@@ -11787,6 +11787,7 @@ div#notebook {
 <ul>
 <li><a href="#sec:prove-dtft-orthogonality">怎么推导出DTFT的系数$X(e^{j 2 \pi f n})$</a></li>
 <li><a href="#sec:z-inverse-transform">怎么理解$z$反变换</a></li>
+<li><a href="#sec:impulse-invariance">冲激响应不变法中的系数$T_s$从哪里来</a></li>
 </ul>
 
 </div>
@@ -12016,16 +12017,22 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="&#37319;&#26679;">&#37319;&#26679;<a class="anchor-link" href="#&#37319;&#26679;">&#182;</a></h3><p>有两种采样的方法。第一种是用一个周期为$T_s$的单位冲击信号序列
+<h3 id="&#37319;&#26679;">&#37319;&#26679;<a name="sec:sampling" /><a class="anchor-link" href="#&#37319;&#26679;">&#182;</a></h3><p>有两种采样的方法。第一种是用一个周期为$T_s$的单位冲激信号序列
 \begin{align}
-    p(t) = \sum_{n = -\infty}^{+\infty} \delta(t - n T_s)
+    \operatorname{III}(t) = \sum_{n = -\infty}^{+\infty} \delta(t - n T_s)
 \end{align}
 乘原信号，得到<strong>理想采样输出</strong>信号
 \begin{align}
-    \hat{x}(t) &amp;= p(t) x(t) \\
+    \hat{x}(t) &amp;= \operatorname{III}(t) x(t) \\
     &amp;= \sum_{n = -\infty}^{+\infty} x(t) \delta(t - n T_s) \\
     &amp;= \sum_{n = -\infty}^{+\infty} x(n T_s) \delta(t - n T_s)
 \end{align}</p>
+<blockquote><p>顺便提一句
+\begin{align}
+    \operatorname{III}(t) \mathop{\longleftrightarrow}^{\cal F} \color{red}{1 \over T_s} \sum_{n = -\infty}^{+\infty} \delta\left(f - {n \over T_s}\right)
+\end{align}
+千万别忘记前面的系数。</p>
+</blockquote>
 <p>第二种是直接定义一个离散信号$x[n]$，使
 \begin{align}
     x[n] = x(n T_s)
@@ -12033,9 +12040,11 @@ div#notebook {
 称为<strong>实际采样输出</strong>信号。</p>
 <p>这两种方法的频谱有关联。先看理想采样输出信号的频谱
 \begin{align}
-    X(j 2 \pi f) &amp;= \int_{-\infty}^{+\infty} \sum_{k = -\infty}^{+\infty} x(n T_s) \delta(t - n T_s) e^{- j 2 \pi f t} \,dt \\
-    &amp;= \int_{-\infty}^{+\infty} \sum_{n = -\infty}^{+\infty} x(n T_s) \delta(t - n T_s) e^{- j 2 \pi f n T_s} \,dt \\
-    &amp;= \sum_{n = -\infty}^{+\infty} \int_{-\infty}^{+\infty}  x(n T_s) \delta(t - n T_s) e^{- j 2 \pi f n T_s} \,dt \\
+    \hat{X}(j 2 \pi f) &amp;= \int_{-\infty}^{+\infty} \hat{x}(t) e^{- j 2 \pi f t} \,dt \\
+    &amp;= \int_{-\infty}^{+\infty} \left[\sum_{n = -\infty}^{+\infty} x(t) \delta(t - n T_s)\right] e^{- j 2 \pi f t} \,dt \\
+    &amp;= \int_{-\infty}^{+\infty} \left[\sum_{n = -\infty}^{+\infty} x(t) \delta(t - n T_s) e^{- j 2 \pi f t}\right] \,dt \\
+    &amp;= \int_{-\infty}^{+\infty} \left[\sum_{n = -\infty}^{+\infty} x(n T_s) \delta(t - n T_s) e^{- j 2 \pi f n T_s}\right] \,dt \\
+    &amp;= \sum_{n = -\infty}^{+\infty} \left[\int_{-\infty}^{+\infty}  x(n T_s) \delta(t - n T_s) e^{- j 2 \pi f n T_s} \,dt\right] \\
     &amp;= \sum_{n = -\infty}^{+\infty} x(n T_s) e^{- j 2 \pi f n T_s} \int_{-\infty}^{+\infty} \delta(t - n T_s) \,dt \\
     &amp;= \sum_{n = -\infty}^{+\infty} x(n T_s) e^{- j 2 \pi f n T_s} \\
 \end{align}</p>
@@ -12045,10 +12054,10 @@ div#notebook {
 \end{align}
 回想$x[n] = x(n T_s)$，再把两个放在一起对比
 \begin{align}
-    X(j 2 \pi f) &amp;= \sum_{n = -\infty}^{+\infty} x(n T_s) e^{- j 2 \pi \color{red}{f n T_s}} \\
+    \hat{X}(j 2 \pi f) &amp;= \sum_{n = -\infty}^{+\infty} x(n T_s) e^{- j 2 \pi \color{red}{f n T_s}} \\
     X(e^{j 2 \pi f}) &amp;= \sum_{n = -\infty}^{+\infty} x(n T_s) e^{- j 2 \pi \color{red}{f n}}
 \end{align}
-很明显，两个频谱就是横向伸缩的关系，也就是$X\left(j 2 \pi {f \over T_s}\right) = X(e^{j 2 \pi f})$或者$X(j 2 \pi f) = X(e^{j 2 \pi f T_s})$</p>
+很明显，两个频谱就是横向伸缩的关系，也就是$\hat{X}\left(j 2 \pi {f \over T_s}\right) = X(e^{j 2 \pi f})$或者$\hat{X}(j 2 \pi f) = X(e^{j 2 \pi f T_s})$</p>
 <blockquote><p>这里再次表明了离散时间傅里叶变换DTFT中频域函数$X(e^{j 2 \pi f})$的变量$f$是无量纲的。而连续时间傅里叶变换CTFT中频域函数$X(j 2 \pi f)$的变量$f$是有量纲的，量纲是$\rm s^{-1}$。</p>
 </blockquote>
 
@@ -12059,11 +12068,11 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="$z$&#21464;&#25442;">$z$&#21464;&#25442;<a class="anchor-link" href="#$z$&#21464;&#25442;">&#182;</a></h2><p>把$x[n]$按一个正交函数系$\{z^n | z \in C\}$展开<sup>[证明正交](#sec:prove-z-orthogonality)</sup>
+<h2 id="$z$&#21464;&#25442;">$z$&#21464;&#25442;<a class="anchor-link" href="#$z$&#21464;&#25442;">&#182;</a></h2><p>把$x[n]$按一个正交函数系$\{z^n | z \in C\}$展开（<a href="#sec:prove-z-orthogonality">证明正交</a>）
 \begin{align}
     x[n] = {1 \over j 2 \pi} \oint_C X(z) z^{n-1} \,dz
 \end{align}
-曲线$C$是复平面上的一条简单曲线，必须全部在收敛域ROC中<sup>[收敛域是什么](#sec:z-transform-roc-explained)</sup>，且需要包围零点$z = 0$。</p>
+曲线$C$是复平面上的一条简单曲线，必须全部在收敛域ROC中（<a href="#sec:z-transform-roc-explained">收敛域是什么</a>），且需要包围零点$z = 0$。</p>
 <blockquote><p>目前我还无法理解这个式子。</p>
 </blockquote>
 <p>$x[n]$在任意一个基底$z^n$上的投影是这样计算的
@@ -12188,7 +12197,7 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h4 id="&#21452;&#36793;&#24207;&#21015;">&#21452;&#36793;&#24207;&#21015;<a class="anchor-link" href="#&#21452;&#36793;&#24207;&#21015;">&#182;</a></h4><p>双边序列的定义是
 \begin{align}
-    \forall n_0 \in Z^+, \exists n \in \{n | |n| &gt; n_0\}: \qquad x[n] \neq 0
+    \forall n_0 \in Z^+, \exists n \in \left\{n \middle| |n| &gt; n_0\right\}: \qquad x[n] \neq 0
 \end{align}
 意思是找不到这样一个区间，使得区间外的所有$n$都满足$x[n] = 0$。</p>
 <blockquote><p>定义的意思是，对于任何一个正整数，都存在另一个绝对值大于它的整数，使得$x[n]$不等于0。意思就是对任何拟划定的区间，都能找到一个区间外的整数$n$，使得$x[n]$不等于0。</p>
@@ -12734,6 +12743,101 @@ $\vec{X}$称为$X[k]$的主值序列。$X[k]$就是$\vec{X}$以$N$为周期的�
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Sander-Tukey&#31639;&#27861;-aka.-DIF&#31639;&#27861;">Sander-Tukey&#31639;&#27861; aka. DIF&#31639;&#27861;<a class="anchor-link" href="#Sander-Tukey&#31639;&#27861;-aka.-DIF&#31639;&#27861;">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="IFFT">IFFT<a class="anchor-link" href="#IFFT">&#182;</a></h2><p>观察DFT的分析公式和综合公式
+\begin{align}
+    X[k] &amp;= \sum_{n = 0}^{N - 1} x[n] e^{\color{red}{-} j 2 \pi {k \over N} n} \\
+    x[n] &amp;= \color{red}{1 \over N} \sum_{n = 0}^{N - 1} X[k] e^{\color{red}{+} j 2 \pi {k \over N} n}
+\end{align}
+发现DFT和IDFT的差别仅仅就在于</p>
+<ul>
+<li>综合公式比分析公式多了一个系数${1 \over N}$</li>
+<li>综合公式里的指数是$+$，分析公式里的指数是$-$</li>
+</ul>
+<p>所以有两种办法来做IFFT。</p>
+<h3 id="&#25913;&#34676;&#34678;&#32467;&#30340;&#20056;&#31995;&#25968;+&#26368;&#21518;&#38500;&#20197;$N$">&#25913;&#34676;&#34678;&#32467;&#30340;&#20056;&#31995;&#25968;+&#26368;&#21518;&#38500;&#20197;$N$<a class="anchor-link" href="#&#25913;&#34676;&#34678;&#32467;&#30340;&#20056;&#31995;&#25968;+&#26368;&#21518;&#38500;&#20197;$N$">&#182;</a></h3><p>把Coolkey-Tukey中的每个蝴蝶结左下方的相乘系数从$\omega_{N}^{nk}$改成$\omega_{N}^{-nk}$，再在最后乘以一个系数${1 \over N}$。</p>
+<blockquote><p>再次注意$\omega_{N}^{kn}$的定义是$e^{-j 2 \pi {k \over N} n}$。</p>
+</blockquote>
+<p>这样IFFT和FFT的程序其实有很大不同了。</p>
+<h3 id="&#36755;&#20837;&#20808;&#21462;&#20849;&#36717;+&#26368;&#21518;&#38500;&#20197;$N$">&#36755;&#20837;&#20808;&#21462;&#20849;&#36717;+&#26368;&#21518;&#38500;&#20197;$N$<a class="anchor-link" href="#&#36755;&#20837;&#20808;&#21462;&#20849;&#36717;+&#26368;&#21518;&#38500;&#20197;$N$">&#182;</a></h3><p>这种方法<strong>不需要改程序</strong>，只需要在FFT的程序前面插入一个<strong>对输入逐个取共轭</strong>的程序、在FFT程序的最后追加一个取共轭、一个<strong>除以$N$</strong>的程序就可以了。</p>
+<p>原理非常简单。观察综合公式
+\begin{align}
+    x[n] = {1 \over N} \sum_{n = 0}^{N - 1} X[k] e^{j 2 \pi {k \over N} n} \\
+\end{align}
+右边取两次共轭，交换共轭和求和次序
+\begin{align}
+    x[n] &amp;= {1 \over N} \left[\sum_{n = 0}^{N - 1} (X[k] e^{j 2 \pi {k \over N} n} )^*\right]^*\\
+    &amp;= {1 \over N} \left(\underbrace{\sum_{n = 0}^{N - 1} X[k]^* e^{- j 2 \pi {k \over N} n}}_{\operatorname{DFT}(X[k]^*) }\right)^*\\
+\end{align}
+可见只要给一个FFT程序输入$X[k]^*$、再给结果取共轭、除以$N$就可以了。非常方便。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="&#25968;&#23383;&#28388;&#27874;&#22120;">&#25968;&#23383;&#28388;&#27874;&#22120;<a class="anchor-link" href="#&#25968;&#23383;&#28388;&#27874;&#22120;">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="&#35774;&#35745;&#26041;&#27861;">&#35774;&#35745;&#26041;&#27861;<a class="anchor-link" href="#&#35774;&#35745;&#26041;&#27861;">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="&#20914;&#20987;&#21709;&#24212;&#19981;&#21464;&#27861;">&#20914;&#20987;&#21709;&#24212;&#19981;&#21464;&#27861;<a name="sec:impulse-invariance" /><a class="anchor-link" href="#&#20914;&#20987;&#21709;&#24212;&#19981;&#21464;&#27861;">&#182;</a></h4><p>使数字滤波器的单位冲激响应$h[n]$处处等于对应模拟滤波器的单位冲击响应的采样点$h(n T_s)$
+\begin{align}
+    \forall n \in Z: \qquad h[n] = h(n T_s)
+\end{align}
+即
+\begin{align}
+    \forall n \in Z: \qquad \int_{- {1 \over 2}}^{1 \over 2} H(e^{j 2 \pi f}) e^{j 2 \pi f n} \,df = \int_{- \infty}^{+ \infty} H(j 2 \pi f) e^{j 2 \pi f n T_s} \,df
+\end{align}
+但是从上面的这个关系，看不出频谱$H(e^{j 2 \pi f})$和$H(j 2 \pi f)$之间的关系。</p>
+<blockquote><p>时刻记住我们的目的：把模拟滤波器的频谱$H(j 2 \pi f)$转换到数字滤波器的频谱$H(e^{j 2 \pi f})$。所以一定要得到用$H(j 2 \pi f)$表示的$H(e^{j 2 \pi f})$。</p>
+</blockquote>
+<p>回想<a href="#sec:sampling">采样章节</a>，我们发现这个好像就是$x[n] = x(n T_s)$的定义式。而且实际采样$x[n] = x(n T_s)$的频谱和理想采样$\hat{x}(t)$的频谱好像是有某种关联的。这个关联可以写成
+\begin{align}
+    H(e^{j 2 \pi f}) = \hat{H}(j 2 \pi {f \over T_s})
+\end{align}</p>
+<p>再把几个频谱关系放在一起观察
+\begin{align}
+    &amp; h[n] &amp;&amp; \mathop{\longleftrightarrow}^{\rm DTFT} &amp;&amp; H(e^{j 2 \pi f}) \\
+    &amp; h(t) &amp;&amp; \mathop{\longleftrightarrow}^{\rm CTFT} &amp;&amp; H(j 2 \pi f) \\
+    &amp; \hat{h}(t) = \sum_{n = -\infty}^{+\infty} h(t) \delta(t - n T_s) &amp;&amp; \mathop{\longleftrightarrow}^{\rm CTFT} &amp;&amp; \hat{H}(j 2 \pi f) = {1 \over T_s} \sum_{n = -\infty}^{+\infty} H\left(j 2 \pi \left(f - {n \over T_s}\right)\right)
+\end{align}
+把上面的关联带入最后一个式子，得到
+\begin{align}
+    H(e^{j 2 \pi f}) = {1 \over T_s} \sum_{n = -\infty}^{+\infty} H\underbrace{\left(j 2 \pi \left({f \over T_s} - {n \over T_s}\right)\right)}_{横向缩放、平移}
+\end{align}</p>
+<p>很显然，把设计好的模拟滤波器的频率响应函数先横向伸缩变换、再复制搬移，就得到了数字滤波器的频率响应函数。</p>
+<p>但是用传输函数更方便，所以</p>
+<blockquote><p>这里推导用的全是频率响应函数而不是传输函数。我觉得也可以一开始就用传输函数推导，即从$s$变换推到$z$变换。</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="&#21452;&#32447;&#24615;&#21464;&#25442;&#27861;">&#21452;&#32447;&#24615;&#21464;&#25442;&#27861;<a class="anchor-link" href="#&#21452;&#32447;&#24615;&#21464;&#25442;&#27861;">&#182;</a></h4>
 </div>
 </div>
 </div>
