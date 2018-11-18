@@ -1,0 +1,18 @@
+@keyframes progress-running {
+    0% {
+        transform: translate(-300vw);
+    }
+    100% {
+        transform: translate(300vw);
+    }
+}
+
+.progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 300vw;
+    height: 5px;
+    background-color: aquamarine;
+    animation: progress-running linear 1.2s infinite;
+}
