@@ -71,48 +71,87 @@
                 loading: false,
             },
             methods: {
-                fetchView: function () {
+                fetchView: () => {
                     if (app.route === "/" || app.route === "/site") {
                         var url = "/dist/index.html"
                     } else {
                         var url = "/dist" + app.route + ".html"
                     }
-                    app.loading = true
-                    return fetch(url).then(function (response) {
+                    app.loading = true // it is loading, so there should be some awesome visual effect(for now it is a progress bar)
+                    return fetch(url).then(response => {
                         if (response.ok) {
                             response.text().then(text => {
                                 app.notebook = text
                             }).then(() => {
-                                MathJax.Hub.Typeset()
+                                MathJax.Hub.Typeset() // reload MathJax
                             }).then(() => {
-                                app.loading = false
+                                app.loading = false // loading done, so any effect should stop
+                            }).then(() => {
+                                document.querySelector("title").innerHTML = document.querySelector("h1").innerText + " - Benjamin Shi's Blog" // make title accord content
                             })
                         } else {
-                            console.log(response.status) // perhaps show some error message
-                            app.notebook = document.querySelector("#not-found").innerHTML
+                            // console.log(response.status) // perhaps show some error message
+                            app.notebook = document.querySelector("#not-found").innerHTML // show some 404 message
+                            document.querySelector("title").innerHTML = "404 - Canon & Baroque - Benjamin Shi's Blog" // i guess this line is not necessary
                         }
                     })
                 }
             },
         })
 
-        page("*", ctx => {
-            ctx.state.offset = window.scrollY
+        page("*", (ctx, next) => {
+            // console.log("into" + ctx.pathname)
+            // if (ctx.state.offset) {
+            //     console.log("been here, offset was" + ctx.state.offset)
+            //     ctx.offset = ctx.state.offset
+            // } else {
+            //     console.log("never been here")
+            //     ctx.offset = 0
+            // }
+            // ctx.state.offset = window.scrollY
             app.route = ctx.pathname
-            app.fetchView().then(function () {
-                if (ctx.state.offset) {
-                    window.scroll({
-                        top: ctx.state.offset
-                    })
-                } else {
-                    window.scroll({
-                        top: 0
-                    })
-                }
+            app.fetchView().then(() => {
+
+                // console.log(ctx.state.offset)
+                // if (ctx.state.offset) {
+                //     console.log("jump to " + ctx.pathname)
+                //     console.log("with offset" + ctx.state.offset)
+                // window.scroll({
+                //     top: ctx.offset
+                // })
+                // } else {
+                //     console.log("jump to " + ctx.pathname)
+                //     console.log("with offset 0")
+                //     window.scroll({
+                //         top: 0
+                //     })
+                // }
             }) // have not fixed the scroll problem
+            // next()
         })
 
+        // window.addEventListener("unload", () => {
+        //     history.replaceState({
+        //         offset: window.scrollY,
+        //     })
+        //     console.log(history.state.offset)
+        // })
+
+        // page.exit("*", (ctx, next) => {
+        //     console.log("leaving" + ctx.pathname)
+        //     ctx.state.offset = ctx.offset = window.scrollY
+        //     // ctx.save()
+        //     console.log("saving offset" + ctx.state.offset)
+        //     next() // next() so that next page can enter
+        // })
+
         page.start() // never forget this.
+
+        // window.addEventListener("scroll", (e) => {
+        //     history.replaceState({
+        //         offset: window.scrollY
+        //     }, null, window.location)
+        // })
     </script>
 </body>
 
