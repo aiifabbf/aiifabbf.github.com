@@ -37,7 +37,7 @@
 <body>
     <div tabindex="-1" id="notebook" class="border-box-sizing">
         <blog-progress :active="loading"></blog-progress>
-        <blog-notebook :post-url="route" :history-context="historyContext" v-on:loading="loading = true" v-on:loaded="loading = false"></blog-notebook>
+        <blog-notebook :post-url="route" :ctx="ctx" v-on:loading="loading = true" v-on:loaded="loading = false"></blog-notebook>
     </div>
 
     <template id="blog-progress">
@@ -56,12 +56,18 @@
     </template>
     <script>
         Vue.component("blog-notebook", {
-            props: ["postUrl", "historyContext"],
+            props: ["postUrl", "ctx"],
             template: "#blog-notebook",
             data: function () {
                 return {
                     notebook: ""
                 }
+            },
+            updated: function () {
+                var self = this
+                self.$emit("loaded")
+                document.querySelector("title").innerHTML = document.querySelector("h1").innerText + " - Benjamin Shi's Blog" // make title accord content
+                MathJax.Hub.Typeset()
             },
             watch: {
                 postUrl: function () {
@@ -70,28 +76,16 @@
                     // var response = await fetch(self.postUrl)
                     // var text = await response.text()
                     // return text
-                    if (self.historyContext && self.historyContext.state.notebook) {
-                        self.notebook = self.historyContext.state.notebook
-                        Vue.nextTick(function () { // MathJax has to wait until Vue finishes DOM modification
-                            self.$emit("loaded")
-                            document.querySelector("title").innerHTML = document.querySelector("h1").innerText + " - Benjamin Shi's Blog" // make title accord content
-                            MathJax.Hub.Typeset()
-                        })
+                    if (self.ctx && self.ctx.state.notebook) {
+                        self.notebook = self.ctx.state.notebook
                     } else {
                         self.notebook = "" // if there is no cache found, that means it is a fresh load and user should read this post from page top
                         fetch(self.postUrl).then(response => {
                             if (response.ok) {
                                 response.text().then(text => {
                                     self.notebook = text
-                                    Vue.nextTick(function () {
-                                        document.querySelector("title").innerHTML = document.querySelector("h1").innerText + " - Benjamin Shi's Blog" // make title accord content
-                                        MathJax.Hub.Typeset() // reload MathJax
-                                        MathJax.Hub.Queue(function () {
-                                            self.$emit("loaded") // loading done, so any effect should stop
-                                            self.historyContext.state.notebook = text // save fetched notebook into state with history API
-                                            self.historyContext.save() // have to explicitly save
-                                        })
-                                    })
+                                    self.ctx.state.notebook = text
+                                    self.ctx.save()
                                 })
                             } else {
                                 // console.log(response.status) // perhaps show some error message
@@ -133,7 +127,7 @@
             data: {
                 route: window.location.pathname,
                 loading: false,
-                historyContext: undefined
+                ctx: undefined
             },
         })
 
@@ -143,19 +137,16 @@
             } else {
                 app.route = "/dist" + ctx.pathname + ".html"
             }
-            app.historyContext = ctx
-            // console.log("into " + ctx.pathname, window.scrollY)
-            // // next()
-            // if (ctx.state.scroll) {
-            //     console.log(ctx.pathname + " already has a scroll offset " + ctx.state.scroll)
-            //     window.scrollTo({
-            //         y: ctx.state.scroll
-            //     })
-            // }
+            app.ctx = ctx
+            console.log("into " + ctx.pathname, window.scrollY)
+            // next()
+            if (ctx.state.scroll) {
+                console.log(ctx.pathname + " already has a scroll offset " + ctx.state.scroll)
+            }
         })
 
         page.exit("*", function (ctx, next) {
-            // console.log("leave " + ctx.pathname, window.scrollY)
+            console.log("leave " + ctx.pathname, window.scrollY)
             // console.log("store scroll offset for " + ctx.pathname + " with " + window.scrollY)
             // ctx.state.scroll = window.scrollY
             // ctx.save()
