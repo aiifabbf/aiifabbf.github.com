@@ -1,2 +1,1 @@
-jupyter nbconvert --template basic posts/*
-mv posts/*.html dist/
+python3 build.py

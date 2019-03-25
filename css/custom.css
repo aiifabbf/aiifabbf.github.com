@@ -16,3 +16,79 @@
     background-color: aquamarine;
     animation: progress-running linear 1.2s infinite;
 }
+
+
+a {
+    text-decoration: none!important;
+}
+
+/* inline literals */
+span.docutils.literal {
+    font-family: monospace;
+    white-space: pre-wrap;
+}
+
+ul.auto-toc, ul.auto-toc ul {
+    list-style-type: none;
+}
+
+.admonition {
+    border-right: 2rem solid rgba(0, 0, 0, 0.05);
+    background: rgba(0, 0, 0, 0.05);
+    padding: 2rem;
+    margin: 2rem 0;
+}
+
+.admonition-title {
+    color: rgba(0, 0, 0, 0.5);
+    font-weight: bolder;
+}
+
+.footnote-reference {
+    position: relative;
+    top: -0.5rem;
+    font-size: smaller;
+}
+
+.footnote {
+    margin: 2rem 0;
+}
+
+.footnote::before {
+    content: "";
+    width: 10rem;
+    border-top: 0.1rem solid black;
+    position: absolute;
+}
+
+/* pre.code, code {
+    background-color: transparent;
+} */
+
+pre.code .ln {
+    color: gray;
+} /* line numbers */
+/* basic highlighting: for a complete scheme, see */
+/* http://docutils.sourceforge.net/sandbox/stylesheets/ */
+pre.code .comment, code .comment {
+    color: #408080;
+}
+
+pre.code .keyword, code .keyword {
+    color: #008000; font-weight: bold;
+}
+pre.code .literal.string, code .literal.string {
+    color: #BA2121;
+}
+
+pre.code .name.builtin, code .name.builtin {
+    color: #008000;
+}
+
+pre.code .deleted, code .deleted {
+    background-color: #DEB0A1;
+}
+
+pre.code .inserted, code .inserted {
+    background-color: #A3D289;
+}
