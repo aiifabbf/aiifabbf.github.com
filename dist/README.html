@@ -13,36 +13,36 @@
 </div>
 <div class="contents topic" id="id2">
 <p class="topic-title first">目录</p>
-<ul class="auto-toc simple">
-<li><p><a class="reference internal" href="#id3" id="id19"><span class="sectnum">1</span> 未解决</a></p></li>
-<li><p><a class="reference internal" href="#id4" id="id20"><span class="sectnum">2</span> 可优化</a></p></li>
-<li><p><a class="reference internal" href="#id5" id="id21"><span class="sectnum">3</span> 一些思路</a></p>
-<ul class="auto-toc">
-<li><p><a class="reference internal" href="#array" id="id22"><span class="sectnum">3.1</span> array中的目标函数优化问题</a></p></li>
+<ul class="simple">
+<li><p><a class="reference internal" href="#id3" id="id19">未解决</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id20">可优化</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id21">一些思路</a></p>
+<ul>
+<li><p><a class="reference internal" href="#array" id="id22">array中的目标函数优化问题</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#id6" id="id23"><span class="sectnum">4</span> 一些模板</a></p>
-<ul class="auto-toc">
-<li><p><a class="reference internal" href="#arrayarraysubsequence" id="id24"><span class="sectnum">4.1</span> 判断一个array是不是另一个array的subsequence（可以不连续）</a></p></li>
-<li><p><a class="reference internal" href="#arrayarraysubstring" id="id25"><span class="sectnum">4.2</span> 判断一个array是不是另一个array的substring（连续）</a></p></li>
-<li><p><a class="reference internal" href="#id7" id="id26"><span class="sectnum">4.3</span> 二叉树的先根遍历</a></p></li>
-<li><p><a class="reference internal" href="#id8" id="id27"><span class="sectnum">4.4</span> 二叉树的中根遍历</a></p></li>
-<li><p><a class="reference internal" href="#id9" id="id28"><span class="sectnum">4.5</span> 二叉树的后根遍历</a></p></li>
-<li><p><a class="reference internal" href="#id10" id="id29"><span class="sectnum">4.6</span> 树的广度优先遍历</a></p></li>
-<li><p><a class="reference internal" href="#id12" id="id30"><span class="sectnum">4.7</span> 二叉树的广度优先遍历</a></p></li>
-<li><p><a class="reference internal" href="#id14" id="id31"><span class="sectnum">4.8</span> 得到二叉树的深度</a></p></li>
-<li><p><a class="reference internal" href="#id15" id="id32"><span class="sectnum">4.9</span> 取得二叉树的所有叶子节点值</a></p></li>
-<li><p><a class="reference internal" href="#id16" id="id33"><span class="sectnum">4.10</span> 取得二叉树里根节点到所有叶子的路径</a></p></li>
-<li><p><a class="reference internal" href="#bst" id="id34"><span class="sectnum">4.11</span> 判断二叉树是不是二分搜索树（BST）</a></p></li>
-<li><p><a class="reference internal" href="#arrayheight-balanced-bst" id="id35"><span class="sectnum">4.12</span> 排好序的array转换到height-balanced BST</a></p></li>
-<li><p><a class="reference internal" href="#id17" id="id36"><span class="sectnum">4.13</span> 筛选出出现频次最高的元素</a></p></li>
-<li><p><a class="reference internal" href="#id18" id="id37"><span class="sectnum">4.14</span> 计算器</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id23">一些模板</a></p>
+<ul>
+<li><p><a class="reference internal" href="#arrayarraysubsequence" id="id24">判断一个array是不是另一个array的subsequence（可以不连续）</a></p></li>
+<li><p><a class="reference internal" href="#arrayarraysubstring" id="id25">判断一个array是不是另一个array的substring（连续）</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id26">二叉树的先根遍历</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id27">二叉树的中根遍历</a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id28">二叉树的后根遍历</a></p></li>
+<li><p><a class="reference internal" href="#id10" id="id29">树的广度优先遍历</a></p></li>
+<li><p><a class="reference internal" href="#id12" id="id30">二叉树的广度优先遍历</a></p></li>
+<li><p><a class="reference internal" href="#id14" id="id31">得到二叉树的深度</a></p></li>
+<li><p><a class="reference internal" href="#id15" id="id32">取得二叉树的所有叶子节点值</a></p></li>
+<li><p><a class="reference internal" href="#id16" id="id33">取得二叉树里根节点到所有叶子的路径</a></p></li>
+<li><p><a class="reference internal" href="#bst" id="id34">判断二叉树是不是二分搜索树（BST）</a></p></li>
+<li><p><a class="reference internal" href="#arrayheight-balanced-bst" id="id35">排好序的array转换到height-balanced BST</a></p></li>
+<li><p><a class="reference internal" href="#id17" id="id36">筛选出出现频次最高的元素</a></p></li>
+<li><p><a class="reference internal" href="#id18" id="id37">计算器</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="id3">
-<h1><a class="toc-backref" href="#id19"><span class="sectnum">1</span> 未解决</a></h1>
+<h1><a class="toc-backref" href="#id19">未解决</a></h1>
 <ul class="simple">
 <li><p>743</p></li>
 <li><p>713</p></li>
@@ -66,7 +66,7 @@
 </ul>
 </div>
 <div class="section" id="id4">
-<h1><a class="toc-backref" href="#id20"><span class="sectnum">2</span> 可优化</a></h1>
+<h1><a class="toc-backref" href="#id20">可优化</a></h1>
 <ul class="simple">
 <li><p>523 找substring能否累加得到k的整数倍</p></li>
 <li><p>653 二分搜索树中的two sum</p></li>
@@ -78,15 +78,37 @@
 </ul>
 </div>
 <div class="section" id="id5">
-<h1><a class="toc-backref" href="#id21"><span class="sectnum">3</span> 一些思路</a></h1>
+<h1><a class="toc-backref" href="#id21">一些思路</a></h1>
 <div class="section" id="array">
-<h2><a class="toc-backref" href="#id22"><span class="sectnum">3.1</span> array中的目标函数优化问题</a></h2>
+<h2><a class="toc-backref" href="#id22">array中的目标函数优化问题</a></h2>
+<p>一般形式是找到array中关于两个下标i, j的目标函数的最大值。</p>
+<div class="math">
+\begin{equation*}
+\max\{f(i, j) | 0 \leq i \leq n - 1, 0 \leq j \leq n - 1\}
+\end{equation*}
+</div>
+<p>实际问题中，i, j的取值可能有几种约束</p>
+<ul class="simple">
+<li><p><span class="math">\(i \neq j\)</span></p></li>
+<li><p><span class="math">\(i &lt; j\)</span></p></li>
+</ul>
+<p><span class="math">\(f(i, j)\)</span> 可能有几种性质</p>
+<ul>
+<li><p>与i, j的顺序无关，即 <span class="math">\(f(i, j) = f(j, i)\)</span></p></li>
+<li><p>可以分解成关于i、关于j的两个独立函数，即 <span class="math">\(f(i, j) = u(i) + v(j)\)</span></p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>比如1021题中， <span class="math">\(f(i, j) = f(i) + g(j)\)</span> 其中 <span class="math">\(f(i) = a_i + i, g(j) = a_j - j\)</span> 。</p>
+</div>
+</li>
+</ul>
+<p>暴力搜索所有的情况的复杂度是 <span class="math">\(O(n^2)\)</span> 。</p>
 </div>
 </div>
 <div class="section" id="id6">
-<h1><a class="toc-backref" href="#id23"><span class="sectnum">4</span> 一些模板</a></h1>
+<h1><a class="toc-backref" href="#id23">一些模板</a></h1>
 <div class="section" id="arrayarraysubsequence">
-<h2><a class="toc-backref" href="#id24"><span class="sectnum">4.1</span> 判断一个array是不是另一个array的subsequence（可以不连续）</a></h2>
+<h2><a class="toc-backref" href="#id24">判断一个array是不是另一个array的subsequence（可以不连续）</a></h2>
 <pre class="code python literal-block"><code><span class="keyword">def</span> <span class="name function">isSubArray</span><span class="punctuation">(</span><span class="name">subarray</span><span class="punctuation">,</span> <span class="name">array</span><span class="punctuation">):</span>
     <span class="name">pos</span> <span class="operator">=</span> <span class="operator">-</span><span class="literal number integer">1</span>
     <span class="keyword">for</span> <span class="name">i</span> <span class="operator word">in</span> <span class="name">subarray</span><span class="punctuation">:</span>
@@ -98,10 +120,10 @@
         <span class="keyword">return</span> <span class="name builtin pseudo">True</span></code></pre>
 </div>
 <div class="section" id="arrayarraysubstring">
-<h2><a class="toc-backref" href="#id25"><span class="sectnum">4.2</span> 判断一个array是不是另一个array的substring（连续）</a></h2>
+<h2><a class="toc-backref" href="#id25">判断一个array是不是另一个array的substring（连续）</a></h2>
 </div>
 <div class="section" id="id7">
-<h2><a class="toc-backref" href="#id26"><span class="sectnum">4.3</span> 二叉树的先根遍历</a></h2>
+<h2><a class="toc-backref" href="#id26">二叉树的先根遍历</a></h2>
 <p>可以用递归</p>
 <pre class="code python literal-block"><code><span class="comment single"># 改编自144</span>
 
@@ -156,7 +178,7 @@
 </div>
 </div>
 <div class="section" id="id8">
-<h2><a class="toc-backref" href="#id27"><span class="sectnum">4.4</span> 二叉树的中根遍历</a></h2>
+<h2><a class="toc-backref" href="#id27">二叉树的中根遍历</a></h2>
 <p>可以用递归，只要把对根节点的访问的语句放到中间就算中根遍历了。</p>
 <pre class="code python literal-block"><code><span class="comment single"># 改编自94</span>
 
@@ -205,7 +227,7 @@
 </ul>
 </div>
 <div class="section" id="id9">
-<h2><a class="toc-backref" href="#id28"><span class="sectnum">4.5</span> 二叉树的后根遍历</a></h2>
+<h2><a class="toc-backref" href="#id28">二叉树的后根遍历</a></h2>
 <pre class="code python literal-block"><code><span class="keyword">class</span> <span class="name class">Solution</span><span class="punctuation">:</span>
     <span class="keyword">def</span> <span class="name function">postorderTraversal</span><span class="punctuation">(</span><span class="name builtin pseudo">self</span><span class="punctuation">,</span> <span class="name">root</span><span class="punctuation">:</span> <span class="name">TreeNode</span><span class="punctuation">)</span> <span class="operator">-&gt;</span> <span class="name">List</span><span class="punctuation">[</span><span class="name builtin">int</span><span class="punctuation">]:</span>
         <span class="keyword">if</span> <span class="name">root</span><span class="punctuation">:</span>
@@ -218,7 +240,7 @@
             <span class="keyword">pass</span></code></pre>
 </div>
 <div class="section" id="id10">
-<h2><a class="toc-backref" href="#id29"><span class="sectnum">4.6</span> 树的广度优先遍历</a></h2>
+<h2><a class="toc-backref" href="#id29">树的广度优先遍历</a></h2>
 <pre class="code python literal-block"><code><span class="keyword">class</span> <span class="name class">Solution</span><span class="punctuation">:</span>
     <span class="keyword">def</span> <span class="name function">levelOrder</span><span class="punctuation">(</span><span class="name builtin pseudo">self</span><span class="punctuation">,</span> <span class="name">root</span><span class="punctuation">:</span> <span class="literal string single">'Node'</span><span class="punctuation">)</span> <span class="operator">-&gt;</span> <span class="name builtin pseudo">None</span><span class="punctuation">:</span>
         <span class="keyword">if</span> <span class="name">root</span><span class="punctuation">:</span>
@@ -248,7 +270,7 @@
 </div>
 </div>
 <div class="section" id="id12">
-<h2><a class="toc-backref" href="#id30"><span class="sectnum">4.7</span> 二叉树的广度优先遍历</a></h2>
+<h2><a class="toc-backref" href="#id30">二叉树的广度优先遍历</a></h2>
 <pre class="code python literal-block"><code><span class="keyword">class</span> <span class="name class">Solution</span><span class="punctuation">:</span>
     <span class="keyword">def</span> <span class="name function">maxDepth</span><span class="punctuation">(</span><span class="name builtin pseudo">self</span><span class="punctuation">,</span> <span class="name">root</span><span class="punctuation">:</span> <span class="name">TreeNode</span><span class="punctuation">)</span> <span class="operator">-&gt;</span> <span class="name builtin">int</span><span class="punctuation">:</span>
         <span class="keyword">if</span> <span class="name">root</span><span class="punctuation">:</span>
@@ -300,7 +322,7 @@
 </ul>
 </div>
 <div class="section" id="id14">
-<h2><a class="toc-backref" href="#id31"><span class="sectnum">4.8</span> 得到二叉树的深度</a></h2>
+<h2><a class="toc-backref" href="#id31">得到二叉树的深度</a></h2>
 <p>以前一直是用广度优先、按层遍历来做的（104题），但是也有非常简单的写法，比如</p>
 <pre class="code python literal-block"><code><span class="comment single"># 摘自543</span>
 
@@ -313,7 +335,7 @@
 <p>不一定比按层遍历快，但是写起来足够简单。</p>
 </div>
 <div class="section" id="id15">
-<h2><a class="toc-backref" href="#id32"><span class="sectnum">4.9</span> 取得二叉树的所有叶子节点值</a></h2>
+<h2><a class="toc-backref" href="#id32">取得二叉树的所有叶子节点值</a></h2>
 <pre class="code python literal-block"><code><span class="comment single"># 摘自872</span>
 
 <span class="keyword">class</span> <span class="name class">Solution</span><span class="punctuation">:</span>
@@ -331,7 +353,7 @@
             <span class="keyword">return</span> <span class="punctuation">[]</span></code></pre>
 </div>
 <div class="section" id="id16">
-<h2><a class="toc-backref" href="#id33"><span class="sectnum">4.10</span> 取得二叉树里根节点到所有叶子的路径</a></h2>
+<h2><a class="toc-backref" href="#id33">取得二叉树里根节点到所有叶子的路径</a></h2>
 <p>还是一个递归的思路。</p>
 <p>一个二叉树根节点到所有叶子的路径，等于</p>
 <ul class="simple">
@@ -362,7 +384,7 @@
 </ul>
 </div>
 <div class="section" id="bst">
-<h2><a class="toc-backref" href="#id34"><span class="sectnum">4.11</span> 判断二叉树是不是二分搜索树（BST）</a></h2>
+<h2><a class="toc-backref" href="#id34">判断二叉树是不是二分搜索树（BST）</a></h2>
 <pre class="code python literal-block"><code><span class="comment single"># 摘自98</span>
 
 <span class="keyword">class</span> <span class="name class">Solution</span><span class="punctuation">:</span>
@@ -386,7 +408,7 @@
             <span class="keyword">return</span> <span class="name builtin pseudo">True</span></code></pre>
 </div>
 <div class="section" id="arrayheight-balanced-bst">
-<h2><a class="toc-backref" href="#id35"><span class="sectnum">4.12</span> 排好序的array转换到height-balanced BST</a></h2>
+<h2><a class="toc-backref" href="#id35">排好序的array转换到height-balanced BST</a></h2>
 <pre class="code python literal-block"><code><span class="comment single"># 摘自108</span>
 
 <span class="keyword">class</span> <span class="name class">Solution</span><span class="punctuation">:</span>
@@ -407,7 +429,7 @@
 </ul>
 </div>
 <div class="section" id="id17">
-<h2><a class="toc-backref" href="#id36"><span class="sectnum">4.13</span> 筛选出出现频次最高的元素</a></h2>
+<h2><a class="toc-backref" href="#id36">筛选出出现频次最高的元素</a></h2>
 <p>提示一下，如果有多种元素出现的频次一样而且恰好最高，怎么写最好？</p>
 <pre class="code python literal-block"><code><span class="comment single"># 摘自 https://leetcode.com/problems/most-frequent-subtree-sum/discuss/98675/Python-easy-understand-solution</span>
 
@@ -415,7 +437,7 @@
 <span class="keyword">return</span> <span class="punctuation">[</span><span class="name">i</span> <span class="keyword">for</span> <span class="name">i</span><span class="punctuation">,</span> <span class="name">v</span> <span class="operator word">in</span> <span class="name">counter</span><span class="operator">.</span><span class="name">items</span><span class="punctuation">()</span> <span class="keyword">if</span> <span class="name">v</span> <span class="operator">==</span> <span class="name">maximumFrequency</span><span class="punctuation">]</span> <span class="comment single"># 再筛选出频次和最高频次一样大的元素</span></code></pre>
 </div>
 <div class="section" id="id18">
-<h2><a class="toc-backref" href="#id37"><span class="sectnum">4.14</span> 计算器</a></h2>
+<h2><a class="toc-backref" href="#id37">计算器</a></h2>
 </div>
 </div>
             </div>

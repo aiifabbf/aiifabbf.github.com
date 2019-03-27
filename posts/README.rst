@@ -12,8 +12,6 @@ leetcode备忘录
 
 .. contents::
 
-.. section-numbering::
-
 未解决
 ==========
 
@@ -54,7 +52,26 @@ leetcode备忘录
 array中的目标函数优化问题
 ----------------------
 
+一般形式是找到array中关于两个下标i, j的目标函数的最大值。
 
+.. math::
+
+    \max\{f(i, j) | 0 \leq i \leq n - 1, 0 \leq j \leq n - 1\}
+
+实际问题中，i, j的取值可能有几种约束
+
+-   :math:`i \neq j`
+-   :math:`i < j`
+
+:math:`f(i, j)` 可能有几种性质
+
+-   与i, j的顺序无关，即 :math:`f(i, j) = f(j, i)`
+-   可以分解成关于i、关于j的两个独立函数，即 :math:`f(i, j) = u(i) + v(j)`
+
+    .. note:: 比如1021题中， :math:`f(i, j) = f(i) + g(j)` 其中 :math:`f(i) = a_i + i, g(j) = a_j - j` 。
+
+
+暴力搜索所有的情况的复杂度是 :math:`O(n^2)` 。
 
 一些模板
 ==========
