@@ -2,6 +2,10 @@
 ``Canon & Baroque``
 ====================
 
+图片测试_
+
+.. _图片测试: test
+
 最近突然不迷Jupyter Notebook了，迷上了语法可爱清新的reStructuredText，所以现在博客可以用reStructuredText写了。
 
 Jupyter Notebook感觉有几个问题
@@ -33,12 +37,14 @@ __ https://store.steampowered.com/app/976730/Halo_The_Master_Chief_Collection/
 
     -   新仓库_
     -   旧仓库_
+    -   Leetcode个人主页_
 
 -   补数据结构
 -   补算法
 
 .. _新仓库: https://github.com/aiifabbf/leetcode-memo
-.. _旧仓库: leetcode中的算法
+.. _旧仓库: leetcode中的算法.ipynb
+.. _Leetcode个人主页: https://leetcode.com/aiifabbf
 
 流水账
 =========
@@ -47,9 +53,9 @@ __ https://store.steampowered.com/app/976730/Halo_The_Master_Chief_Collection/
 -   GRE考场服务__
 -   港科面试__
 
-__ return-to-cs
-__ gre-exprience
-__ hkust-interview
+__ return-to-cs.ipynb
+__ gre-exprience.ipynb
+__ hkust-interview.ipynb
 
 一些笔记
 ==========
@@ -66,7 +72,7 @@ __ hkust-interview
 .. _算法: notes-introduction-to-algorithms
 .. _Leetcode: README
 .. _数字信号处理: dsp
-.. _通信原理: principles-of-communications
+.. _通信原理: principles-of-communication
 .. _CMOS模拟集成电路: cmos-ii
 .. _托福作文: https://github.com/aiifabbf/toefl-writings
 
