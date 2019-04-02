@@ -2,10 +2,6 @@
 ``Canon & Baroque``
 ====================
 
-图片测试_
-
-.. _图片测试: test
-
 最近突然不迷Jupyter Notebook了，迷上了语法可爱清新的reStructuredText，所以现在博客可以用reStructuredText写了。
 
 Jupyter Notebook感觉有几个问题
