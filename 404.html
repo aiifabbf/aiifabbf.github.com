@@ -75,16 +75,18 @@
                         return
                     } else {
                         element.setAttribute("src", "/posts/" + src) // if it is an internal source, do something
+                        console.log(element, src)
                     }
                 })
                 Array.from(document.querySelectorAll("a")).map(function (element) { // link reference adapting, so I can write semantically right links in rst docs
                     let href = element.getAttribute("href")
-                    if (!src.startsWith("http") && !src.startsWith("ftp") && !src.startsWith("#")) { // it is a reference to other blog posts
-                        if (src.endsWith(".ipynb")) {
-                            element.setAttribute("href", src.slice(0, -6))
-                        } else if (src.endsWith(".rst")) {
-                            element.setAttribute("href", src.slice(0, -4))
+                    if (!href.startsWith("http") && !href.startsWith("ftp") && !href.startsWith("#")) { // it is a reference to other blog posts
+                        if (href.endsWith(".ipynb")) {
+                            element.setAttribute("href", href.slice(0, -6))
+                        } else if (href.endsWith(".rst")) {
+                            element.setAttribute("href", href.slice(0, -4))
                         }
+                        console.log(element, href)
                     }
                 })
             },
