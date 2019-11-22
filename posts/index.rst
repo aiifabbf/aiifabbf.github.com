@@ -2,42 +2,31 @@
 ``Canon & Baroque``
 ====================
 
-最近突然不迷Jupyter Notebook了，迷上了语法可爱清新的reStructuredText，所以现在博客可以用reStructuredText写了。
+突然发现（你又突然发现了）很久没有更新了……我还以为换了清新可爱的reStructuredText我就会有写东西的动力、常更博客，原来自己只是喜欢调样式而已（前端真爱粉？）
 
-Jupyter Notebook感觉有几个问题
+我的妈呀，喊了半年多了， `终于要出Halo: Reach的PC版了 <https://store.steampowered.com/app/976730/Halo_The_Master_Chief_Collection/>`_ 。买爆。虽然其实我电脑并不能跑起来……
 
--   也太重了吧……每次都要开 ``jupyter notebook`` 然后在浏览器里编辑。要是没有浏览器呢？ [#]_
--   markdown的语法真的是……给我一种非常不安全的感觉，方言众多、没有规范。我严重依赖的某些功能说不定下一个版本就没了。相比之下rst就稳定很多。
--   markdown缺一些东西，比如footnote [#]_ 、admonition__
+电脑还是13年买的yoga，但是装上ubuntu用着真的太顺手了。我最喜欢的地方是它的键盘实在是太合理了，最右边有home, end, page up, page down键。不知道这种键盘布局叫什么名字，反正我至今都没有找到这种键盘布局的机械键盘（求告知）。毕业之后思考了很久要不要换电脑，最终还是没换。现在外壳早就刮花了，屏幕周围一圈的橡胶圈也开始老化脱落了，去年还坏了一个USB口（总共就两个）。但我觉得还能再战十年嘻嘻。
 
-__ admonition示例_
+最近很喜欢听 `哥德堡变奏曲 <https://imslp.org/wiki/Goldberg-Variationen,_BWV_988_(Bach,_Johann_Sebastian)>`_ ，好像已经到了每天至少循环两遍的程度了。
 
-说了很久的Travic CI……再等等吧嘻嘻，毕竟等了这么多年， Halo也终于出PC版了__ 。
-
-__ https://store.steampowered.com/app/976730/Halo_The_Master_Chief_Collection/
-
-.. [#] 当然我好像也不会真的用vim写东西……
-.. [#] 这就是footnote啦。好吧长得其实像sidenote。
-
-.. note::
-    :name: admonition示例
-
-    这就是admonition啦。我个人理解这个admonition的目的是放一段从正文中引申出来的一个话题，同时这个话题内容又比较多，不适合放在footnote里。
-
-    这个admonition的样式我自己加的……还可以吧？
+去米国开始读水硕了，这学期选了四门课：数据库、算法、图形学、机器学习。算法真的好难……
 
 最近
 =====
 
--   刷Leetcode。现在刷了300道了。
+-   补数据库
+-   补数据结构
+-   补算法
+-   去米国了
+-   毕业了_
+-   刷Leetcode。现在刷了 **500道** 了。嘻嘻
 
     -   新仓库_
     -   旧仓库_
     -   Leetcode个人主页_
 
--   补数据结构
--   补算法
-
+.. _毕业了: after-graduation.rst
 .. _新仓库: https://github.com/aiifabbf/leetcode-memo
 .. _旧仓库: leetcode中的算法.ipynb
 .. _Leetcode个人主页: https://leetcode.com/aiifabbf
@@ -97,13 +86,14 @@ __ hkust-interview.ipynb
 你是谁啊/这是什么破网站啊
 ==============================
 
-在下Benjamin Shi，现在EE大四，转CS。
+在下Benjamin Shi，现在EE [#]_ 毕业了_ ，去了米国的西北大学读CE（读作CE写作转CS）。
 
 这个博客的定位是比较正经的 [#]_ 朋友圈。主要记录一点人生的经验 [#]_ （牢骚）。
 
 如果你也恰好有缘学同样的东西，希望我的笔记能给你带来一点启发。笔记虽然初衷都是为了写给我自己看的，但是我是理解能力很差、又很健忘的人，这些笔记承担着n年后唤起我回忆的重任。所以我相信我能懂的你也一定能懂。如果不懂你别打我QAQ，发邮件给我吧。
 
-留个邮箱吧 aiifabbf at outlook.com 。有什么问题欢迎交流。一緒に遊びましょう〜〜
+留个邮箱吧 aiifabbf at outlook.com 。在 `知乎 <https://www.zhihu.com/people/benjamin-shi>`_ 上也可以找到我。有什么问题欢迎交流。一緒に遊びましょう〜〜
 
+.. [#] 在 `华科 <http://www.hust.edu.cn>`_ 读的集成电路。
 .. [#] 就是带公式的。你总不能在朋友圈里发DFT的理解吧……关爱智障的眼神.jpg
 .. [#] 以后会多记录一点心路历程，最近转CS的路上遇到了太多烦心的事情。
