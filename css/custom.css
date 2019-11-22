@@ -52,6 +52,11 @@ ul.auto-toc, ul.auto-toc ul {
 
 .footnote {
     margin: 2rem 0;
+    padding: 1em 0 0 0;
+    position: relative;
+    display: grid;
+    grid-template-columns: 3em auto;
+    align-items: baseline;
 }
 
 .footnote::before {
