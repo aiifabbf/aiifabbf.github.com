@@ -55,7 +55,7 @@ ul.auto-toc, ul.auto-toc ul {
     padding: 1em 0 0 0;
     position: relative;
     display: grid;
-    grid-template-columns: 3em auto;
+    grid-template-columns: 3em 1fr;
     align-items: baseline;
 }
 
