@@ -17,9 +17,13 @@
     animation: progress-running linear 1.2s infinite;
 }
 
-
 a {
     text-decoration: none!important;
+}
+
+/* display equation gaps */
+.rendered_html * + p {
+    margin-bottom: 1em;
 }
 
 /* inline literals */
