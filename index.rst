@@ -2,7 +2,9 @@
 ``Canon & Baroque``
 ====================
 
-突然发现（你又突然发现了）很久没有更新了……我还以为换了清新可爱的reStructuredText我就会有写东西的动力、常更博客，原来自己只是喜欢调样式而已（前端真爱粉？）
+    突然发现（你又突然发现了）很久没有更新了……我还以为换了清新可爱的reStructuredText我就会有写东西的动力、常更博客，原来自己只是喜欢调样式而已（前端真爱粉？）
+
+我果然就是喜欢调样式，哈哈。你有没有发现这个博客现在变成Sphinx编译的了？Sphinx是我到目前为止见过的最完美的文本编译工具。想想我从Jupyter notebook、变成reStructuredText、再到现在的Sphinx经历了多少坎坷（坑）。这样子的话，一段时间内我就不会再改博客的外在了，该好好写内容了。
 
 `Halo: Reach的PC版出啦 <https://store.steampowered.com/app/976730/Halo_The_Master_Chief_Collection/>`_ 。因为自己电脑跑不起来，所以去朋友家玩了一把，好爽啊。不过发现了几个bug，最严重的是过场动画居然听不到对话声音。
 
@@ -10,7 +12,13 @@
 
 最近很喜欢听 `哥德堡变奏曲 <https://imslp.org/wiki/Goldberg-Variationen,_BWV_988_(Bach,_Johann_Sebastian)>`_ ，好像已经到了每天至少循环两遍的程度了。
 
-去米国开始读水硕了，这学期选了四门课：数据库、算法、图形学、机器学习。算法真的好难……
+去米国读了一学期水硕了，这学期选了四门课：数据库、算法、图形学、机器学习。感觉还可以，就是算法太难了……下学期要肝操作系统、编译器、网络、深度学习了。
+
+.. toctree::
+    :hidden:
+    :glob:
+
+    posts/*
 
 最近
 =====
@@ -19,48 +27,31 @@
 -   补数据结构
 -   补算法
 -   去米国了
--   毕业了_
+-   :doc:`毕业了 <posts/after-graduation>`
 -   刷Leetcode。现在刷了 **600道** 了。嘻嘻
 
-    -   新仓库_
-    -   旧仓库_
-    -   Leetcode个人主页_
-
-.. _毕业了: after-graduation.rst
-.. _新仓库: https://github.com/aiifabbf/leetcode-memo
-.. _旧仓库: leetcode中的算法.ipynb
-.. _Leetcode个人主页: https://leetcode.com/aiifabbf
+    -   `新仓库 <https://github.com/aiifabbf/leetcode-memo>`_
+    -   `旧仓库 <jupyter/leetcode中的算法.html>`_
+    -   `Leetcode个人主页 <https://leetcode.com/aiifabbf>`_
 
 流水账
 =========
 
--   毕业了_
--   回到CS__
--   GRE考场服务__
--   港科面试__
-
-__ return-to-cs.ipynb
-__ gre-exprience.ipynb
-__ hkust-interview.ipynb
+-   :doc:`毕业了 <posts/after-graduation>`
+-   `回到CS <jupyter/return-to-cs.html>`_
+-   `GRE考场服务 <jupyter/gre-experience.html>`_
+-   `港科面试 <jupyter/hkust-interview.html>`_
 
 一些笔记
 ==========
 
--   离散数学_
--   算法_
--   Leetcode_
--   数字信号处理_
--   通信原理_
--   CMOS模拟集成电路_
--   托福作文_
-
-.. _离散数学: notes-discrete-mathematics
-.. _算法: notes-introduction-to-algorithms
-.. _Leetcode: README
-.. _数字信号处理: dsp
-.. _通信原理: principles-of-communication
-.. _CMOS模拟集成电路: cmos-ii
-.. _托福作文: https://github.com/aiifabbf/toefl-writings
+-   `离散数学 <jupyter/notes-discrete-mathematics.html>`_
+-   `算法 <jupyter/notes-introduction-to-algorithms.html>`_
+-   :doc:`Leetcode <posts/README>`
+-   `数字信号处理 <jupyter/dsp.html>`_
+-   `通信原理 <jupyter/principles-of-communication.html>`_
+-   `CMOS模拟集成电路 <jupyter/cmos-ii.html>`_
+-   `托福作文 <https://github.com/aiifabbf/toefl-writings>`_
 
 学习愿望清单
 ===============
@@ -89,7 +80,7 @@ __ hkust-interview.ipynb
 你是谁啊/这是什么破网站啊
 ==============================
 
-在下Benjamin Shi，现在EE [#]_ 毕业了_ ，去了米国的西北大学读CE（读作CE写作转CS）。
+在下Benjamin Shi，现在EE [#]_ 毕业了，去了米国的西北大学读CE（读作CE写作转CS）。
 
 这个博客的定位是比较正经的 [#]_ 朋友圈。主要记录一点人生的经验 [#]_ （牢骚）。
 

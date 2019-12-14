@@ -1,13 +1,2 @@
-/*
-.ipynb_checkpoints
-!/build.sh
-!/build.py
-!/dev.py
-!/404.html
-!/favicon.ico
-!/dist/
-!/posts/
-!/css/
-!/js/
-!/cv/
-!/.gitignore
+_build/html
+env

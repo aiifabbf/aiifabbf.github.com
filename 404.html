@@ -65,59 +65,76 @@
                 }
             },
             updated: function () {
-                var self = this
-                self.$emit("loaded")
-                document.querySelector("title").innerHTML = document.querySelector("h1").innerText + " - Benjamin Shi's Blog" // make title accord content
-                MathJax.Hub.Typeset() // force refreshing formulas
+                let self = this;
+                self.$emit("loaded");
+                document.querySelector("title").innerHTML = document.querySelector("h1").innerText + " - Benjamin Shi's Blog"; // make title accord content
+                MathJax.Hub.Typeset(); // force refreshing formulas
                 Array.from(document.querySelectorAll("img")).map(function (element) { // image source adapting
-                    let src = element.getAttribute("src")
-                    if (src.startsWith("http") || src.startsWith("ftp")) { // if it is an external source, do nothing
-                        return
+                    let src = element.getAttribute("src");
+                    if (src.startsWith("https") || src.startsWith("http") || src.startsWith("ftp")) { // if it is an external source, do nothing
+                        return;
                     } else {
-                        element.setAttribute("src", "/posts/" + src) // if it is an internal source, do something
-                        console.log(element, src)
+                        element.setAttribute("src", "/_build/html" + location.pathname.substr(0, location.pathname.lastIndexOf("/") + 1) + src); // if it is an internal source, do something
                     }
                 })
-                Array.from(document.querySelectorAll("a")).map(function (element) { // link reference adapting, so I can write semantically right links in rst docs
-                    let href = element.getAttribute("href")
-                    if (!href.startsWith("http") && !href.startsWith("ftp") && !href.startsWith("#")) { // it is a reference to other blog posts
-                        if (href.endsWith(".ipynb")) {
-                            element.setAttribute("href", href.slice(0, -6))
-                        } else if (href.endsWith(".rst")) {
-                            element.setAttribute("href", href.slice(0, -4))
-                        }
-                        console.log(element, href)
-                    }
-                })
+                // Array.from(document.querySelectorAll("a")).map(function (element) { // link reference adapting, so I can write semantically right links in rst docs
+                //     let href = element.getAttribute("href")
+                //     if (!href.startsWith("http") && !href.startsWith("ftp") && !href.startsWith("#")) { // it is a reference to other blog posts
+                //         if (href.endsWith(".ipynb")) {
+                //             element.setAttribute("href", href.slice(0, -6))
+                //         } else if (href.endsWith(".rst")) {
+                //             element.setAttribute("href", href.slice(0, -4))
+                //         }
+                //         console.log(element, href)
+                //     }
+                // })
+                // Since there is already sphinx with .. toctree::, no need for this any more
             },
             watch: {
                 postUrl: function () {
-                    var self = this
-                    self.$emit("loading")
-                    // var response = await fetch(self.postUrl)
-                    // var text = await response.text()
-                    // return text
+                    let self = this;
+                    self.$emit("loading");
                     if (self.ctx && self.ctx.state.notebook) {
-                        self.notebook = self.ctx.state.notebook
+                        self.notebook = self.ctx.state.notebook;
                     } else {
                         self.notebook = "" // if there is no cache found, that means it is a fresh load and user should read this post from page top
                         fetch(self.postUrl).then(response => {
                             if (response.ok) {
                                 response.text().then(text => {
-                                    self.notebook = text
-                                    self.ctx.state.notebook = text
-                                    self.ctx.save()
+                                    let notebook = "";
+                                    if (app.route.startsWith("/_build/html/jupyter")) {
+                                        notebook = text;
+                                    } else {
+                                        let parser = new DOMParser();
+                                        let parsed = parser.parseFromString(text, "text/html").querySelector("div.body").innerHTML;
+                                        let rstTemplate = `
+                                        <div class="cell border-box-sizing text_cell rendered">
+                                            <div class="prompt input_prompt">
+                                            </div>
+                                            <div class="inner_cell">
+                                                <div class="text_cell_render border-box-sizing rendered_html">
+                                                </div>
+                                            </div>
+                                        </div>`;
+                                        let node = document.createElement("div");
+                                        node.innerHTML = rstTemplate;
+                                        node.querySelector(".rendered_html").innerHTML = parsed;
+                                        notebook = node.innerHTML;
+                                    }
+                                    self.notebook = notebook;
+                                    self.ctx.state.notebook = notebook;
+                                    self.ctx.save();
                                 })
                             } else {
                                 // console.log(response.status) // perhaps show some error message
-                                self.notebook = document.querySelector("#not-found").innerHTML // show some 404 message
-                                document.querySelector("title").innerHTML = "404 - Canon & Baroque - Benjamin Shi's Blog" // i guess this line is not necessary
+                                self.notebook = document.querySelector("#not-found").innerHTML; // show some 404 message
+                                document.querySelector("title").innerHTML = "404 - Canon & Baroque - Benjamin Shi's Blog"; // i guess this line is not necessary
                             }
                         })
                     }
                 }
             }
-        })
+        });
     </script>
 
     <template id="not-found">
@@ -143,38 +160,38 @@
     </template>
 
     <script>
-        var app = new Vue({
+        let app = new Vue({
             el: '#notebook',
             data: {
                 route: window.location.pathname,
                 loading: false,
-                ctx: undefined
+                ctx: undefined,
             },
-        })
+        });
 
         page("*", (ctx, next) => {
             if (ctx.pathname == "/" || ctx.pathname == "/site") {
-                app.route = "/dist/index.html"
+                app.route = "/_build/html/index.html";
             } else {
-                app.route = "/dist" + ctx.pathname + ".html"
+                app.route = "/_build/html" + ctx.pathname;
             }
-            app.ctx = ctx
-            console.log("into " + ctx.pathname, window.scrollY)
+            app.ctx = ctx;
+            console.log("into " + ctx.pathname, window.scrollY);
             // next()
             if (ctx.state.scroll) {
-                console.log(ctx.pathname + " already has a scroll offset " + ctx.state.scroll)
+                console.log(ctx.pathname + " already has a scroll offset " + ctx.state.scroll);
             }
-        })
+        });
 
         page.exit("*", function (ctx, next) {
-            console.log("leave " + ctx.pathname, window.scrollY)
+            console.log("leave " + ctx.pathname, window.scrollY);
             // console.log("store scroll offset for " + ctx.pathname + " with " + window.scrollY)
             // ctx.state.scroll = window.scrollY
             // ctx.save()
-            next()
-        })
+            next();
+        });
 
-        page.start() // never forget this.
+        page.start(); // never forget this.
     </script>
 </body>
 

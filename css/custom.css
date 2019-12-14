@@ -21,6 +21,30 @@ a {
     text-decoration: none!important;
 }
 
+blockquote {
+    border: none;
+    position: relative;
+}
+
+blockquote::before {
+    content: "“";
+    font-size: 3em;
+    color: gray;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+blockquote::after {
+    content: "”";
+    font-size: 3em;
+    color: gray;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+
 /* display equation gaps */
 .rendered_html * + p {
     margin-bottom: 1em;
