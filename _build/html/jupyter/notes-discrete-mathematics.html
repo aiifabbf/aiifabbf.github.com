@@ -1,0 +1,127 @@
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="&#31163;&#25955;&#25968;&#23398;">&#31163;&#25955;&#25968;&#23398;<a class="anchor-link" href="#&#31163;&#25955;&#25968;&#23398;">&#182;</a></h1><p>这门课我是看着<a href="https://www.youtube.com/watch?v=GyFVgJZ0hIs&amp;index=2&amp;list=PLUl4u3cNGP60UlabZBeeqOuoLuj_KNphQ">MIT 6.042J Mathematics for Computer Science, Spring 2015</a>的视频、辅助Kenneth H. Rosen的书<em>Discrete Mathematics and Its Applications</em>来学的。</p>
+<p>视频和书的内容安排、顺序大致差不多。为了以后查阅方便，这个笔记按书的顺序编排。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="&#36923;&#36753;&#21644;&#35777;&#26126;">&#36923;&#36753;&#21644;&#35777;&#26126;<a class="anchor-link" href="#&#36923;&#36753;&#21644;&#35777;&#26126;">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="&#35777;&#26126;&#26041;&#27861;">&#35777;&#26126;&#26041;&#27861;<a class="anchor-link" href="#&#35777;&#26126;&#26041;&#27861;">&#182;</a></h3><ul>
+<li>反证法</li>
+<li>分情况讨论</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="&#21453;&#35777;&#27861;">&#21453;&#35777;&#27861;<a class="anchor-link" href="#&#21453;&#35777;&#27861;">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<p>视频里的例子：证明$\sqrt{2}$是无理数。</p>
+<p>一个实数要么是无理数、要么是无理数，不存在一个实数既是有理数又是无理数。所以要证明$\sqrt{2}$是无理数等价于要证明它不是有理数。</p>
+<p>有理数的定义是，一个数可以表示成两个互质整数的商。所以证明$\sqrt{2}$等价于，证明不存在这两个互质的整数，使得$\sqrt{2}$能被它们的商表示。</p>
+<p>但是直接证明是很难的。要证明不存在，需要证明每一对互质整数的商都不能表示$\sqrt{2}$。</p>
+<p>如果利用反证法，就很容易。我们先假设存在一对互质的整数$p, q$，使得
+$$
+    \sqrt{2} = {p \over q}\label{eq-ex-sqrt2-irrational}\tag{1}
+$$
+再用这个条件导出一个矛盾，就可以证明我们最初的假设不正确。</p>
+<p>一个可能的矛盾是，$p, q$并不互质。由$\eqref{eq-ex-sqrt2-irrational}$我们可以得到
+$$
+    2 q^2 = p^2\label{eq-ex-sqrt2-irrational-2}\tag{2}
+$$
+因为$q^2$是整数，任意整数的两倍一定是偶数，所以说明$p^2$一定是偶数。</p>
+<p>那么，如果$p^2$是偶数，$p$一定也是偶数吗？好像是这样的，但是为了严谨，这个也是需要证明的。</p>
+<p>因为$p^2$是偶数，所以$p$也一定是偶数。所以$p$可以写成$p = 2k$。再带入$\eqref{eq-ex-sqrt2-irrational-2}$里，得到
+$$
+\begin{aligned}
+    2 q^2 = 4 k^2 \\
+    q^2 = 2 k^2
+\end{aligned}
+$$
+这下子，$q^2$也是偶数了，那么$q$也一定是偶数了。既然$p, q$都是偶数，那么它们就有共同的因子2，所以违反了一开始我们的前提。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<p>视频里的例子：证明任何一个大于1的整数，都可以写成几个质数的积。</p>
+<p>假设存在一个非空自然数集合$M$，包括了世界上所有的不能被表示成质数积的自然数。</p>
+<p>根据<a href="https://en.wikipedia.org/wiki/Well-ordering_theorem">良序定理</a>，任何一个非空整数集里都存在一个最小值。换句话说，这个集合里存在一个元素$x$，使得对这个集合里的任意元素$y$来说，$x$都小于等于$y$。</p>
+<p>所以这个非空自然数集合$M$自然也存在一个最小值$m$。它是所有不能被表示成质数积的自然数中，最小的那个数。</p>
+<p>因为这个数$m$不能被表示成几个质数的积，所以它自己不可能是一个质数。因为如果$m$是一个质数，它就能被<strong>自己表示。</strong>所以$m$不是质数。</p>
+<p>又因为一个自然数要么是质数、要么是合数，$m$不是质数，所以$m$是合数。根据合数的定义，它能被写成两个大于1、并且小于自己的自然数的积。
+$$
+    m = j \cdot k
+$$
+并且$m &gt; j &gt; 1, m &gt; k &gt; 1$。</p>
+<p>既然$j &lt; m$，那么$j$一定不在集合$M$里，即$j \notin M$，因为我们之前已经说过$m$是$M$里最小的元素了，而$j$比$m$更小，所以$j$不可能在集合$M$里面。同理，$k$也一定不在集合$M$里面。</p>
+<p>那么既然$j, k$不在集合$M$里面，那么它们一定能被表示成质数积，即
+$$
+\begin{aligned}
+    j &amp;= p_{j_1} \cdot p_{j_2} \cdots p_{j_n} \\
+    k &amp;= p_{k_1} \cdot p_{k_2} \cdots p_{k_n}
+\end{aligned}
+$$
+那么
+$$
+    m = (p_{j_1} \cdot p_{j_2} \cdots p_{j_n}) \times (p_{k_1} \cdot p_{k_2} \cdots p_{k_n})
+$$</p>
+<p>我们惊奇地发现$m$竟然被表示成了几个质数的积。由此发现$m \notin M$。</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="&#20998;&#24773;&#20917;&#35752;&#35770;">&#20998;&#24773;&#20917;&#35752;&#35770;<a class="anchor-link" href="#&#20998;&#24773;&#20917;&#35752;&#35770;">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+<p>视频里的例子：证明<code>(x &gt; 0) || (x &lt;= 0 &amp;&amp; y &gt; 100)</code>与<code>(x &gt; 0) || (y &gt; 100)</code>等价。</p>
+<p>当<code>x &gt; 0</code>成立时，<code>(x &gt; 0) || (x &lt;= 0 &amp;&amp; y &gt; 100)</code>的或条件之一成立，所以整个命题全部成立；<code>(x &gt; 0) || (y &gt; 100)</code>的或条件之一成立，所以整个命题也全部成立。</p>
+<p>当<code>x &lt;= 0</code>成立时，<code>(x &gt; 0) || (x &lt;= 0 &amp;&amp; y &gt; 100)</code>的前半部分不成立，所以整个命题等价于<code>(x &lt;= 0 &amp;&amp; y &gt; 100)</code>，又因为和条件之一成立，所以命题等价于<code>y &gt; 100</code>；<code>(x &gt; 0) || (y &gt; 100)</code>的前半部分不成立，所以整个命题等价于<code>y &gt; 100</code>。命题<code>y &gt; 100</code>和命题<code>y &gt; 100</code>等价，所以各自的原命题等价。</p>
+<p>所以不管<code>x &gt; 0</code>成立还是不成立，<code>(x &gt; 0) || (x &lt;= 0 &amp;&amp; y &gt; 100)</code>与<code>(x &gt; 0) || (y &gt; 100)</code>都等价。</p>
+<p>我感觉语言推理还是不够简介，还可以写成形式逻辑。</p>
+
+</div>
+</div>
+</div>
+ 
+

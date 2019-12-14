@@ -1,0 +1,600 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>leetcode备忘录 &#8212; blog  文档</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="毕业了" href="after-graduation.html" />
+    <link rel="prev" title="Canon &amp; Baroque" href="../index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="after-graduation.html" title="毕业了"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Canon &amp; Baroque"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">blog  文档</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="leetcode">
+<h1><a class="toc-backref" href="#id19">leetcode备忘录</a></h1>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>前情提要</p>
+<p>前大概200题在我<a class="reference external" href="http://aiifabbf.github.io/leetcode中的算法">博客</a>上。</p>
+<p>二刷的时候都会整理到这里来。</p>
+</div>
+<div class="contents topic" id="id2">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#leetcode" id="id19">leetcode备忘录</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id3" id="id20">未解决</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id21">可优化</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id22">一些思路</a></p>
+<ul>
+<li><p><a class="reference internal" href="#array" id="id23">array中的目标函数优化问题</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id6" id="id24">一些模板</a></p>
+<ul>
+<li><p><a class="reference internal" href="#arrayarraysubsequence" id="id25">判断一个array是不是另一个array的subsequence（可以不连续）</a></p></li>
+<li><p><a class="reference internal" href="#arrayarraysubstring" id="id26">判断一个array是不是另一个array的substring（连续）</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id27">二叉树的先根遍历</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id28">二叉树的中根遍历</a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id29">二叉树的后根遍历</a></p></li>
+<li><p><a class="reference internal" href="#id10" id="id30">树的广度优先遍历</a></p></li>
+<li><p><a class="reference internal" href="#id12" id="id31">二叉树的广度优先遍历</a></p></li>
+<li><p><a class="reference internal" href="#id14" id="id32">得到二叉树的深度</a></p></li>
+<li><p><a class="reference internal" href="#id15" id="id33">取得二叉树的所有叶子节点值</a></p></li>
+<li><p><a class="reference internal" href="#id16" id="id34">取得二叉树里根节点到所有叶子的路径</a></p></li>
+<li><p><a class="reference internal" href="#bst" id="id35">判断二叉树是不是二分搜索树（BST）</a></p></li>
+<li><p><a class="reference internal" href="#arrayheight-balanced-bst" id="id36">排好序的array转换到height-balanced BST</a></p></li>
+<li><p><a class="reference internal" href="#id17" id="id37">筛选出出现频次最高的元素</a></p></li>
+<li><p><a class="reference internal" href="#id18" id="id38">计算器</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id20">未解决</a></h2>
+<ul class="simple">
+<li><p>743</p></li>
+<li><p>713</p></li>
+<li><p>475</p></li>
+<li><p>784</p></li>
+<li><p>399</p></li>
+<li><p>866 找不小于n的最小回文素数</p></li>
+<li><p>491 找数组的递增subsequence</p></li>
+<li><p>223 找出两个矩形的相交区域的面积</p></li>
+<li><p>805 拆数组，拆成两个平均值相同的数组</p></li>
+<li><p>835 平移找矩阵最大重合面积</p></li>
+<li><p>994 元胞自动机</p></li>
+<li><p>436 寻找区间列里比现在这个大的最小的区间</p></li>
+<li><p>958 判断二叉树是不是完全二叉树</p></li>
+<li><p>662 二叉树的最大宽度</p></li>
+<li><p>449 序列化、反序列化二叉树的方法</p></li>
+<li><p>406</p></li>
+<li><p>898</p></li>
+<li><p>863</p></li>
+<li><p>1015</p></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id21">可优化</a></h2>
+<ul class="simple">
+<li><p>523 找substring能否累加得到k的整数倍</p></li>
+<li><p>653 二分搜索树中的two sum</p></li>
+<li><p>671 找到一个满足一些特殊性质的二叉树里的倒数第二小的节点值</p></li>
+<li><p>543 二叉树里任意两点之间的距离的最大值</p></li>
+<li><p>235 在二分搜索树里找到两个节点的最近公共祖先节点</p></li>
+<li><p>222 数出一个完全二叉树里的节点个数</p></li>
+<li><p>88  合并两个从小到大排好序的array</p></li>
+</ul>
+</div>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id22">一些思路</a></h2>
+<div class="section" id="array">
+<h3><a class="toc-backref" href="#id23">array中的目标函数优化问题</a></h3>
+<p>一般形式是找到array中关于两个下标i, j的目标函数的最大值。</p>
+<div class="math notranslate nohighlight">
+\[\max\{f(i, j) | 0 \leq i \leq n - 1, 0 \leq j \leq n - 1\}\]</div>
+<p>实际问题中，i, j的取值可能有几种约束</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(i \neq j\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(i &lt; j\)</span></p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(f(i, j)\)</span> 可能有几种性质</p>
+<ul>
+<li><p>与i, j的顺序无关，即 <span class="math notranslate nohighlight">\(f(i, j) = f(j, i)\)</span></p></li>
+<li><p>可以分解成关于i、关于j的两个独立函数，即 <span class="math notranslate nohighlight">\(f(i, j) = u(i) + v(j)\)</span></p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>比如1021题中， <span class="math notranslate nohighlight">\(f(i, j) = f(i) + g(j)\)</span> 其中 <span class="math notranslate nohighlight">\(f(i) = a_i + i, g(j) = a_j - j\)</span> 。</p>
+</div>
+</li>
+</ul>
+<p>暴力搜索所有的情况的复杂度是 <span class="math notranslate nohighlight">\(O(n^2)\)</span> 。</p>
+</div>
+</div>
+<div class="section" id="id6">
+<h2><a class="toc-backref" href="#id24">一些模板</a></h2>
+<div class="section" id="arrayarraysubsequence">
+<h3><a class="toc-backref" href="#id25">判断一个array是不是另一个array的subsequence（可以不连续）</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">isSubArray</span><span class="p">(</span><span class="n">subarray</span><span class="p">,</span> <span class="n">array</span><span class="p">):</span>
+    <span class="n">pos</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">subarray</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">pos</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">pos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="arrayarraysubstring">
+<h3><a class="toc-backref" href="#id26">判断一个array是不是另一个array的substring（连续）</a></h3>
+</div>
+<div class="section" id="id7">
+<h3><a class="toc-backref" href="#id27">二叉树的先根遍历</a></h3>
+<p>可以用递归</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 改编自144</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">preorderTraversal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="n">TreeNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">root</span><span class="p">:</span>
+            <span class="n">doSomthing</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">val</span><span class="p">)</span> <span class="c1"># 比如放入数组之类的</span>
+            <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">preorderTraversal</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">preorderTraversal</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+</pre></div>
+</div>
+<p>也可以用迭代、借助stack。好处有两个</p>
+<ul class="simple">
+<li><p>速度快一点</p></li>
+<li><p>不受递归深度限制</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 改编自144</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">preorderTraversal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="n">TreeNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">root</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">stack</span> <span class="o">=</span> <span class="p">[</span><span class="n">root</span><span class="p">]</span>
+
+            <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
+                <span class="n">node</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">val</span><span class="p">)</span> <span class="c1"># 这里相当于访问node</span>
+                <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">:</span> <span class="c1"># 这里要记住是右边先进stack</span>
+                    <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+                    <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">res</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>先根遍历路径的特点</p>
+<p>先根遍历路径的第一个元素永远是根节点，然后接下来是左边子树、右边子树。图像类似这样</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>o [     ] (     )
+------------------
+0 1     ? ?      n
+</pre></div>
+</div>
+<p>所以除了能确定第一个元素是根节点，其他的信息比如</p>
+<ul class="simple">
+<li><p>第二个元素开始是属于左边子树还是右边子树？</p></li>
+<li><p>从第几个元素开始是左边子树和右边子树的边界？</p></li>
+<li><p>…</p></li>
+</ul>
+<p>都是不知道的。</p>
+</div>
+</div>
+<div class="section" id="id8">
+<h3><a class="toc-backref" href="#id28">二叉树的中根遍历</a></h3>
+<p>可以用递归，只要把对根节点的访问的语句放到中间就算中根遍历了。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 改编自94</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">inorderTraversal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="n">TreeNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">root</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">inorderTraversal</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+            <span class="n">doSomthing</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">val</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">inorderTraversal</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+</pre></div>
+</div>
+<p>也可以借助stack，然后迭代，但是写起来挺麻烦的……</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>二分搜索树（BST）用中根遍历之后，会得到排好序的array。</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>中根遍历路径的特点</p>
+<p>中根遍历路径的第一个元素可能是左边子树、也可能是根节点（如果左边子树不存在的话）。图像类似这样</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[       ] o (       )
+---------------------
+0         ? ?        n
+</pre></div>
+</div>
+<p>所以单靠中根遍历路径其实不能得到什么有用的信息。</p>
+<p>但是如果中根遍历路径和先根遍历路径同时给出（105题）、或者中根遍历路径和后根遍历路径同时给出（106题），就可以还原出树本来的结构。</p>
+<p>以中根遍历路径和先根遍历路径为例，</p>
+<ol class="arabic">
+<li><p>中根遍历路径的第一个元素肯定是根节点的值。</p></li>
+<li><p>在先根遍历路径里找到根节点的值的位置，这样就能知道</p>
+<ul class="simple">
+<li><p>在这之前的所有元素都是属于左边子树的，且左边子树的节点个数也是知道的。</p></li>
+<li><p>在这之后的所有元素都是属于右边子树的，且右边子树的节点个数也是知道的。</p></li>
+</ul>
+<p>再回到中根遍历路径里，因为左边子树的节点个数知道了（假设是n），所以中根遍历路径里从第2个元素到第2 + n - 1个元素是属于左边子树的，从第2 + n个元素一直到最后都是属于右边子树的。</p>
+</li>
+<li><p>递归地把左边子树、右边子树的结构按同样的方法恢复出来。</p></li>
+</ol>
+</div>
+<p>衍生</p>
+<ul class="simple">
+<li><p>105 从中根、先根遍历路径中恢复出二叉树</p></li>
+<li><p>106 从中根、后根遍历路径中恢复出二叉树</p></li>
+<li><p>889 从先根、后根遍历路径中恢复出二叉树的一种可能</p></li>
+</ul>
+</div>
+<div class="section" id="id9">
+<h3><a class="toc-backref" href="#id29">二叉树的后根遍历</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">postorderTraversal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="n">TreeNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">root</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">postorderTraversal</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">postorderTraversal</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+            <span class="n">doSomthing</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id10">
+<h3><a class="toc-backref" href="#id30">树的广度优先遍历</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">levelOrder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="s1">&#39;Node&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">root</span><span class="p">:</span>
+            <span class="n">queue</span> <span class="o">=</span> <span class="p">[</span><span class="n">root</span><span class="p">]</span>
+            <span class="k">while</span> <span class="n">queue</span><span class="p">:</span>
+                <span class="n">element</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">doSomething</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+                <span class="n">queue</span> <span class="o">+=</span> <span class="n">element</span><span class="o">.</span><span class="n">children</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+</pre></div>
+</div>
+<div class="admonition note" id="id11">
+<p class="admonition-title">注解</p>
+<p>树的广度优先、按层遍历</p>
+<p>如果想一层一层遍历，可以不要直接把下一层的所有children都放到queue里，而是暂时先放到一个临时queue里面，等这一层完了，再把临时queue整个替换掉全局的那个queue。比如下面这个例子</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">maxDepth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="s1">&#39;Node&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">root</span><span class="p">:</span>
+            <span class="n">depth</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">queue</span> <span class="o">=</span> <span class="p">[</span><span class="n">root</span><span class="p">]</span>
+            <span class="k">while</span> <span class="n">queue</span><span class="p">:</span>
+                <span class="n">levelQueue</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="n">i</span><span class="o">.</span><span class="n">children</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">queue</span><span class="p">),</span> <span class="p">[])</span>
+                <span class="n">queue</span> <span class="o">=</span> <span class="n">levelQueue</span>
+                <span class="n">depth</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="n">depth</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id12">
+<h3><a class="toc-backref" href="#id31">二叉树的广度优先遍历</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">maxDepth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="n">TreeNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">root</span><span class="p">:</span>
+            <span class="n">queue</span> <span class="o">=</span> <span class="p">[</span><span class="n">root</span><span class="p">]</span>
+
+            <span class="k">while</span> <span class="n">queue</span><span class="p">:</span>
+                <span class="n">i</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+                    <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">right</span><span class="p">:</span> <span class="c1"># 切记切记这里不是elif，是if，因为左边和右边根本没关系</span>
+                    <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+                <span class="n">doSomething</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>二叉树的广度优先、按层遍历</p>
+<p>如果想一层一层遍历，和 <a class="reference internal" href="#id11">树的广度优先、按层遍历</a> 一样。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">maxDepth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="n">TreeNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">root</span><span class="p">:</span>
+            <span class="n">depth</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">queue</span> <span class="o">=</span> <span class="p">[</span><span class="n">root</span><span class="p">]</span>
+            <span class="k">while</span> <span class="n">queue</span><span class="p">:</span>
+                <span class="n">levelQueue</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">queue</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+                        <span class="n">levelQueue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">right</span><span class="p">:</span> <span class="c1"># 切记切记这里不是elif，是if，因为左边和右边根本没关系</span>
+                        <span class="n">levelQueue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+                <span class="n">depth</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">queue</span> <span class="o">=</span> <span class="n">levelQueue</span>
+            <span class="k">return</span> <span class="n">depth</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>如果一个二叉树是 <a class="reference external" href="https://en.wikipedia.org/wiki/Binary_tree#Types_of_binary_trees">完全二叉树</a> 的话，那么对这个完全二叉树的广度优先遍历有一个性质：如果遇到一个节点是null，那么以后就不再会遇到非null节点。</p>
+<p>而且这条性质是充分必要的，如果一个树不是完全二叉树，那么它不会满足这条性质；如果一个树是完全二叉树，那么它一定满足这条性质。</p>
+<p>958题里我利用了这条性质。</p>
+</div>
+<p>衍生</p>
+<ul class="simple">
+<li><p>103 二叉树的zigzag遍历</p></li>
+<li><p>513 二叉树最后一层的最左边节点的值</p></li>
+<li><p>515 二叉树最后一层的最大节点值</p></li>
+</ul>
+</div>
+<div class="section" id="id14">
+<h3><a class="toc-backref" href="#id32">得到二叉树的深度</a></h3>
+<p>以前一直是用广度优先、按层遍历来做的（104题），但是也有非常简单的写法，比如</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 摘自543</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">maxDepth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="n">TreeNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">root</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxDepth</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxDepth</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>不一定比按层遍历快，但是写起来足够简单。</p>
+</div>
+<div class="section" id="id15">
+<h3><a class="toc-backref" href="#id33">取得二叉树的所有叶子节点值</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 摘自872</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">getLeaves</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="n">TreeNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">root</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span> <span class="o">==</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">root</span><span class="o">.</span><span class="n">val</span><span class="p">]</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLeaves</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLeaves</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">res</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id16">
+<h3><a class="toc-backref" href="#id34">取得二叉树里根节点到所有叶子的路径</a></h3>
+<p>还是一个递归的思路。</p>
+<p>一个二叉树根节点到所有叶子的路径，等于</p>
+<ul class="simple">
+<li><p>左边子二叉树里根节点到所有叶子的路径</p></li>
+<li><p>右边子二叉树里根节点到所有叶子的路径</p></li>
+</ul>
+<p>加上根节点到左边子节点、根节点到右边子节点的两条路。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 摘自257</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">binaryTreePaths</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="n">TreeNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">root</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span> <span class="o">==</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span> <span class="c1"># 叶子</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">f</span><span class="s2">&quot;{root.val}&quot;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span> <span class="o">!=</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">f</span><span class="s2">&quot;{root.val}-&gt;{i}&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">binaryTreePaths</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">)]</span> <span class="c1"># 根节点出发到左边子节点、加上左边子二叉树里根节点到所有叶子的路径</span>
+            <span class="k">elif</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span> <span class="o">==</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">f</span><span class="s2">&quot;{root.val}-&gt;{i}&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">binaryTreePaths</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">)]</span> <span class="c1"># 根节点出发到右边子节点、加上右边子二叉树里根节点到所有叶子的路径</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">f</span><span class="s2">&quot;{root.val}-&gt;{i}&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">binaryTreePaths</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">binaryTreePaths</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">)]</span> <span class="c1"># 左右都加</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1"># 空节点</span>
+            <span class="k">return</span> <span class="p">[]</span> <span class="c1"># 无路可走</span>
+</pre></div>
+</div>
+<p>衍生</p>
+<ul class="simple">
+<li><p>129</p></li>
+<li><p>988</p></li>
+<li><p>113</p></li>
+</ul>
+</div>
+<div class="section" id="bst">
+<h3><a class="toc-backref" href="#id35">判断二叉树是不是二分搜索树（BST）</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 摘自98</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">isValidBST</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="n">TreeNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">isBST</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;-inf&quot;</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">isBST</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="n">TreeNode</span><span class="p">,</span> <span class="n">lower</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">upper</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span> <span class="c1"># 除了root还要传入上下界</span>
+        <span class="k">if</span> <span class="n">root</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">val</span> <span class="o">&gt;</span> <span class="n">lower</span> <span class="ow">and</span> <span class="n">root</span><span class="o">.</span><span class="n">val</span> <span class="o">&lt;</span> <span class="n">upper</span><span class="p">:</span> <span class="c1"># 首先根节点要在上下界之内</span>
+                <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span> <span class="o">!=</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span> <span class="c1"># 左边子树非空、右边子树空</span>
+                    <span class="k">return</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">val</span> <span class="o">&lt;</span> <span class="n">root</span><span class="o">.</span><span class="n">val</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">isBST</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">root</span><span class="o">.</span><span class="n">val</span><span class="p">)</span> <span class="c1"># 下界不变，上界变成根节点的值</span>
+                <span class="k">elif</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span> <span class="o">==</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span> <span class="c1"># 左边子树空、右边子树非空</span>
+                    <span class="k">return</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">val</span> <span class="o">&gt;</span> <span class="n">root</span><span class="o">.</span><span class="n">val</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">isBST</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">,</span> <span class="n">root</span><span class="o">.</span><span class="n">val</span><span class="p">,</span> <span class="n">upper</span><span class="p">)</span> <span class="c1"># 下界变成根节点的值，上界不变</span>
+                <span class="k">elif</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span> <span class="o">!=</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">val</span> <span class="o">&lt;</span> <span class="n">root</span><span class="o">.</span><span class="n">val</span> <span class="ow">and</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">val</span> <span class="o">&gt;</span> <span class="n">root</span><span class="o">.</span><span class="n">val</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">isBST</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">root</span><span class="o">.</span><span class="n">val</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">isBST</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">,</span> <span class="n">root</span><span class="o">.</span><span class="n">val</span><span class="p">,</span> <span class="n">upper</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="bp">True</span>
+            <span class="k">else</span><span class="p">:</span> <span class="c1"># 不然即使自己是BST，作为子树放在上层里也不能使大树是BST</span>
+                <span class="k">return</span> <span class="bp">False</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1"># 空树是BST</span>
+            <span class="k">return</span> <span class="bp">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="arrayheight-balanced-bst">
+<h3><a class="toc-backref" href="#id36">排好序的array转换到height-balanced BST</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 摘自108</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">sortedArrayToBST</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">TreeNode</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># 空树</span>
+            <span class="k">return</span> <span class="bp">None</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># 数组只含一个元素</span>
+            <span class="k">return</span> <span class="n">TreeNode</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1"># 数组含有2个及以上的元素，这时候可以继续拆</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+            <span class="n">root</span> <span class="o">=</span> <span class="n">TreeNode</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">n</span> <span class="o">//</span> <span class="mi">2</span><span class="p">])</span> <span class="c1"># 取最中间一个元素作为根节点</span>
+            <span class="n">root</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sortedArrayToBST</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span> <span class="n">n</span> <span class="o">//</span> <span class="mi">2</span><span class="p">])</span> <span class="c1"># 构造左边子树</span>
+            <span class="n">root</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sortedArrayToBST</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">n</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:])</span> <span class="c1"># 构造右边子树</span>
+            <span class="k">return</span> <span class="n">root</span>
+</pre></div>
+</div>
+<p>衍生</p>
+<ul class="simple">
+<li><p>1008 从二分搜索树的先根遍历路径重建出二分搜索树</p></li>
+</ul>
+</div>
+<div class="section" id="id17">
+<h3><a class="toc-backref" href="#id37">筛选出出现频次最高的元素</a></h3>
+<p>提示一下，如果有多种元素出现的频次一样而且恰好最高，怎么写最好？</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 摘自 https://leetcode.com/problems/most-frequent-subtree-sum/discuss/98675/Python-easy-understand-solution</span>
+
+<span class="n">maximumFrequency</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">values</span><span class="p">())</span> <span class="c1"># 首先得到最高频次</span>
+<span class="k">return</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">counter</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="o">==</span> <span class="n">maximumFrequency</span><span class="p">]</span> <span class="c1"># 再筛选出频次和最高频次一样大的元素</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id18">
+<h3><a class="toc-backref" href="#id38">计算器</a></h3>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">leetcode备忘录</a><ul>
+<li><a class="reference internal" href="#id3">未解决</a></li>
+<li><a class="reference internal" href="#id4">可优化</a></li>
+<li><a class="reference internal" href="#id5">一些思路</a><ul>
+<li><a class="reference internal" href="#array">array中的目标函数优化问题</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id6">一些模板</a><ul>
+<li><a class="reference internal" href="#arrayarraysubsequence">判断一个array是不是另一个array的subsequence（可以不连续）</a></li>
+<li><a class="reference internal" href="#arrayarraysubstring">判断一个array是不是另一个array的substring（连续）</a></li>
+<li><a class="reference internal" href="#id7">二叉树的先根遍历</a></li>
+<li><a class="reference internal" href="#id8">二叉树的中根遍历</a></li>
+<li><a class="reference internal" href="#id9">二叉树的后根遍历</a></li>
+<li><a class="reference internal" href="#id10">树的广度优先遍历</a></li>
+<li><a class="reference internal" href="#id12">二叉树的广度优先遍历</a></li>
+<li><a class="reference internal" href="#id14">得到二叉树的深度</a></li>
+<li><a class="reference internal" href="#id15">取得二叉树的所有叶子节点值</a></li>
+<li><a class="reference internal" href="#id16">取得二叉树里根节点到所有叶子的路径</a></li>
+<li><a class="reference internal" href="#bst">判断二叉树是不是二分搜索树（BST）</a></li>
+<li><a class="reference internal" href="#arrayheight-balanced-bst">排好序的array转换到height-balanced BST</a></li>
+<li><a class="reference internal" href="#id17">筛选出出现频次最高的元素</a></li>
+<li><a class="reference internal" href="#id18">计算器</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="../index.html"
+                        title="上一章"><code class="docutils literal notranslate"><span class="pre">Canon</span> <span class="pre">&amp;</span> <span class="pre">Baroque</span></code></a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="after-graduation.html"
+                        title="下一章">毕业了</a></p>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/posts/README.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="after-graduation.html" title="毕业了"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Canon &amp; Baroque"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">blog  文档</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; 版权所有 2019, aiifabbf.
+      由 <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.2 创建。
+    </div>
+  </body>
+</html>
