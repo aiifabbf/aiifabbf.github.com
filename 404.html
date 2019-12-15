@@ -160,6 +160,11 @@
     </template>
 
     <script>
+        // site under https does not serve on GitHub pages. I do not know why. This is a workaround for now.
+        if (location.protocol === "https:") {
+            location.protocol = "http:";
+        }
+
         let app = new Vue({
             el: '#notebook',
             data: {
