@@ -44,6 +44,10 @@ blockquote::after {
     bottom: 0;
 }
 
+/* fix sphinx toctree */
+ul {
+    margin-top: 1em!important;
+}
 
 /* display equation gaps */
 .rendered_html * + p {

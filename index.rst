@@ -23,9 +23,7 @@
 最近
 =====
 
--   补数据库
--   补数据结构
--   补算法
+-   :doc:`归约和NP问题 <posts/reduction-np>`
 -   去米国了
 -   :doc:`毕业了 <posts/after-graduation>`
 -   刷Leetcode。现在刷了 **600道** 了。嘻嘻
@@ -33,6 +31,14 @@
     -   `新仓库 <https://github.com/aiifabbf/leetcode-memo>`_
     -   `旧仓库 <jupyter/leetcode中的算法.html>`_
     -   `Leetcode个人主页 <https://leetcode.com/aiifabbf>`_
+
+略懂
+====
+
+.. toctree::
+    :maxdepth: 1
+
+    posts/reduction-np.rst
 
 流水账
 =========
