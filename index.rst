@@ -6,13 +6,15 @@
 
 我果然就是喜欢调样式，哈哈。你有没有发现这个博客现在变成Sphinx编译的了？Sphinx是我到目前为止见过的最完美的文本编译工具。想想我从Jupyter notebook、变成reStructuredText、再到现在的Sphinx经历了多少坎坷（坑）。这样子的话，一段时间内我就不会再改博客的外在了，该好好写内容了。
 
-`Halo: Reach的PC版出啦 <https://store.steampowered.com/app/976730/Halo_The_Master_Chief_Collection/>`_ 。因为自己电脑跑不起来，所以去朋友家玩了一把，好爽啊。不过发现了几个bug，最严重的是过场动画居然听不到对话声音。
+    电脑还是13年买的yoga，但是装上ubuntu用着真的太顺手了。我最喜欢的地方是它的键盘实在是太合理了，最右边有home, end, page up, page down键。不知道这种键盘布局叫什么名字，反正我至今都没有找到这种键盘布局的机械键盘（求告知）。毕业之后思考了很久要不要换电脑，最终还是没换。现在外壳早就刮花了，屏幕周围一圈的橡胶圈也开始老化脱落了，去年还坏了一个USB口（总共就两个）。但我觉得还能再战十年嘻嘻。
 
-电脑还是13年买的yoga，但是装上ubuntu用着真的太顺手了。我最喜欢的地方是它的键盘实在是太合理了，最右边有home, end, page up, page down键。不知道这种键盘布局叫什么名字，反正我至今都没有找到这种键盘布局的机械键盘（求告知）。毕业之后思考了很久要不要换电脑，最终还是没换。现在外壳早就刮花了，屏幕周围一圈的橡胶圈也开始老化脱落了，去年还坏了一个USB口（总共就两个）。但我觉得还能再战十年嘻嘻。
+我知道这种键盘布局叫什么了，叫84键，很少有厂家做这种布局的键盘。淘宝上我只找到了一家。
 
 最近很喜欢听 `哥德堡变奏曲 <https://imslp.org/wiki/Goldberg-Variationen,_BWV_988_(Bach,_Johann_Sebastian)>`_ ，好像已经到了每天至少循环两遍的程度了。
 
-去米国读了一学期水硕了，这学期选了四门课：数据库、算法、图形学、机器学习。感觉还可以，就是算法太难了……下学期要肝操作系统、编译器、网络、深度学习了。
+新学期开始了，开始肝操作系统、编译器、网络、深度学习了。
+
+我怎么还没找到实习啊……
 
 .. toctree::
     :hidden:
@@ -23,6 +25,8 @@
 最近
 =====
 
+-   :doc:`posts/mathworks-interview/index`
+-   :doc:`posts/amazon-interview/index`
 -   :doc:`归约和NP问题 <posts/reduction-np>`
 -   去米国了
 -   :doc:`毕业了 <posts/after-graduation>`
@@ -47,6 +51,12 @@
 -   `回到CS <jupyter/return-to-cs.html>`_
 -   `GRE考场服务 <jupyter/gre-experience.html>`_
 -   `港科面试 <jupyter/hkust-interview.html>`_
+
+上岸
+=====
+
+-   :doc:`posts/mathworks-interview/index`
+-   :doc:`posts/amazon-interview/index`
 
 一些笔记
 ==========

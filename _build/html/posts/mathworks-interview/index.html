@@ -1,0 +1,981 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>MathWorks题库 &#8212; blog  文档</title>
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">blog  文档</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mathworks">
+<h1>MathWorks题库</h1>
+<div class="contents topic" id="id1">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#mathworks" id="id13">MathWorks题库</a></p>
+<ul>
+<li><p><a class="reference internal" href="#huffman" id="id14">Huffman树</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id15">验证数组是否是二分搜索树的先根遍历</a></p></li>
+<li><p><a class="reference internal" href="#substringsubstring" id="id16">所有substring里字典序最大的那个substring</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id17">离所有大楼距离之和最近的空地</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id18">一组一组地颠倒链表</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id19">哪些词语可以用一行键盘打出</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id20">数组的度</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id21">颠倒链表</a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id22">有多少条能到达终点的路径</a></p></li>
+<li><p><a class="reference internal" href="#stackqueue" id="id23">用stack实现queue</a></p></li>
+<li><p><a class="reference internal" href="#id11" id="id24">有多少条能到达终点的路径</a></p></li>
+<li><p><a class="reference internal" href="#anagram" id="id25">按anagram分组</a></p></li>
+<li><p><a class="reference internal" href="#id12" id="id26">面试体验</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>收到了MathWorks的面试呀！赶紧来抱个佛脚。</p>
+<div class="section" id="huffman">
+<h2>Huffman树</h2>
+<p><a class="reference external" href="https://leetcode.com/problems/minimum-cost-tree-from-leaf-values/">Leetcode 1130</a></p>
+<p>用构建Huffman树的做法做，本质上是greedy，复杂度是 <span class="math notranslate nohighlight">\(O(n^2)\)</span> 。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">mctFromLeafValues</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arr</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">largestLeafValue</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;-inf&quot;</span><span class="p">)</span>
+            <span class="n">product</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">a</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">b</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span> <span class="o">&lt;</span> <span class="n">product</span><span class="p">:</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="n">i</span>
+                    <span class="n">product</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+                    <span class="n">largestLeafValue</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+            <span class="n">res</span> <span class="o">+=</span> <span class="n">product</span>
+            <span class="n">arr</span><span class="p">[</span><span class="n">index</span><span class="p">:</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">largestLeafValue</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">res</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">Solution</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">mctFromLeafValues</span><span class="p">([</span><span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]))</span> <span class="c1"># 32</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>验证数组是否是二分搜索树的先根遍历</h2>
+<p><a class="reference external" href="https://leetcode.com/problems/verify-preorder-sequence-in-binary-search-tree/">Leetcode 255</a></p>
+<p>这道题好难，我一开始没想出来。我只知道二分搜索树的中根遍历能得到一个从小到大排好序的数组，但是不知道前根遍历有什么性质。</p>
+<p>然后就想先重建树、然后再取树的先根遍历，再利用先根遍历的性质来验证。但是一时间没有想到怎样在 <span class="math notranslate nohighlight">\(O(n)\)</span> 内重建树。</p>
+<p>后来想了两天，终于想到了一个绝妙的方法！翻了一圈discussion都没有发现我这个方法。</p>
+<p>这个方法的本质还是重建树，但是是尽最大努力来重建树，一旦发现接下来没办法继续重建，就说明数组不是BST的先根遍历。听我慢慢讲。</p>
+<p>最关键的事情是，在重建过程中，遇到某个数字需要插入到BST里的时候，需要满足两方面条件</p>
+<ul class="simple">
+<li><p>不能违背preorder的性质</p></li>
+<li><p>不能违背BST的性质</p></li>
+</ul>
+<p>也就是说，要想把接下来一个数字插入到BST里、形成更大的一颗BST之前，这个数字不是随便什么地方都能插入的，要满足插入之后，树的preorder仍然是原数组，同时树仍然是BST。所以如果发现下一个数字没地方插入的时候，说明有问题。</p>
+<p>那存在随便一个数字可能有多个位置可以插入的情况吗？没有，BST的性质保证了某个数字只能出现在某个固定的区间里，不可能出现在多个区间里。</p>
+<p>所以定义一个叫做 <strong>插槽</strong> 的东西，来表示在不违背preorder的性质下，下一个数字能插入的位置。</p>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="../../_images/255.svg"><img alt="../../_images/255.svg" src="../../_images/255.svg" width="100%" /></a>
+</div>
+<p>先看上图的上半部分。</p>
+<p>在5和2已经插入、将要插入6的时候，发现在不违背preorder的性质的前提下，BST里面只有3个位置可能可以插入6这个数字。什么叫做不违背preorder的性质呢？思考一下，如果把6放在这3个位置中的某个位置，整棵树经过preorder之后仍然得到 <code class="docutils literal notranslate"><span class="pre">[5,</span> <span class="pre">2,</span> <span class="pre">6]</span></code> ，所以这是不违背preorder的性质的。</p>
+<p>既然这3个位置都不违反preorder的性质，那么为啥一定放到右上那个位置呢？因为每个插槽里的数也是有范围的，这个范围由BST的性质决定。比如 <code class="docutils literal notranslate"><span class="pre">2</span></code> 的左边插槽里只能放一个 <span class="math notranslate nohighlight">\((-\infty, 2)\)</span> 区间里的数字，不能放别的，如果放了超出这个范围的数字，那么这棵树就不是BST了。比如放个3，那么这棵树就不是BST了。</p>
+<p>我们把每个可用插槽的范围都写出来，发现6只能放在右上的插槽里。所以到这里一切还可以。</p>
+<p>再看图的下半部分，出现问题了。什么问题呢？现在6已经插入了BST了，将要插入1。插入6之后，在6的下面创造了两个新的插槽，这两个插槽分别可以放入范围在 <span class="math notranslate nohighlight">\((5, 6)\)</span> 区间内和 <span class="math notranslate nohighlight">\((6, +\infty)\)</span> 区间内的数字。</p>
+<p>现在将要插入1，在不违背preorder性质的前提下，只有6的两个子节点这两个插槽可以插入1。为啥不能插入刚才 <code class="docutils literal notranslate"><span class="pre">2</span></code> 那里的两个插槽呢？因为如果插在那里了，preorder就不是 <code class="docutils literal notranslate"><span class="pre">[5,</span> <span class="pre">2,</span> <span class="pre">6,</span> <span class="pre">1]</span></code> 了，而变成了 <code class="docutils literal notranslate"><span class="pre">[5,</span> <span class="pre">2,</span> <span class="pre">1,</span> <span class="pre">6]</span></code> 了，和原数组不符合了。所以1只能插在6的下面这两个插槽里面。</p>
+<p>所以这里我们总结出了一个很重要的规律，就是每当有一个新的数字要插入BST的时候，我们应该从小到大检查每个可用插槽能接受数字的范围，如果某个插槽里不能放入当前要插入的数字，这个插槽就应该永久删除、不可使用了。即，一旦有某个数字不能放入某个插槽，那么一定有这个数字之后的任何一个数字都无法放入那个插槽，否则违反preorder性质。</p>
+<p>刚才插入6的时候，我们排除了2下方的两个插槽 <span class="math notranslate nohighlight">\((-\infty, 2)\)</span> 和 <span class="math notranslate nohighlight">\((2, 5)\)</span> ，插入6之后，之后的数字再也没法插入这两个插槽了，所以它们不再是可用插槽。</p>
+<p>现在1只有两个可用插槽，应该放入哪个插槽呢？我们发现都不行，因为一个插槽需要插入 <span class="math notranslate nohighlight">\((5, 6)\)</span> 另一个需要插入 <span class="math notranslate nohighlight">\((6, +\infty)\)</span> ，1不属于其中的任何一个区间。所以重建树的过程到这里就卡住了。</p>
+<p>所以可以表明对于 <code class="docutils literal notranslate"><span class="pre">[5,</span> <span class="pre">2,</span> <span class="pre">6,</span> <span class="pre">1,</span> <span class="pre">3]</span></code> ，我们找不到某个BST使得它的preorder正好是这个数组。</p>
+<p>另外说下如果能成功插入数字的话，会产生哪两个新的可用插槽。很显然，假设数字 <span class="math notranslate nohighlight">\(v\)</span> 填入了插槽 <span class="math notranslate nohighlight">\((a, b)\)</span> ，那么会产生 <span class="math notranslate nohighlight">\((a, v)\)</span> 和 <span class="math notranslate nohighlight">\((v, b)\)</span> 这两个新的插槽。比如刚才6填入 <span class="math notranslate nohighlight">\((5, +\infty)\)</span> 之后，产生了 <span class="math notranslate nohighlight">\((5, 6)\)</span> 和 <span class="math notranslate nohighlight">\(（6， +\infty)\)</span> 这两个插槽。</p>
+<p>可能还是很难理解。我看了discussion里的答案，也不能理解他们的做法。后来问了 <a class="reference external" href="https://github.com/Raitless">&#64;tzb</a> ，他给出了和discussion里同样的做法，给我讲了一遍，我还是不能理解。因为我没法理解stack里的数到底是什么意义。</p>
+<p>在我的解法里，stack里面的元素有明确的意义，是插槽能接受数字的范围，是一个区间。</p>
+<p>当需要插入一个新的数字的时候，会不停pop掉stack顶端的区间。如果发现数字不能放入那个区间，那个区间也不会回到stack，会直接扔掉，符合刚才的分析；如果发现数字可以放入那个区间，那么说明数字可以放入那个插槽。放入之后，新的节点会产生2个新的插槽，这两个插槽的区间也会进入stack。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># class Solution:</span>
+<span class="c1">#     def verifyPreorder(self, preorder: List[int]) -&gt; bool:</span>
+<span class="c1">#         if preorder:</span>
+<span class="c1">#             root = preorder[0]</span>
+<span class="c1">#             rightTreeIndex = -1</span>
+
+<span class="c1">#             for i, v in enumerate(preorder[1: ], 1):</span>
+<span class="c1">#                 if v &gt;= root:</span>
+<span class="c1">#                     rightTreeIndex = i</span>
+<span class="c1">#                     break</span>
+<span class="c1">#             else:</span>
+<span class="c1">#                 return self.verifyPreorder(preorder[1: ])</span>
+
+<span class="c1">#             for v in preorder[rightTreeIndex: ]:</span>
+<span class="c1">#                 if v &lt; root:</span>
+<span class="c1">#                     return False</span>
+<span class="c1">#             else:</span>
+<span class="c1">#                 return self.verifyPreorder(preorder[rightTreeIndex: ]) and self.verifyPreorder(preorder[1: rightTreeIndex])</span>
+
+<span class="c1">#         else:</span>
+<span class="c1">#             return True</span>
+<span class="c1"># 这样可以做，但是实在是太慢了</span>
+
+<span class="c1"># 我自己的做法</span>
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">verifyPreorder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preorder</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="p">[(</span><span class="nb">float</span><span class="p">(</span><span class="s2">&quot;-inf&quot;</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">))]</span> <span class="c1"># 第一个数字当然只能插入到根节点的位置。而且因为现在BST里面还没有元素，所以第一个插槽的范围是(-inf, inf)</span>
+
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">preorder</span><span class="p">:</span> <span class="c1"># 开始重建BST，尝试插入preorder中的每个数字</span>
+
+            <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">v</span><span class="p">:</span> <span class="c1"># 检测stack顶端的插槽能否放入当前数字</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="c1"># 如果不能放入当前数字，就直接扔掉这个插槽，因为反正之后的数字也没法放进去</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span> <span class="c1"># 数字可以放入某个插槽</span>
+                <span class="n">interval</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="c1"># 把数字填入这个插槽</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">v</span><span class="p">,</span> <span class="n">interval</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="c1"># 填入数字之后，又产生了两个新的可用插槽。也可以理解为把刚才的插槽分解成了两个插槽</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">interval</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span> <span class="c1"># 说明stack空了，没有找到任何一个插槽能放下当前数字</span>
+                <span class="k">return</span> <span class="bp">False</span> <span class="c1"># BST重建失败</span>
+
+        <span class="k">return</span> <span class="bp">True</span> <span class="c1"># 重建成功，每个数字都放入了BST中正确的位置</span>
+
+<span class="c1"># leetcode某个discussion的做法，我不懂</span>
+<span class="c1"># class Solution:</span>
+<span class="c1">#     def verifyPreorder(self, preorder: List[int]) -&gt; bool:</span>
+<span class="c1">#         stack = []</span>
+<span class="c1">#         lower = float(&quot;-inf&quot;)</span>
+
+<span class="c1">#         for v in preorder:</span>
+
+<span class="c1">#             while len(stack) != 0 and stack[-1] &lt; v:</span>
+<span class="c1">#                 lower = stack.pop()</span>
+
+<span class="c1">#             if v &lt; lower:</span>
+<span class="c1">#                 return False</span>
+<span class="c1">#             else:</span>
+<span class="c1">#                 stack.append(v)</span>
+
+<span class="c1">#         return True</span>
+
+<span class="c1"># tzb的做法，我不懂。感觉和discussion的做法差不多</span>
+<span class="c1"># class Solution:</span>
+<span class="c1">#     def verifyPreorder(self, preorder: List[int]) -&gt; bool:</span>
+<span class="c1">#         stack = []</span>
+<span class="c1">#         isBST = True</span>
+<span class="c1">#         root = float(&quot;-inf&quot;)</span>
+
+<span class="c1">#         for v in preorder:</span>
+<span class="c1">#             if v &lt; root:</span>
+<span class="c1">#                 isBST = False</span>
+<span class="c1">#                 break</span>
+        
+<span class="c1">#             while len(stack) != 0 and v &gt; stack[-1]:</span>
+<span class="c1">#                 root = stack.pop()</span>
+
+<span class="c1">#             stack.append(v)</span>
+
+<span class="c1">#         return isBST</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">Solution</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">verifyPreorder</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span> <span class="c1"># false</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">verifyPreorder</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">]))</span> <span class="c1"># true</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">verifyPreorder</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">23</span><span class="p">]))</span> <span class="c1"># false</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="substringsubstring">
+<h2>所有substring里字典序最大的那个substring</h2>
+<p><a class="reference external" href="https://leetcode.com/problems/last-substring-in-lexicographical-order/">Leetcode 1163</a></p>
+<p>首先可以确定，解一定是这个字符串的一个后缀，因为对于任意以第 <span class="math notranslate nohighlight">\(i\)</span> 个字符开始的substring，字典序最大的那个substring一定是从第 <span class="math notranslate nohighlight">\(i\)</span> 个字符到字符串的结尾。</p>
+<p>确定了解是后缀之后，我们要搜索的空间从 <span class="math notranslate nohighlight">\(O(n^2)\)</span> 降低到了 <span class="math notranslate nohighlight">\(O(n)\)</span> ，因为一个长度为 <span class="math notranslate nohighlight">\(n\)</span> 的字符串总共有 <span class="math notranslate nohighlight">\(O(n)\)</span> 个后缀。但是复杂度仍然是 <span class="math notranslate nohighlight">\(O(n^2)\)</span> ，因为比较两个substring字典序的复杂度是 <span class="math notranslate nohighlight">\(O(n)\)</span> 。</p>
+<p>想到了一个叫做后缀树的东西，但是后缀树的 <span class="math notranslate nohighlight">\(O(n)\)</span> 构造实在是太难了，完全没看懂。</p>
+<p>后来发现了一个叫做后缀数组suffix array的东西，可以不用构造后缀树，用一种叫做 <a class="reference external" href="https://www.cnblogs.com/SGCollin/p/9974557.html">倍增构造法</a> 的算法，就可以在 <span class="math notranslate nohighlight">\(O(n)\)</span> 内得到原字符串 <code class="docutils literal notranslate"><span class="pre">s</span></code> 的每个后缀 <code class="docutils literal notranslate"><span class="pre">s[i:</span> <span class="pre">]</span></code> 放在一起按字典序从小到大排序之后的 <strong>排名</strong> 。然后再找到那个排名正好是 <span class="math notranslate nohighlight">\(n - 1\)</span> 的后缀，就是答案了。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># import heapq</span>
+
+<span class="c1"># class Node:</span>
+<span class="c1">#     def __init__(self):</span>
+<span class="c1">#         self.children: Dict[str, Node] = {}</span>
+<span class="c1">#         self.heap: List[str] = []</span>
+<span class="c1">#         heapq.heapify(self.heap)</span>
+<span class="c1">#         self.value: Any = None</span>
+
+<span class="c1"># class Solution:</span>
+<span class="c1">#     def lastSubstring(self, s: str) -&gt; str:</span>
+<span class="c1">#         suffixTree = self.getSuffixTree(s)</span>
+<span class="c1">#         res = []</span>
+<span class="c1">#         head = suffixTree</span>
+
+<span class="c1">#         while len(head.children) != 0:</span>
+<span class="c1">#             largest = heapq.nlargest(1, head.heap)[0]</span>
+<span class="c1">#             res.append(largest)</span>
+<span class="c1">#             head = head.children[largest]</span>
+
+<span class="c1">#         return &quot;&quot;.join(res)[: -1]</span>
+
+<span class="c1">#     def getSuffixTree(self, s: str) -&gt; Node:</span>
+<span class="c1">#         root = Node()</span>
+
+<span class="c1">#         for i in reversed(range(0, len(s))):</span>
+<span class="c1">#             suffix = s[i: ]</span>
+<span class="c1">#             head = root</span>
+
+<span class="c1">#             for v in suffix + &quot;\x00&quot;:</span>
+<span class="c1">#                 if v not in head.children:</span>
+<span class="c1">#                     head.children[v] = Node()</span>
+<span class="c1">#                     heapq.heappush(head.heap, v)</span>
+<span class="c1">#                 head = head.children[v]</span>
+
+<span class="c1">#         return root</span>
+<span class="c1"># 后缀树构造太慢了</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">lastSubstring</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">ranks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRankArray</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="c1"># ranks[i]表示s[i: ]按字典序从小到大排序后的排名</span>
+        
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ranks</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">v</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">:</span> <span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">getRankArray</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">xy</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="n">rankMapping</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">v</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">xy</span><span class="p">))))</span>
+
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="c1"># rank = [rankMapping[v] for v in xy]</span>
+            <span class="c1"># if len(rank) == len(set(rank)):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rankMapping</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">rankMapping</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">xy</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xy</span><span class="p">)):</span>
+                    <span class="k">if</span> <span class="n">i</span> <span class="o">+</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+                        <span class="c1"># xy[i] = (rank[i], rank[i + k])</span>
+                        <span class="n">xy</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">rankMapping</span><span class="p">[</span><span class="n">xy</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="n">rankMapping</span><span class="p">[</span><span class="n">xy</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">k</span><span class="p">]])</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1"># xy[i] = (rank[i], 0)</span>
+                        <span class="n">xy</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">rankMapping</span><span class="p">[</span><span class="n">xy</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="mi">0</span><span class="p">)</span>
+
+                <span class="c1"># rankMapping = dict((v, i) for i, v in enumerate(sorted(set(xy))))</span>
+                <span class="n">rankMapping</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">xy</span><span class="p">))):</span>
+                    <span class="n">rankMapping</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+
+                <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">Solution</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">lastSubstring</span><span class="p">(</span><span class="s2">&quot;abab&quot;</span><span class="p">))</span> <span class="c1"># bab</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">lastSubstring</span><span class="p">(</span><span class="s2">&quot;leetcode&quot;</span><span class="p">))</span> <span class="c1"># tcode</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>离所有大楼距离之和最近的空地</h2>
+<p><a class="reference external" href="https://leetcode.com/problems/shortest-distance-from-all-buildings/">Leetcode</a></p>
+<p>我的做法是对每个大楼，都用BFS计算出图上每个空地到这栋大楼的最小距离，然后再遍历图上的每块空地，找出能到达所有大楼的、同时到达所有大楼的最小距离之和最小的那块空地。</p>
+<p>这样复杂度应该是 <span class="math notranslate nohighlight">\(O(m^2 n^2)\)</span> 。超时了。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">shortestDistance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">rowCount</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+        <span class="n">columnCount</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">buildings</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">obstacles</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">rowIndex</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
+
+            <span class="k">for</span> <span class="n">columnIndex</span><span class="p">,</span> <span class="n">box</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+                <span class="n">position</span> <span class="o">=</span> <span class="p">(</span><span class="n">rowIndex</span><span class="p">,</span> <span class="n">columnIndex</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">box</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">buildings</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">box</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">obstacles</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+
+        <span class="n">positionDistanceMapping</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">traveled</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">building</span> <span class="ow">in</span> <span class="n">buildings</span><span class="p">:</span>
+            <span class="c1"># queue = [building]</span>
+            <span class="n">queue</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+            <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">building</span><span class="p">)</span>
+            <span class="n">traveled</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+            <span class="n">distance</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="k">while</span> <span class="n">queue</span><span class="p">:</span>
+                <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+                    <span class="n">node</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="n">rowIndex</span><span class="p">,</span> <span class="n">columnIndex</span> <span class="o">=</span> <span class="n">node</span>
+                    <span class="n">neighbors</span> <span class="o">=</span> <span class="p">[</span>
+                        <span class="p">(</span><span class="n">rowIndex</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">columnIndex</span><span class="p">),</span>
+                        <span class="p">(</span><span class="n">rowIndex</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">columnIndex</span><span class="p">),</span>
+                        <span class="p">(</span><span class="n">rowIndex</span><span class="p">,</span> <span class="n">columnIndex</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
+                        <span class="p">(</span><span class="n">rowIndex</span><span class="p">,</span> <span class="n">columnIndex</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="p">]</span>
+
+                    <span class="k">for</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="n">neighbors</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">neighbor</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">rowCount</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">neighbor</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">columnCount</span> <span class="ow">and</span> <span class="n">grid</span><span class="p">[</span><span class="n">neighbor</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">neighbor</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">neighbor</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">traveled</span><span class="p">:</span>
+                            <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">neighbor</span><span class="p">)</span>
+
+                    <span class="n">traveled</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">node</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">buildings</span> <span class="ow">and</span> <span class="n">node</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">obstacles</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">node</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">positionDistanceMapping</span><span class="p">:</span>
+                            <span class="n">positionDistanceMapping</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+                            <span class="n">positionDistanceMapping</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="n">building</span><span class="p">]</span> <span class="o">=</span> <span class="n">distance</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">positionDistanceMapping</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="n">building</span><span class="p">]</span> <span class="o">=</span> <span class="n">distance</span>
+
+                <span class="n">distance</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">res</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;+inf&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">distanceToBuildings</span> <span class="ow">in</span> <span class="n">positionDistanceMapping</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">distanceToBuildings</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">buildings</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="n">distanceToBuildings</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+
+        <span class="k">if</span> <span class="n">res</span> <span class="o">==</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;+inf&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">res</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">Solution</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">shortestDistance</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]]))</span> <span class="c1"># 7</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">shortestDistance</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]]))</span> <span class="c1"># </span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>一组一组地颠倒链表</h2>
+<p><a class="reference external" href="https://leetcode.com/problems/reverse-nodes-in-k-group/">Leetcode 25</a></p>
+<p>这题真的写了巨久。写完过了发现其实很简单。</p>
+<p>因为题目要求最后不满 <span class="math notranslate nohighlight">\(k\)</span> 个的元素不要动，所以我就先遍历一遍链表，得到链表的总长度，然后看一下总共需要颠倒多少 <strong>段</strong> 。</p>
+<p>知道了需要颠倒多少段之后，就开始一段一段分别颠倒就好了。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># Definition for singly-linked list.</span>
+<span class="k">class</span> <span class="nc">ListNode</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">reverseKGroup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">head</span><span class="p">:</span> <span class="n">ListNode</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ListNode</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">head</span> <span class="o">!=</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">k</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># 如果k是1的话，等于不需要颠倒</span>
+            <span class="n">sentinel</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span> <span class="c1"># 假节点</span>
+            <span class="n">sentinel</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">head</span>
+            <span class="n">length</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="k">while</span> <span class="n">head</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span> <span class="c1"># 先遍历一遍链表，得到长度</span>
+                <span class="n">head</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="n">next</span>
+                <span class="n">length</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="n">segmentCount</span> <span class="o">=</span> <span class="n">length</span> <span class="o">//</span> <span class="n">k</span> <span class="c1"># 需要颠倒的段的数量</span>
+            <span class="n">previousSegmentEnd</span> <span class="o">=</span> <span class="n">sentinel</span> <span class="c1"># 前一段的最后一个节点</span>
+
+            <span class="k">for</span> <span class="n">segmentIndex</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">segmentCount</span><span class="p">):</span> <span class="c1"># 颠倒那么多段</span>
+                <span class="n">head</span> <span class="o">=</span> <span class="n">previousSegmentEnd</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">next</span>
+                <span class="n">previous</span> <span class="o">=</span> <span class="n">previousSegmentEnd</span><span class="o">.</span><span class="n">next</span>
+
+                <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span> <span class="c1"># 因为是分段颠倒，所以每段只需要颠倒k - 1个链</span>
+                    <span class="n">temp</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="n">next</span>
+                    <span class="n">head</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">previous</span>
+
+                    <span class="n">previous</span> <span class="o">=</span> <span class="n">head</span>
+                    <span class="n">head</span> <span class="o">=</span> <span class="n">temp</span>
+                <span class="c1"># 颠倒完这一段了，出for之后，head指向的是下一段的第一个节点、previous指向的是当前段颠倒之后的第一个节点</span>
+
+                <span class="n">temp</span> <span class="o">=</span> <span class="n">previousSegmentEnd</span><span class="o">.</span><span class="n">next</span> <span class="c1"># temp现在是当前段颠倒后的最后一个节点</span>
+                <span class="n">previousSegmentEnd</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">previous</span> <span class="c1"># 把上一段最后一个节点的下一个节点指向当前段颠倒后的第一个节点</span>
+                <span class="n">temp</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">head</span> <span class="c1"># 当前段颠倒后的最后一个节点的下一个节点指向下一段的第一个节点</span>
+                <span class="n">previousSegmentEnd</span> <span class="o">=</span> <span class="n">temp</span> <span class="c1"># 把当前段颠倒后的最后一个节点设置为上一段最后一个节点，进入下一个段</span>
+
+            <span class="k">return</span> <span class="n">sentinel</span><span class="o">.</span><span class="n">next</span>
+        <span class="k">elif</span> <span class="n">head</span> <span class="o">!=</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">head</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">head</span>
+
+    <span class="c1"># 用于测试</span>
+    <span class="k">def</span> <span class="nf">linkedListToList</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">head</span><span class="p">:</span> <span class="n">ListNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">while</span> <span class="n">head</span><span class="p">:</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">head</span><span class="o">.</span><span class="n">val</span><span class="p">)</span>
+            <span class="n">head</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="n">next</span>
+
+        <span class="k">return</span> <span class="n">res</span>
+
+    <span class="k">def</span> <span class="nf">listToLinkedList</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array</span><span class="p">:</span> <span class="n">List</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ListNode</span><span class="p">:</span>
+        <span class="n">sentinel</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+        <span class="n">head</span> <span class="o">=</span> <span class="n">sentinel</span>
+
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">array</span><span class="p">:</span>
+            <span class="n">head</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+            <span class="n">head</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="n">next</span>
+
+        <span class="k">return</span> <span class="n">sentinel</span><span class="o">.</span><span class="n">next</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">Solution</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">linkedListToList</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">reverseKGroup</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">listToLinkedList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]),</span> <span class="mi">3</span><span class="p">)))</span> <span class="c1"># 3 2 1 4 5</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">linkedListToList</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">reverseKGroup</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">listToLinkedList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]),</span> <span class="mi">3</span><span class="p">)))</span> <span class="c1"># 3 2 1 6 5 4</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">linkedListToList</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">reverseKGroup</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">listToLinkedList</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)))</span> <span class="c1"># 2 1 4 3 5</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>哪些词语可以用一行键盘打出</h2>
+<p><a class="reference external" href="https://leetcode.com/problems/keyboard-row/">Leetcode 500</a></p>
+<p>很简单，搞一个字符到键盘排号的映射。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">findWords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="n">charRowMapping</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># 搞一个字符到排号的映射</span>
+        <span class="n">charRowMapping</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">v</span><span class="p">:</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="s2">&quot;qwertyuiop&quot;</span><span class="p">})</span> <span class="c1"># 第一排的所有字符</span>
+        <span class="n">charRowMapping</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">v</span><span class="p">:</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="s2">&quot;asdfghjkl&quot;</span><span class="p">})</span> <span class="c1"># 第二排的所有字符</span>
+        <span class="n">charRowMapping</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">v</span><span class="p">:</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="s2">&quot;zxcvbnm&quot;</span><span class="p">})</span> <span class="c1"># 第三排的所有字符</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">charRowMapping</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># 如果单词里面所有的字符都在同一排</span>
+                <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+<p>还写了个rust版的</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">Solution</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">collections</span>::<span class="n">HashMap</span><span class="p">;</span><span class="w"></span>
+<span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">collections</span>::<span class="n">HashSet</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">impl</span><span class="w"> </span><span class="n">Solution</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">find_words</span><span class="p">(</span><span class="n">words</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">charRowMapping</span>: <span class="nc">HashMap</span><span class="o">&lt;</span><span class="n">char</span><span class="p">,</span><span class="w"> </span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HashMap</span>::<span class="n">new</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">charRowMapping</span><span class="p">.</span><span class="n">extend</span><span class="p">(</span><span class="s">&quot;qwertyuiop&quot;</span><span class="p">.</span><span class="n">chars</span><span class="p">().</span><span class="n">map</span><span class="p">(</span><span class="o">|</span><span class="n">v</span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)));</span><span class="w"></span>
+<span class="w">        </span><span class="n">charRowMapping</span><span class="p">.</span><span class="n">extend</span><span class="p">(</span><span class="s">&quot;asdfghjkl&quot;</span><span class="p">.</span><span class="n">chars</span><span class="p">().</span><span class="n">map</span><span class="p">(</span><span class="o">|</span><span class="n">v</span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)));</span><span class="w"></span>
+<span class="w">        </span><span class="n">charRowMapping</span><span class="p">.</span><span class="n">extend</span><span class="p">(</span><span class="s">&quot;zxcvbnm&quot;</span><span class="p">.</span><span class="n">chars</span><span class="p">().</span><span class="n">map</span><span class="p">(</span><span class="o">|</span><span class="n">v</span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)));</span><span class="w"></span>
+
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">res</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec</span><span class="o">!</span><span class="p">[];</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">word</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">words</span><span class="p">.</span><span class="n">iter</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="n">rows</span>: <span class="nc">HashSet</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">word</span><span class="p">.</span><span class="n">to_lowercase</span><span class="p">().</span><span class="n">chars</span><span class="p">().</span><span class="n">map</span><span class="p">(</span><span class="o">|</span><span class="n">v</span><span class="o">|</span><span class="w"> </span><span class="o">*</span><span class="n">charRowMapping</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="o">&amp;</span><span class="n">v</span><span class="p">).</span><span class="n">unwrap</span><span class="p">()).</span><span class="n">collect</span><span class="p">();</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="n">rows</span><span class="p">.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="n">res</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">word</span><span class="p">.</span><span class="n">clone</span><span class="p">());</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">res</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">HashMap.extend()</span></code> 真好用啊。</p>
+</div>
+<div class="section" id="id7">
+<h2>数组的度</h2>
+<p><a class="reference external" href="https://leetcode.com/problems/degree-of-an-array/">Leetcode 697</a></p>
+<p>度定义为出现最多次数的元素出现的次数，找一个尽可能短的、度和原数组一样大的substring。</p>
+<p>做法很简单，记录每 <strong>种</strong> 元素出现的次数、第一次出现的位置、最后一次出现的位置。那么符合要求的substring就是那个出现次数最多、最后一次出现的位置和第一次出现的位置之差最小的substring啦。</p>
+<p>为什么呢，因为反正只要满足substring里含有那么多的那种元素就可以了，没有必要包含第一次出现之前的其他种类的元素和最后一次出现的位置之后的其他种类的元素，即使包括了那些元素，也只会徒增substring的长度，而substring的度不变，所以这样吃力不讨好的事情何必去做呢。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">findShortestSubArray</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">counter</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Hashable</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># key是数字，value是一个list，第一个元素表示key出现的次数、第二个元素表示key第一次出现的位置、第三个元素表示key最后一次出现的位置</span>
+        <span class="n">maxFrequency</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># 一边构造counter，一边记下最高频次</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">counter</span><span class="p">:</span> <span class="c1"># 已经出现过了</span>
+                <span class="n">counter</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span> <span class="c1"># 频次+1</span>
+                <span class="n">counter</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span> <span class="c1"># 更新最后出现的位置</span>
+            <span class="k">else</span><span class="p">:</span> <span class="c1"># 没有见过</span>
+                <span class="n">counter</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="c1"># 记下来</span>
+
+            <span class="n">maxFrequency</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">maxFrequency</span><span class="p">,</span> <span class="n">counter</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="n">res</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">counter</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">maxFrequency</span><span class="p">:</span> <span class="c1"># 如果是出现频次最高的元素</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># 最短相同度substring一定是从这个元素第一次出现的位置到最后一次出现的位置之后那个substring</span>
+
+        <span class="k">return</span> <span class="n">res</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">Solution</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">findShortestSubArray</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span> <span class="c1"># 2</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">findShortestSubArray</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span> <span class="c1"># 6</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h2>颠倒链表</h2>
+<p><a class="reference external" href="https://leetcode.com/problems/reverse-linked-list/">Leetcode 206</a></p>
+<p>颠倒链表，返回颠倒后的第一个节点。</p>
+<p>题目没有规定什么，所以可以有3种写法</p>
+<ul class="simple">
+<li><p>我最喜欢的就是先变成list，颠倒，再变回来</p></li>
+<li><p>一边遍历，一边从后往前建一个新的链表</p></li>
+<li><p>原地颠倒</p></li>
+</ul>
+<p>面试估计会要你写原地颠倒，因为省空间。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># Definition for singly-linked list.</span>
+<span class="k">class</span> <span class="nc">ListNode</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">reverseList</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">head</span><span class="p">:</span> <span class="n">ListNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ListNode</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">head</span><span class="p">:</span>
+            <span class="n">previous</span> <span class="o">=</span> <span class="n">head</span> <span class="c1"># previous指向第一个节点</span>
+            <span class="n">head</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="n">next</span> <span class="c1"># head指向第二个节点</span>
+
+            <span class="n">previous</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="bp">None</span> <span class="c1"># 第一个节点颠倒之后变成最后一个节点，最后一个节点后面没有节点了</span>
+
+            <span class="k">while</span> <span class="n">head</span><span class="p">:</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="n">next</span>
+                <span class="n">head</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">previous</span>
+                
+                <span class="n">previous</span> <span class="o">=</span> <span class="n">head</span>
+                <span class="n">head</span> <span class="o">=</span> <span class="n">temp</span>
+
+            <span class="c1"># 出while之后，head是null，previous是颠倒后的第一个节点</span>
+
+            <span class="k">return</span> <span class="n">previous</span> <span class="c1"># 所以返回previous</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">head</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id9">
+<span id="id10"></span><h2>有多少条能到达终点的路径</h2>
+<p><a class="reference external" href="https://leetcode.com/problems/unique-paths-ii/">Leetcode 63</a></p>
+<p>给一个地图，机器人开始在左上角，终点在右下角，地图上标0的地方都是可以走的，标1的地方是障碍不能走。机器人每一步只能要么往下走、要么往右走。问机器人要到达终点总共有多少条不同的路径。</p>
+<p>用DP，设 <code class="docutils literal notranslate"><span class="pre">dp[i,</span> <span class="pre">j]</span></code> 是从起点到 <span class="math notranslate nohighlight">\((i, j)\)</span> 的路径数量。思考一下 <code class="docutils literal notranslate"><span class="pre">dp[i,</span> <span class="pre">j]</span></code> 和前面的项有什么关系。</p>
+<p>如果 <span class="math notranslate nohighlight">\((i, j)\)</span> 上是障碍物的话，那么无论如何都到达不了 <span class="math notranslate nohighlight">\((i, j)\)</span> ，所以这时候 <code class="docutils literal notranslate"><span class="pre">dp[i,</span> <span class="pre">j]</span> <span class="pre">=</span> <span class="pre">0</span></code> 。</p>
+<p>如果 <span class="math notranslate nohighlight">\((i, j)\)</span> 上不是障碍物的话，那么怎样才能到达 <span class="math notranslate nohighlight">\((i, j)\)</span> 呢？只有两种方法：从上方的 <span class="math notranslate nohighlight">\((i - 1, j)\)</span> 往正下方走一格；或者从左边的 <span class="math notranslate nohighlight">\((i, j - 1)\)</span> 往右边走一格。那么到达 <span class="math notranslate nohighlight">\((i - 1, j)\)</span> 和 <span class="math notranslate nohighlight">\((i, j - 1)\)</span> 总共有多少种方法呢？根据定义，是 <code class="docutils literal notranslate"><span class="pre">dp[i</span> <span class="pre">-</span> <span class="pre">1,</span> <span class="pre">j]</span> <span class="pre">+</span> <span class="pre">dp[i,</span> <span class="pre">j</span> <span class="pre">-</span> <span class="pre">1]</span></code> ，所以到达 <span class="math notranslate nohighlight">\((i, j)\)</span> 的方法总共就有这么多种。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">uniquePathsWithObstacles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obstacleGrid</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">obstacleGrid</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">obstacleGrid</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># 为了对付屑test case</span>
+            <span class="k">return</span> <span class="mi">0</span>
+
+        <span class="n">rowCount</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">obstacleGrid</span><span class="p">)</span>
+        <span class="n">columnCount</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">obstacleGrid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">dp</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="c1"># 初始条件</span>
+        <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="k">for</span> <span class="n">columnIndex</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">columnCount</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">obstacleGrid</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">columnIndex</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnIndex</span><span class="p">]</span> <span class="o">=</span> <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnIndex</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnIndex</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">rowIndex</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rowCount</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">obstacleGrid</span><span class="p">[</span><span class="n">rowIndex</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">dp</span><span class="p">[</span><span class="n">rowIndex</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">dp</span><span class="p">[</span><span class="n">rowIndex</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dp</span><span class="p">[</span><span class="n">rowIndex</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># 开始填表</span>
+        <span class="k">for</span> <span class="n">rowIndex</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">obstacleGrid</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span> <span class="p">],</span> <span class="mi">1</span><span class="p">):</span>
+
+            <span class="k">for</span> <span class="n">columnIndex</span><span class="p">,</span> <span class="n">box</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span> <span class="p">],</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">box</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">dp</span><span class="p">[</span><span class="n">rowIndex</span><span class="p">,</span> <span class="n">columnIndex</span><span class="p">]</span> <span class="o">=</span> <span class="n">dp</span><span class="p">[</span><span class="n">rowIndex</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">columnIndex</span><span class="p">]</span> <span class="o">+</span> <span class="n">dp</span><span class="p">[</span><span class="n">rowIndex</span><span class="p">,</span> <span class="n">columnIndex</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">dp</span><span class="p">[</span><span class="n">rowIndex</span><span class="p">,</span> <span class="n">columnIndex</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">return</span> <span class="n">dp</span><span class="p">[</span><span class="n">rowCount</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">columnCount</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">Solution</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">uniquePathsWithObstacles</span><span class="p">([</span>
+  <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+  <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+  <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">]))</span> <span class="c1"># 2</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">uniquePathsWithObstacles</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<span class="p">]))</span> <span class="c1"># 1</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">uniquePathsWithObstacles</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<span class="p">]))</span> <span class="c1"># 0</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">uniquePathsWithObstacles</span><span class="p">([[</span><span class="mi">1</span><span class="p">]]))</span> <span class="c1"># 0 屑test case</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">uniquePathsWithObstacles</span><span class="p">([[</span><span class="mi">0</span><span class="p">]]))</span> <span class="c1"># 1 屑test case</span>
+</pre></div>
+</div>
+<p>还写了个rust的。</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">Solution</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">collections</span>::<span class="n">HashMap</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">impl</span><span class="w"> </span><span class="n">Solution</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">unique_paths_with_obstacles</span><span class="p">(</span><span class="n">obstacle_grid</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;&gt;</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">i32</span> <span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">rowCount</span>: <span class="kt">usize</span> <span class="o">=</span><span class="w"> </span><span class="n">obstacle_grid</span><span class="p">.</span><span class="n">len</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">columnCount</span>: <span class="kt">usize</span> <span class="o">=</span><span class="w"> </span><span class="n">obstacle_grid</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">len</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">obstacle_grid</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">obstacle_grid</span><span class="p">[</span><span class="n">rowCount</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">][</span><span class="n">columnCount</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">dp</span>: <span class="nc">HashMap</span><span class="o">&lt;</span><span class="p">(</span><span class="kt">usize</span><span class="p">,</span><span class="w"> </span><span class="kt">usize</span><span class="p">),</span><span class="w"> </span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HashMap</span>::<span class="n">new</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">        </span><span class="n">dp</span><span class="p">.</span><span class="n">insert</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">columnIndex</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="p">..</span><span class="n">columnCount</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="n">obstacle_grid</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">columnIndex</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="n">dp</span><span class="p">.</span><span class="n">insert</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">columnIndex</span><span class="p">),</span><span class="w"> </span><span class="o">*</span><span class="n">dp</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">columnIndex</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)).</span><span class="n">unwrap</span><span class="p">());</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="n">dp</span><span class="p">.</span><span class="n">insert</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">columnIndex</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">rowIndex</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="p">..</span><span class="n">rowCount</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="n">obstacle_grid</span><span class="p">[</span><span class="n">rowIndex</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="n">dp</span><span class="p">.</span><span class="n">insert</span><span class="p">((</span><span class="n">rowIndex</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span><span class="w"> </span><span class="o">*</span><span class="n">dp</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">rowIndex</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)).</span><span class="n">unwrap</span><span class="p">());</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="n">dp</span><span class="p">.</span><span class="n">insert</span><span class="p">((</span><span class="n">rowIndex</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">rowIndex</span><span class="p">,</span><span class="w"> </span><span class="n">row</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">obstacle_grid</span><span class="p">.</span><span class="n">iter</span><span class="p">().</span><span class="n">enumerate</span><span class="p">().</span><span class="n">skip</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">columnIndex</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">row</span><span class="p">.</span><span class="n">iter</span><span class="p">().</span><span class="n">enumerate</span><span class="p">().</span><span class="n">skip</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="o">*</span><span class="n">value</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="n">dp</span><span class="p">.</span><span class="n">insert</span><span class="p">((</span><span class="n">rowIndex</span><span class="p">,</span><span class="w"> </span><span class="n">columnIndex</span><span class="p">),</span><span class="w"> </span><span class="o">*</span><span class="n">dp</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">rowIndex</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">columnIndex</span><span class="p">)).</span><span class="n">unwrap</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="o">*</span><span class="n">dp</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">rowIndex</span><span class="p">,</span><span class="w"> </span><span class="n">columnIndex</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)).</span><span class="n">unwrap</span><span class="p">());</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="n">dp</span><span class="p">.</span><span class="n">insert</span><span class="p">((</span><span class="n">rowIndex</span><span class="p">,</span><span class="w"> </span><span class="n">columnIndex</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="n">dp</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">rowCount</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">columnCount</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)).</span><span class="n">unwrap</span><span class="p">()</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p><code class="docutils literal notranslate"><span class="pre">[[1]],</span> <span class="pre">[[0]]</span></code> 这算什么屑test case？</p>
+</div>
+</div>
+<div class="section" id="stackqueue">
+<h2>用stack实现queue</h2>
+<p><a class="reference external" href="https://leetcode.com/problems/implement-queue-using-stacks/">Leetcode 232</a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">MyQueue</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize your data structure here.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Push element x to the back of queue.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes the element from in front of queue and returns that element.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="p">:</span>
+            <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+
+        <span class="n">res</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+
+        <span class="k">while</span> <span class="n">queue</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">queue</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="n">res</span>
+
+    <span class="k">def</span> <span class="nf">peek</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the front element.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="p">:</span>
+            <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+
+        <span class="n">res</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+        <span class="k">while</span> <span class="n">queue</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">queue</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="n">res</span>
+
+    <span class="k">def</span> <span class="nf">empty</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns whether the queue is empty.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stack</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+
+
+<span class="c1"># Your MyQueue object will be instantiated and called as such:</span>
+<span class="c1"># obj = MyQueue()</span>
+<span class="c1"># obj.push(x)</span>
+<span class="c1"># param_2 = obj.pop()</span>
+<span class="c1"># param_3 = obj.peek()</span>
+<span class="c1"># param_4 = obj.empty()</span>
+</pre></div>
+</div>
+<p>还写了个rust的。</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">collections</span>::<span class="n">VecDeque</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">struct</span> <span class="nc">MyQueue</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">stack</span>: <span class="nc">VecDeque</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="p">,</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+
+<span class="sd">/** </span>
+<span class="sd"> * `&amp;self` means the method takes an immutable reference.</span>
+<span class="sd"> * If you need a mutable reference, change it to `&amp;mut self` instead.</span>
+<span class="sd"> */</span><span class="w"></span>
+<span class="k">impl</span><span class="w"> </span><span class="n">MyQueue</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
+<span class="w">    </span><span class="sd">/** Initialize your data structure here. */</span><span class="w"></span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">new</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nc">Self</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">MyQueue</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">stack</span>: <span class="nc">VecDeque</span>::<span class="n">new</span><span class="p">(),</span><span class="w"></span>
+<span class="w">        </span><span class="p">};</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span>
+<span class="w">    </span><span class="sd">/** Push element x to the back of queue. */</span><span class="w"></span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">push</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">x</span>: <span class="kt">i32</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="bp">self</span><span class="p">.</span><span class="n">stack</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">x</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span>
+<span class="w">    </span><span class="sd">/** Removes the element from in front of queue and returns that element. */</span><span class="w"></span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">pop</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">i32</span> <span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">queue</span>: <span class="nc">VecDeque</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">VecDeque</span>::<span class="n">new</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="o">!</span><span class="bp">self</span><span class="p">.</span><span class="n">stack</span><span class="p">.</span><span class="n">is_empty</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">queue</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">stack</span><span class="p">.</span><span class="n">pop_back</span><span class="p">().</span><span class="n">unwrap</span><span class="p">());</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">res</span>: <span class="kt">i32</span> <span class="o">=</span><span class="w"> </span><span class="n">queue</span><span class="p">.</span><span class="n">pop_back</span><span class="p">().</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="o">!</span><span class="n">queue</span><span class="p">.</span><span class="n">is_empty</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="bp">self</span><span class="p">.</span><span class="n">stack</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">queue</span><span class="p">.</span><span class="n">pop_back</span><span class="p">().</span><span class="n">unwrap</span><span class="p">());</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">res</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span>
+<span class="w">    </span><span class="sd">/** Get the front element. */</span><span class="w"></span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">peek</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">i32</span> <span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">queue</span>: <span class="nc">VecDeque</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">VecDeque</span>::<span class="n">new</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="o">!</span><span class="bp">self</span><span class="p">.</span><span class="n">stack</span><span class="p">.</span><span class="n">is_empty</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">queue</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">stack</span><span class="p">.</span><span class="n">pop_back</span><span class="p">().</span><span class="n">unwrap</span><span class="p">());</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">res</span>: <span class="kt">i32</span> <span class="o">=</span><span class="w"> </span><span class="n">queue</span><span class="p">.</span><span class="n">pop_back</span><span class="p">().</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">queue</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">res</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="o">!</span><span class="n">queue</span><span class="p">.</span><span class="n">is_empty</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="bp">self</span><span class="p">.</span><span class="n">stack</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">queue</span><span class="p">.</span><span class="n">pop_back</span><span class="p">().</span><span class="n">unwrap</span><span class="p">());</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">res</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span>
+<span class="w">    </span><span class="sd">/** Returns whether the queue is empty. */</span><span class="w"></span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">empty</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">bool</span> <span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">stack</span><span class="p">.</span><span class="n">is_empty</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="sd">/**</span>
+<span class="sd"> * Your MyQueue object will be instantiated and called as such:</span>
+<span class="sd"> * let obj = MyQueue::new();</span>
+<span class="sd"> * obj.push(x);</span>
+<span class="sd"> * let ret_2: i32 = obj.pop();</span>
+<span class="sd"> * let ret_3: i32 = obj.peek();</span>
+<span class="sd"> * let ret_4: bool = obj.empty();</span>
+<span class="sd"> */</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id11">
+<h2>有多少条能到达终点的路径</h2>
+<p><a class="reference external" href="https://leetcode.com/problems/unique-paths/">Leetcode 62</a></p>
+<p><a class="reference internal" href="#id9">63</a> 的简单版本，没有障碍。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">uniquePaths</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">rowCount</span> <span class="o">=</span> <span class="n">m</span>
+        <span class="n">columnCount</span> <span class="o">=</span> <span class="n">n</span>
+        <span class="n">dp</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="k">for</span> <span class="n">columnIndex</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">columnCount</span><span class="p">):</span>
+            <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnIndex</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="k">for</span> <span class="n">rowIndex</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rowCount</span><span class="p">):</span>
+            <span class="n">dp</span><span class="p">[</span><span class="n">rowIndex</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="k">for</span> <span class="n">rowIndex</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rowCount</span><span class="p">):</span>
+
+            <span class="k">for</span> <span class="n">columnIndex</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">columnCount</span><span class="p">):</span>
+                <span class="n">dp</span><span class="p">[</span><span class="n">rowIndex</span><span class="p">,</span> <span class="n">columnIndex</span><span class="p">]</span> <span class="o">=</span> <span class="n">dp</span><span class="p">[</span><span class="n">rowIndex</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">columnIndex</span><span class="p">]</span> <span class="o">+</span> <span class="n">dp</span><span class="p">[</span><span class="n">rowIndex</span><span class="p">,</span> <span class="n">columnIndex</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">dp</span><span class="p">[</span><span class="n">rowCount</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">columnCount</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">Solution</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">uniquePaths</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="c1"># 3</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">uniquePaths</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span> <span class="c1"># 28</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="anagram">
+<h2>按anagram分组</h2>
+<p><a class="reference external" href="https://leetcode.com/problems/group-anagrams/">Leetcode 49</a></p>
+<p>如果两个字符串的直方图相同，则互为anagram。比如 <code class="docutils literal notranslate"><span class="pre">eat,</span> <span class="pre">tea</span></code> 都是由1个 <code class="docutils literal notranslate"><span class="pre">e</span></code> 、1个 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和1个 <code class="docutils literal notranslate"><span class="pre">t</span></code> 组成，所以它们互为anagram。</p>
+<p>我的做法是搞一个hash map，key是某种变换后的结果，互为anagram的字符串经过这个变换得到相同的东西，value是所有互为anagram的字符串。</p>
+<p>怎样找到一种合适的变换使得互为anagram的字符串经过这个变换变成相同的东西呢？既然定义里面说了直方图相同，那么用 <code class="docutils literal notranslate"><span class="pre">Counter</span></code> 不就好了？可惜 <code class="docutils literal notranslate"><span class="pre">Counter</span></code> 不能被hash，所以做不了key。</p>
+<p>所以只能给字符串里的字符排序，很显然如果两个字符串互为anagram的话，它们里面的字符按ascii从小到大排序之后形成的字符串是相同的；如果两个字符串不互为anagram的话，再怎么排序得到的字符串都不同。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">groupAnagrams</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">strs</span><span class="p">:</span>
+            <span class="n">root</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">root</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+                <span class="n">res</span><span class="p">[</span><span class="n">root</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">res</span><span class="p">[</span><span class="n">root</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>2020/1/8</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id12">
+<h2>面试体验</h2>
+<p>2020/1/10号下午2点面的，面试我的是一个印度小姐姐。</p>
+<p>先是问了我最喜欢的项目是什么，在这个项目里遇到了什么问题，怎么解决的。</p>
+<p>然后开始狂问面向对象设计，问面向对象里的封装、继承概念，问面向对象有什么优势。</p>
+<p>问了机器学习里的一些概念，问最小二乘法的原理，问过拟合是怎么回事，怎么看出过拟合了。</p>
+<p>然后就是线代，问了如何判断一个矩阵是否可逆，逆矩阵、转置后的矩阵的行列式和原矩阵的关系，特征值的含义。</p>
+<p>问了一些Python的语法，字符串的immutable特性。用Python实现了一些很简单的操作。</p>
+<p>然后就问我有没有什么问题要问她。</p>
+<p>是的没错，一道算法题都没问……</p>
+<p>看来要恶补OOP设计的内容了呀。</p>
+<p>2020/1/10</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">MathWorks题库</a><ul>
+<li><a class="reference internal" href="#huffman">Huffman树</a></li>
+<li><a class="reference internal" href="#id2">验证数组是否是二分搜索树的先根遍历</a></li>
+<li><a class="reference internal" href="#substringsubstring">所有substring里字典序最大的那个substring</a></li>
+<li><a class="reference internal" href="#id4">离所有大楼距离之和最近的空地</a></li>
+<li><a class="reference internal" href="#id5">一组一组地颠倒链表</a></li>
+<li><a class="reference internal" href="#id6">哪些词语可以用一行键盘打出</a></li>
+<li><a class="reference internal" href="#id7">数组的度</a></li>
+<li><a class="reference internal" href="#id8">颠倒链表</a></li>
+<li><a class="reference internal" href="#id9">有多少条能到达终点的路径</a></li>
+<li><a class="reference internal" href="#stackqueue">用stack实现queue</a></li>
+<li><a class="reference internal" href="#id11">有多少条能到达终点的路径</a></li>
+<li><a class="reference internal" href="#anagram">按anagram分组</a></li>
+<li><a class="reference internal" href="#id12">面试体验</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/posts/mathworks-interview/index.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">blog  文档</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; 版权所有 2019, aiifabbf.
+      由 <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.2 创建。
+    </div>
+  </body>
+</html>
