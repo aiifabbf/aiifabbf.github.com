@@ -1,0 +1,485 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>前缀和太好用了 &#8212; blog  文档</title>
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="../uncertainty-principle-fourier.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../uncertainty-principle-fourier.html" title="&lt;no title&gt;"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">blog  文档</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>前缀和太好用了</h1>
+<div class="contents topic" id="id2">
+<p class="topic-title first">目录</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#id1" id="id13">前缀和太好用了</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id5" id="id14">典型题</a></p>
+<ul>
+<li><p><a class="reference internal" href="#substring-sum" id="id15">Substring sum</a></p></li>
+<li><p><a class="reference internal" href="#k-substring" id="id16">多少个和是 <span class="math notranslate nohighlight">\(k\)</span> 的substring</a></p></li>
+<li><p><a class="reference internal" href="#substring" id="id17">多少个和在区间内的substring</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id6" id="id18">需要转个弯的问题</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id7" id="id19">是否能拆成三个和相等的substring</a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id20">含有等量0和1的最长substring的长度</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id10" id="id21">二维前缀和</a></p>
+<ul>
+<li><p><a class="reference internal" href="#k" id="id22">和不超过 <span class="math notranslate nohighlight">\(k\)</span> 的子方阵的最大边长</a></p></li>
+<li><p><a class="reference internal" href="#submatrix-sum" id="id23">Submatrix sum</a></p></li>
+<li><p><a class="reference internal" href="#k-1-times-2k-1" id="id24"><span class="math notranslate nohighlight">\((2K + 1) \times (2K + 1)\)</span> 子方阵的和</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id11" id="id25">随便说两句</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>前缀和这个技巧真的太好用了，值得写一篇夸一下。感觉它可以用在一切和substring sum（连续子序列和）有关的场合。</p>
+<p>还有一个好处是，用了前缀和之后，这题目其实和原来那个数组没关系了，变成了一道完全只和前缀和序列有关的类似2 sum的题目。</p>
+<p>设 <span class="math notranslate nohighlight">\(A_i\)</span> 是数列 <span class="math notranslate nohighlight">\(a_0, a_1, ..., a_{i - 1}\)</span> 的和，那么有</p>
+<div class="math notranslate nohighlight">
+\[a_i + a_{i + 1} + \cdots + a_{j - 1} = A_j - A_i\]</div>
+<p>如果 <span class="math notranslate nohighlight">\(i\)</span> 和 <span class="math notranslate nohighlight">\(j\)</span> 距离很远的话，频繁计算左边式子就很花时间，所以不如在 <span class="math notranslate nohighlight">\(O(n)\)</span> 内先算出每个 <span class="math notranslate nohighlight">\(A_i\)</span> 存下来，需要用的时候直接 <span class="math notranslate nohighlight">\(A_j - A_i\)</span> ，这样 <span class="math notranslate nohighlight">\(O(1)\)</span> 就能计算任意一段substring sum了。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>你不觉得这个式子</p>
+<div class="math notranslate nohighlight">
+\[\underbrace{a_i + a_{i + 1} + \cdots + a_{j - 1}}_{\sum_{k = i}^{j - 1} a_k} = A_j - A_i\]</div>
+<p>和 <a class="reference external" href="https://en.wikipedia.org/wiki/Fundamental_theorem_of_calculus#Corollary">微积分基本定理</a></p>
+<div class="math notranslate nohighlight">
+\[\int_a^b f(x) \,dx = F(b) - F(a)\]</div>
+<p>很像吗。</p>
+<p>我还想到了 <a class="reference external" href="https://en.wikipedia.org/wiki/Cumulative_distribution_function#Definition">概率、概率密度函数、概率分布函数之间的关系</a></p>
+<div class="math notranslate nohighlight">
+\[P(a &lt; X \leq b) = \int_a^b f(x) \,dx = F(b) - F(a)\]</div>
+</div>
+<p>用Python的话，算这个很简单，可以用标准库函数</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">itertools</span>
+
+<span class="n">integral</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="n">array</span><span class="p">))</span> <span class="c1"># 最前面补一个0，这样非常优雅，integral[j] - integral[i]就直接是array[i: j]的和了</span>
+<span class="c1"># assert integral[j] - integral[i] == sum(array[i: j])</span>
+</pre></div>
+</div>
+<div class="section" id="id5">
+<h2>典型题</h2>
+<p>来几道例题吧。</p>
+<div class="section" id="substring-sum">
+<h3>Substring sum</h3>
+<p>这道是标准的substring sum</p>
+<blockquote>
+<div><p>给一个数组， <strong>是否存在</strong> 某个substring的和是 <span class="math notranslate nohighlight">\(t\)</span> ？</p>
+</div></blockquote>
+<p>直接遍历每个 <span class="math notranslate nohighlight">\(A_j\)</span> ，看前面存不存在一个 <span class="math notranslate nohighlight">\(A_i\)</span> 正好满足 <span class="math notranslate nohighlight">\(A_j - A_i = t\)</span> 。但是这样做的话，复杂度还是 <span class="math notranslate nohighlight">\(O(n^2)\)</span> ，因为对每个 <span class="math notranslate nohighlight">\(A_j\)</span> ，都要扫描一遍 <span class="math notranslate nohighlight">\(A_0\)</span> 到 <span class="math notranslate nohighlight">\(A_{j - 1}\)</span> 。什么数据结构可以做到快速判断一个元素是否存在？</p>
+<p>集合啊。那就用集合把 <span class="math notranslate nohighlight">\(A_0\)</span> 到 <span class="math notranslate nohighlight">\(A_{j - 1}\)</span> 存起来，然后遍历到 <span class="math notranslate nohighlight">\(A_j\)</span> 的时候，只要看集合里面是否存在 <span class="math notranslate nohighlight">\(A_j - t\)</span> 这个数字就好了。如果不存在，不要忘了先把 <span class="math notranslate nohighlight">\(A_j\)</span> 加入集合，然后再到下一个迭代。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">substringSum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">t</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">integral</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="n">array</span><span class="p">))</span> <span class="c1"># 算出A_i</span>
+        <span class="n">seen</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span> <span class="c1"># 把至今见过的A_i都存起来</span>
+
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">integral</span><span class="p">:</span> <span class="c1"># v = A_j</span>
+            <span class="k">if</span> <span class="n">v</span> <span class="o">-</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span> <span class="c1"># 如果A_j - t之前见过</span>
+                <span class="k">return</span> <span class="bp">True</span> <span class="c1"># 那么存在</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="c1"># 别忘了把当前积分项加入到见过的数的集合里</span>
+
+        <span class="k">return</span> <span class="bp">False</span> <span class="c1"># 转了一圈都不存在</span>
+</pre></div>
+</div>
+<p>这样复杂度做到了 <span class="math notranslate nohighlight">\(O(n)\)</span> 。这个是不是有点 <a class="reference external" href="https://leetcode.com/problems/two-sum/">2 sum</a> 的感觉？</p>
+</div>
+<div class="section" id="k-substring">
+<h3>多少个和是 <span class="math notranslate nohighlight">\(k\)</span> 的substring</h3>
+<p>下面这道是稍微进阶一点的， <a class="reference external" href="https://leetcode.com/problems/subarray-sum-equals-k/">Leetcode 560</a></p>
+<blockquote>
+<div><p>给一个数组，存在 <strong>多少个</strong> 和是 <span class="math notranslate nohighlight">\(k\)</span> 的substring？</p>
+</div></blockquote>
+<p>和标准题没什么区别，唯一的区别是，集合改成map，记录一下每个数出现的次数。遍历到 <span class="math notranslate nohighlight">\(A_j\)</span> 的时候，往前看看前面有多少个 <span class="math notranslate nohighlight">\(A_i\)</span> 满足 <span class="math notranslate nohighlight">\(A_j - A_i = k\)</span> 。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">subarraySum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">integral</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span> <span class="c1"># 算出A_i</span>
+        <span class="n">counter</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">()</span> <span class="c1"># 至今为止见过的每个数字及其出现的次数</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># 至今为止见到的和正好为k的substring的个数</span>
+
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">integral</span><span class="p">:</span> <span class="c1"># 遍历每个A_j</span>
+            <span class="n">res</span> <span class="o">+=</span> <span class="n">counter</span><span class="p">[</span><span class="n">v</span> <span class="o">-</span> <span class="n">k</span><span class="p">]</span> <span class="c1"># 前面见过的每个满足A_j - A_i = k的A_i都可以和A_j配对，每个满足A_j - A_i = k的i都满足a_i + a_{i + 1} + ... + a_{j - 1} = k</span>
+            <span class="n">counter</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span> <span class="c1"># 别忘了把当前这一项出现的次数+1</span>
+
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+<p>复杂度还是 <span class="math notranslate nohighlight">\(O(n)\)</span> 。</p>
+</div>
+<div class="section" id="substring">
+<h3>多少个和在区间内的substring</h3>
+<p>下一题， <a class="reference external" href="https://leetcode.com/problems/count-of-range-sum/">Leetcode 327</a></p>
+<blockquote>
+<div><p>给一个数组，存在 <strong>多少个</strong> 和在 <span class="math notranslate nohighlight">\([l, r]\)</span> 区间内的substring</p>
+</div></blockquote>
+<p>一样的套路，只不过前面见过的每个满足 <span class="math notranslate nohighlight">\(A_j - A_i \in [l, r]\)</span> 的 <span class="math notranslate nohighlight">\(A_i\)</span> 都可以配对，所以乍一看好像还是 <span class="math notranslate nohighlight">\(O(n^2)\)</span> 。可以从反方向考虑，对 <span class="math notranslate nohighlight">\([l, r]\)</span> 里的每个整数 <span class="math notranslate nohighlight">\(t\)</span> ，都去数前面满足 <span class="math notranslate nohighlight">\(A_j - A_i = t\)</span> 的 <span class="math notranslate nohighlight">\(A_i\)</span> 。</p>
+<p>这样复杂度是 <span class="math notranslate nohighlight">\(O(n (r - l))\)</span> ，不是多项式阶，是 <strong>伪多项式阶</strong> 。因为复杂度式子中出现了 <span class="math notranslate nohighlight">\(r - l\)</span> ，是输入的值、而不是输入的规模。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">countRangeSum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">lower</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">upper</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">integral</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span> <span class="c1"># 计算A_i</span>
+        <span class="n">counter</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">()</span> <span class="c1"># 数前面每个数字出现次数</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># 至今发现了多少个和在[l, r]内的substring</span>
+
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">integral</span><span class="p">:</span> <span class="c1"># 遍历每个A_j</span>
+
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lower</span><span class="p">,</span> <span class="n">upper</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span> <span class="c1"># 往前找所有满足A_j - A_i = t, t in [l, r]的A_i</span>
+                <span class="n">res</span> <span class="o">+=</span> <span class="n">counter</span><span class="p">[</span><span class="n">v</span> <span class="o">-</span> <span class="n">t</span><span class="p">]</span> <span class="c1"># 前面的每个满足A_j - A_i = t, t in [l, r]的A_i都可以和A_j配对</span>
+
+            <span class="n">counter</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>需要转个弯的问题</h2>
+<p>上面三道是比较容易看出用前缀和解决的。下面的题目就不那么容易看出可以用前缀和搞定了。</p>
+<div class="section" id="id7">
+<h3>是否能拆成三个和相等的substring</h3>
+<p>比如这一道 <a class="reference external" href="https://leetcode.com/problems/partition-array-into-three-parts-with-equal-sum/">Leetcode 1013</a></p>
+<blockquote>
+<div><p>给一个数列， <strong>能不能</strong> 把这个数列正好拆分成三个substring、并且这三个substring各自的累加和相等？</p>
+</div></blockquote>
+<p>比如</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>可以拆分成</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">0,</span> <span class="pre">2,</span> <span class="pre">1</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-6,</span> <span class="pre">6,</span> <span class="pre">-7,</span> <span class="pre">9,</span> <span class="pre">1</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">2,</span> <span class="pre">0,</span> <span class="pre">1</span></code></p></li>
+</ul>
+<p>这三个substring，同时这三个substring的累加和都是3。</p>
+<p>这个怎么做呢？如果用暴力做法做，就是要在数组里找两个分裂位置，然后把数组拆分成三个substring，测试每个substring的累加和是否相等。一个长 <span class="math notranslate nohighlight">\(n\)</span> 的数组总共有 <span class="math notranslate nohighlight">\(n - 1\)</span> 个分裂点，比如 <code class="docutils literal notranslate"><span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4</span></code> 长度为4、有3个分裂点。所以一个长度是 <span class="math notranslate nohighlight">\(n\)</span> 的数组总共有 <span class="math notranslate nohighlight">\(C_{n - 1}^2\)</span> 种拆分成三个substring的方法。因为 <span class="math notranslate nohighlight">\(C_{n - 1}^2 \in O(n^2)\)</span> ，所以暴力做法复杂度至少是 <span class="math notranslate nohighlight">\(O(n^2)\)</span> ，这还不带算上每次求每个substring的复杂度（当然如果用前缀和的话，算substring的复杂度就是 <span class="math notranslate nohighlight">\(O(1)\)</span> 了）。</p>
+<p>不就是要找一对 <span class="math notranslate nohighlight">\(0 &lt; i &lt; j &lt; n\)</span> ，使得</p>
+<div class="math notranslate nohighlight">
+\[a_0 + a_1 + \cdots + a_{i - 1} = a_i + a_{i + 1} + \cdots + a_{j - 1} = a_j + a_{j + 1} + \cdots + a_{n - 1}\]</div>
+<p>吗？用前缀和表示，就是</p>
+<div class="math notranslate nohighlight">
+\[A_i = A_j - A_i = \underbrace{A_n}_\text{已知量} - A_j\]</div>
+<p>解这个方程，得到</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{cases}
+    A_i = {1 \over 3} A_n \\
+    A_j = {2 \over 3} A_n
+\end{cases}\end{split}\]</div>
+<p>很明显了，是要在积分序列里 <a class="footnote-reference brackets" href="#integral" id="id8">1</a>  找到一对 <span class="math notranslate nohighlight">\(0 &lt; i &lt; j &lt; n\)</span> 使得 <span class="math notranslate nohighlight">\(A_i\)</span> 正好是原数组累加和的三分之一、 <span class="math notranslate nohighlight">\(A_j\)</span> 正好是原数组累加和的三分之二。</p>
+<p>怎么写呢？我写的时候想到了两种方法</p>
+<ul class="simple">
+<li><p>从左往右找出第一次出现累加和三分之一的下标 <span class="math notranslate nohighlight">\(i\)</span> ，从左往右找出最后一次出现累加和三分之二的下标 <span class="math notranslate nohighlight">\(j\)</span> 。两个数字都找不到、或者其中一个找不到、或者出现了 <span class="math notranslate nohighlight">\(i \geq j\)</span> ，说明找不到；只有两个数字都找得到，并且满足 <span class="math notranslate nohighlight">\(0 &lt; i &lt; j &lt; n\)</span> 才算找到。</p></li>
+<li><p>还是用标准题的套路。遍历每个积分项 <span class="math notranslate nohighlight">\(A_j\)</span> ，如果 <span class="math notranslate nohighlight">\(A_j\)</span> 正好是原序列累加和的三分之二、并且原序列累加和的三分之一之前见到过，那么说明能找到。如果遍历完了都没有找到，说明不存在。</p></li>
+</ul>
+<p>我还是觉得第二种比较好。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">canThreePartsEqualSum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">integral</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="n">A</span><span class="p">))</span> <span class="c1"># 计算A_i</span>
+        <span class="n">secondProportion</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">integral</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># 累加和的三分之二</span>
+        <span class="n">firstProportion</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">integral</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># 累加和的三分之一</span>
+        <span class="n">seen</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span> <span class="c1"># 之前见过的累加和</span>
+
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">integral</span><span class="p">:</span> <span class="c1"># 遍历每个积分项A_j</span>
+            <span class="k">if</span> <span class="n">v</span> <span class="o">==</span> <span class="n">secondProportion</span> <span class="ow">and</span> <span class="n">firstProportion</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span> <span class="c1"># 如果出现当前积分项A_j正好是原序列累加和的三分之二、并且原序列累加和的三分之一之前出现过</span>
+                <span class="k">return</span> <span class="bp">True</span> <span class="c1"># 那么恭喜，找到了</span>
+            <span class="k">else</span><span class="p">:</span> <span class="c1"># 可能还没找到</span>
+                <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="c1"># 先把当前积分项记下来再说</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1"># 遍历完了都没找到</span>
+            <span class="k">return</span> <span class="bp">False</span> <span class="c1"># 那说明是真的不存在</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id9">
+<h3>含有等量0和1的最长substring的长度</h3>
+<p>下一道， <a class="reference external" href="https://leetcode.com/problems/contiguous-array/">Leetcode 525</a></p>
+<blockquote>
+<div><p>给一个只含有0和1的数组，含有等量0和1的substring的最大长度是多少？</p>
+</div></blockquote>
+<p>这个真的需要想一想，很难想到。可以把“含有等量0和1”这个信息转换成substring sum吗？一开始还真的想不到，一个含有0和含有1数量相同的substring的累加和能有什么性质？</p>
+<p>还真的有！把数组里所有的0都变成-1，那么原来含有等量0和1的substring，变成了含有等量-1和1的substring，这样它的累加和不就是0了吗？而且这个也不会破坏可区分性，那些原来不含有等量0和1的substring，在0全部变成-1之后，它们的累加和也不可能是0。所以这个转换是无损的。</p>
+<p>那么问题就变成了，找到累加和是0的substring的最大长度。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">findMaxLength</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">array</span> <span class="o">=</span> <span class="p">(</span><span class="n">v</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">)</span> <span class="c1"># 把所有的0变成-1。这里用了生成器，可以省内存省时间</span>
+        <span class="n">integral</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="n">itertools</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="n">array</span><span class="p">))</span> <span class="c1"># 计算A_j。这里用了itertools.chain可以延迟计算，省内存省时间</span>
+        <span class="n">seen</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># key是积分值、value是这个积分值第一次出现的下标</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># 至今见过的最长的累加和是0的substring的长度</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">integral</span><span class="p">):</span> <span class="c1"># 遍历每个积分项A_j</span>
+            <span class="k">if</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span> <span class="c1"># 如果前面有A_i使得A_j - A_i = 0</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">i</span> <span class="o">-</span> <span class="n">seen</span><span class="p">[</span><span class="n">v</span><span class="p">])</span> <span class="c1"># 对比一下长度，取长的那个</span>
+                <span class="c1"># 这里不要seen[v] = i，只要保留当前积分值第一次出现的下标就可以了，这样可以让substring尽可能长</span>
+            <span class="k">else</span><span class="p">:</span> <span class="c1"># 没有</span>
+                <span class="n">seen</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span> <span class="c1"># 记下，继续找</span>
+
+        <span class="k">return</span> <span class="n">res</span> <span class="c1"># 遍历完了都没有找到，说明没有，那么最大长度是0</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id10">
+<h2>二维前缀和</h2>
+<p>最近几次周赛我见过两道二维前缀和的题目了。一般都是需要频繁计算某个矩阵里面子矩阵的累加和。</p>
+<p>设 <span class="math notranslate nohighlight">\(A_{i, j}\)</span> 是下标在 <span class="math notranslate nohighlight">\([0, i) \times [0, j)\)</span> 里的矩阵项的和，也就是子矩阵 <span class="math notranslate nohighlight">\(\mathbf{A}_{[0, i), [0, j)}\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\left[\begin{matrix}
+    a_{0, 0} &amp; a_{0, 1} &amp; \cdots &amp; a_{0, j - 1} \\
+    a_{1, 0} &amp; a_{1, 1} &amp; \cdots &amp; a_{1, j - 1} \\
+    \vdots &amp; &amp; \ddots &amp; \vdots \\
+    a_{i - 1, 0} &amp; a_{i - 1, 1} &amp; \cdots &amp; a_{i - 1, j - 1}
+\end{matrix}\right]\end{split}\]</div>
+<p>所有项的和。那么任意一个子矩阵的 <span class="math notranslate nohighlight">\(\mathbf{A}_{[a, b), [x, y)}\)</span> 的累加和怎么算？稍微复杂一点，但是想一想很简单</p>
+<div class="math notranslate nohighlight">
+\[\sum \mathbf{A}_{[a, b), [x, y)} = A_{b, y} - A_{a, y} - A_{b, x} + A_{a, x}\]</div>
+<p>还不能理解的话看一下这张图</p>
+<div class="figure align-default" id="id12">
+<a class="reference internal image-reference" href="../../_images/2d-prefix-sum.svg"><img alt="../../_images/2d-prefix-sum.svg" src="../../_images/2d-prefix-sum.svg" width="100%" /></a>
+<p class="caption"><span class="caption-number">图 1 </span><span class="caption-text">先减去 <span class="math notranslate nohighlight">\(A_{a, y}\)</span> 再减去 <span class="math notranslate nohighlight">\(A_{b, x}\)</span> 之后，左上角那块区域 <span class="math notranslate nohighlight">\(A_{a, x}\)</span> 被删了两次，所以最后要补回来，这就是最后一项 <span class="math notranslate nohighlight">\(+ A_{a, x}\)</span> 的来源。</span></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>好的我又想到概率密度函数和概率分布函数的关系了，不过这次是二维的。</p>
+<p>假设 <span class="math notranslate nohighlight">\(f_{X, Y}(x, y)\)</span> 是随机变量 <span class="math notranslate nohighlight">\(X, Y\)</span> 的联合概率密度函数，那么 <span class="math notranslate nohighlight">\(X, Y\)</span> 的联合概率分布函数是</p>
+<div class="math notranslate nohighlight">
+\[F_{X, Y}(x, y) = \int_{-\infty}^x \int_{-\infty}^y f_{X, Y}(x, y) \,dx dy\]</div>
+<p>图中右下角那块区域代表的是 <span class="math notranslate nohighlight">\(P(x_1 &lt; x \leq x_2 \land y_1 &lt; y \leq y_2)\)</span> ，等于</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    P(x_1 &lt; x \leq x_2 \land y_1 &lt; y \leq y_2) &amp;= \int_{x_1}^{x_2} \int_{y_1}^{y_2} f_{X, Y}(x, y) \,dx dy \\
+    &amp;= F_{X, Y}(x_2, y_2) - F_{X, Y}(x_1, y_2) - F_{X, Y}(x_2, y_1) + F_{X, Y}(x_1, y_1)
+\end{aligned}\end{split}\]</div>
+</div>
+<p>现在我们知道了手头有二维前缀和可以计算任意子矩阵的和，那么一开始怎么计算出这个二维前缀和呢？没有 <code class="docutils literal notranslate"><span class="pre">itertools.accumulate()</span></code> 可以用了，我们只能自己实现了。计算的方法还是DP。</p>
+<p>设 <code class="docutils literal notranslate"><span class="pre">integral[i][j]</span></code> 是下标在 <span class="math notranslate nohighlight">\([0, i) \times [0, j)\)</span> 里的矩阵项的和，也就是刚才说的 <span class="math notranslate nohighlight">\(A_{i, j}\)</span> 。 <code class="docutils literal notranslate"><span class="pre">integral[i][j]</span></code> 和前面已经计算过的项有什么关系呢？</p>
+<p>现在假设已经有了所有 <span class="math notranslate nohighlight">\(A_{i, j}\)</span> ，怎么得到 <span class="math notranslate nohighlight">\(a_{i - 1, j - 1}\)</span> 呢？很显然 <span class="math notranslate nohighlight">\(a_{i - 1, j - 1}\)</span> 是子矩阵 <span class="math notranslate nohighlight">\(\mathbf{A}_{[i - 1, i), [j - 1, j)}\)</span> 的和，即</p>
+<div class="math notranslate nohighlight">
+\[a_{i - 1, j - 1} = \sum \mathbf{A}_{[i - 1, i), [j - 1, j)}\]</div>
+<p>刚才我们知道了任意子矩阵的和怎么求，所以这里如法炮制</p>
+<div class="math notranslate nohighlight">
+\[\underbrace{\sum \mathbf{A}_{[i - 1, i), [j - 1, j)}}_{ = a_{i - 1, j - 1}} = A_{i, j} - A_{i - 1, j} - A_{i, j - 1} + A_{i - 1, j - 1}\]</div>
+<p>调换一下位置</p>
+<div class="math notranslate nohighlight">
+\[A_{i, j} = a_{i - 1, j - 1} + A_{i - 1, j} + A_{i, j - 1} - A_{i - 1, j - 1}\]</div>
+<p>所以生成 <code class="docutils literal notranslate"><span class="pre">integral</span></code> 的代码可以这么写</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rowCount</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+<span class="n">columnCount</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">integral</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">columnCount</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rowCount</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+
+<span class="k">for</span> <span class="n">rowIndex</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rowCount</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+
+    <span class="k">for</span> <span class="n">columnIndex</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">columnCount</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">integral</span><span class="p">[</span><span class="n">rowIndex</span><span class="p">][</span><span class="n">columnIndex</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="n">rowIndex</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">columnIndex</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">integral</span><span class="p">[</span><span class="n">rowIndex</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">columnIndex</span><span class="p">]</span> <span class="o">+</span> <span class="n">integral</span><span class="p">[</span><span class="n">rowIndex</span><span class="p">][</span><span class="n">columnIndex</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">integral</span><span class="p">[</span><span class="n">rowIndex</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">columnIndex</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>来看例题吧。</p>
+<div class="section" id="k">
+<h3>和不超过 <span class="math notranslate nohighlight">\(k\)</span> 的子方阵的最大边长</h3>
+<p>出自 <a class="reference external" href="https://leetcode.com/problems/maximum-side-length-of-a-square-with-sum-less-than-or-equal-to-threshold/">Leetcode 1292</a></p>
+<blockquote>
+<div><p>给一个矩阵 <code class="docutils literal notranslate"><span class="pre">mat</span></code> ，这个矩阵里所有的和不超过 <code class="docutils literal notranslate"><span class="pre">threshold</span></code> 的子方阵里，最大的那个方阵的边长是多少？</p>
+</div></blockquote>
+<p>做法是先生成二维前缀和 <code class="docutils literal notranslate"><span class="pre">integral[i][j]</span></code> ，然后再遍历矩阵里的每个元素，遍历每个以这个元素为右下角的子方阵，利用二维前缀和计算出每个子方阵的累加和。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">maxSideLength</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mat</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">rowCount</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
+        <span class="n">columnCount</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">integral</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">columnCount</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rowCount</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rowCount</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">columnCount</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">integral</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">mat</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">integral</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">integral</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">integral</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># 到这里integral[i][j]就生成好了</span>
+
+        <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># 最大的、和不超过threshold的子方阵的边长</span>
+
+        <span class="k">for</span> <span class="n">rowIndex</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">integral</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span> <span class="p">],</span> <span class="mi">1</span><span class="p">):</span> <span class="c1"># 遍历每个子方阵</span>
+
+            <span class="k">for</span> <span class="n">columnIndex</span><span class="p">,</span> <span class="n">box</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span> <span class="p">],</span> <span class="mi">1</span><span class="p">):</span>
+
+                <span class="k">for</span> <span class="n">delta</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="mi">1000</span><span class="p">):</span> <span class="c1"># 随便取了个1000。边长小于当前找到的最大边长的子方阵也不用看了</span>
+                    <span class="k">if</span> <span class="n">rowIndex</span> <span class="o">-</span> <span class="n">delta</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">columnIndex</span> <span class="o">-</span> <span class="n">delta</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># 如果取的子方阵超出边界了</span>
+                        <span class="k">break</span> <span class="c1"># 也不用再搜索更大的子方阵了，因为更大的肯定也会超出边界</span>
+                    <span class="k">else</span><span class="p">:</span> <span class="c1"># 没有超出边界</span>
+                        <span class="k">if</span> <span class="n">integral</span><span class="p">[</span><span class="n">rowIndex</span><span class="p">][</span><span class="n">columnIndex</span><span class="p">]</span> <span class="o">-</span> <span class="n">integral</span><span class="p">[</span><span class="n">rowIndex</span><span class="p">][</span><span class="n">columnIndex</span> <span class="o">-</span> <span class="n">delta</span><span class="p">]</span> <span class="o">-</span> <span class="n">integral</span><span class="p">[</span><span class="n">rowIndex</span> <span class="o">-</span> <span class="n">delta</span><span class="p">][</span><span class="n">columnIndex</span><span class="p">]</span> <span class="o">+</span> <span class="n">integral</span><span class="p">[</span><span class="n">rowIndex</span> <span class="o">-</span> <span class="n">delta</span><span class="p">][</span><span class="n">columnIndex</span> <span class="o">-</span> <span class="n">delta</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">threshold</span><span class="p">:</span> <span class="c1"># 计算一下这个子方阵的和，如果和不超过threshold的话</span>
+                            <span class="n">res</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">delta</span><span class="p">)</span> <span class="c1"># 记下最大边长</span>
+                        <span class="k">else</span><span class="p">:</span> <span class="c1"># 如果和已经超过threshold了的话</span>
+                            <span class="k">break</span> <span class="c1"># 同样也不需要再搜索更大的子方阵了，因为题目说了矩阵里面的元素都是非负的，更大的子方阵的和不会更小，只会更大或者不变</span>
+
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="submatrix-sum">
+<h3>Submatrix sum</h3>
+<p>出自 <a class="reference external" href="https://leetcode.com/problems/number-of-submatrices-that-sum-to-target/">Leetcode 1074</a></p>
+<blockquote>
+<div><p>给一个矩阵 <code class="docutils literal notranslate"><span class="pre">matrix</span></code> ，这个矩阵有多少个累加和是 <code class="docutils literal notranslate"><span class="pre">target</span></code> 的子矩阵？</p>
+</div></blockquote>
+<p>这道题用prefix sum一直超时。所以这里先挖个坑_(:з」∠)_</p>
+</div>
+<div class="section" id="k-1-times-2k-1">
+<h3><span class="math notranslate nohighlight">\((2K + 1) \times (2K + 1)\)</span> 子方阵的和</h3>
+<p>出自 <a class="reference external" href="https://leetcode.com/problems/matrix-block-sum/">Leetcode 1314</a></p>
+<blockquote>
+<div><p>给一个 <span class="math notranslate nohighlight">\(m \times n\)</span> 的矩阵 <code class="docutils literal notranslate"><span class="pre">mat</span></code> 和一个整数 <span class="math notranslate nohighlight">\(K\)</span> ，返回另一个 <span class="math notranslate nohighlight">\(m \times n\)</span> 的矩阵 <code class="docutils literal notranslate"><span class="pre">answer</span></code> ，其中 <code class="docutils literal notranslate"><span class="pre">answer[i][j]</span></code> 是子矩阵 <code class="docutils literal notranslate"><span class="pre">mat[i</span> <span class="pre">-</span> <span class="pre">K:</span> <span class="pre">i</span> <span class="pre">+</span> <span class="pre">K</span> <span class="pre">+</span> <span class="pre">1,</span> <span class="pre">j</span> <span class="pre">-</span> <span class="pre">K:</span> <span class="pre">j</span> <span class="pre">+</span> <span class="pre">K</span> <span class="pre">+</span> <span class="pre">1]</span></code> 累加和。如果子矩阵圈到外面去了，默认那些位置是0。</p>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>这个题可以看成是用一个 <span class="math notranslate nohighlight">\((2K + 1) \times (2K + 1)\)</span> 的全1卷积核去卷积矩阵 <code class="docutils literal notranslate"><span class="pre">mat</span></code> 。我觉得看成卷积比较合理，因为卷积不忽略边界、并且卷积后的结果和原矩阵大小相同。</p>
+</div>
+<p>太简单了，这还能怎么做，明示prefix sum。只要注意一下求和的范围就好了，不要越界就好了。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">matrixBlockSum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mat</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">K</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+        <span class="n">rowCount</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
+        <span class="n">columnCount</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">integral</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">columnCount</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rowCount</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+
+        <span class="k">for</span> <span class="n">rowIndex</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rowCount</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+
+            <span class="k">for</span> <span class="n">columnIndex</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">columnCount</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">integral</span><span class="p">[</span><span class="n">rowIndex</span><span class="p">][</span><span class="n">columnIndex</span><span class="p">]</span> <span class="o">=</span> <span class="n">mat</span><span class="p">[</span><span class="n">rowIndex</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">columnIndex</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">integral</span><span class="p">[</span><span class="n">rowIndex</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">columnIndex</span><span class="p">]</span> <span class="o">+</span> <span class="n">integral</span><span class="p">[</span><span class="n">rowIndex</span><span class="p">][</span><span class="n">columnIndex</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">integral</span><span class="p">[</span><span class="n">rowIndex</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">columnIndex</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">columnCount</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rowCount</span><span class="p">)]</span>
+
+        <span class="k">for</span> <span class="n">rowIndex</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mat</span><span class="p">):</span>
+
+            <span class="k">for</span> <span class="n">columnIndex</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+
+                <span class="n">a</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">rowIndex</span> <span class="o">-</span> <span class="n">K</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">b</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">rowIndex</span> <span class="o">+</span> <span class="n">K</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rowCount</span><span class="p">)</span> <span class="c1"># 左上角坐标是(a, b)，注意不要越界。超出的部分算0</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">columnIndex</span> <span class="o">-</span> <span class="n">K</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">columnIndex</span> <span class="o">+</span> <span class="n">K</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">columnCount</span><span class="p">)</span> <span class="c1"># 右下角坐标是(x, y)，同样要注意不要越界</span>
+
+                <span class="n">res</span><span class="p">[</span><span class="n">rowIndex</span><span class="p">][</span><span class="n">columnIndex</span><span class="p">]</span> <span class="o">=</span> <span class="n">integral</span><span class="p">[</span><span class="n">b</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">+</span> <span class="n">integral</span><span class="p">[</span><span class="n">a</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">-</span> <span class="n">integral</span><span class="p">[</span><span class="n">a</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">-</span> <span class="n">integral</span><span class="p">[</span><span class="n">b</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="c1"># 计算子矩阵和</span>
+
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id11">
+<h2>随便说两句</h2>
+<p>我觉得prefix sum是我做了这么多题以来第一次感觉到“套路”的做法。剥开题目的表象下面就是非常套路的求积分、用积分算部分和。其实没有什么新意。关键还是要看出题目的本质，而这就是我最不擅长的地方了_(:з」∠)_</p>
+<p>这个做法最让我觉得神奇的地方是，把数组保存成积分的形式、比直接保存原数组好像多了一些信息，这些信息就是原数组每个substring的和。然而这些多出的信息似乎并没有让我们付出很多额外的 <strong>代价</strong> ，代价只有 <span class="math notranslate nohighlight">\(O(n)\)</span> 的时间，连额外空间的代价都不需要，因为生成积分之后，原数组其实已经可以扔掉了，原数组里的任意一个元素仍然可以在 <span class="math notranslate nohighlight">\(O(1)\)</span> 时间内得到。</p>
+<p>这个真的是太神奇了，我不知道该怎么形容这种感觉，除了感觉很爽之外，又有一种其实我好像根本没理解它的敬畏感_(:з」∠)_</p>
+<p>2020/1/11</p>
+<dl class="footnote brackets">
+<dt class="label" id="integral"><span class="brackets"><a class="fn-backref" href="#id8">1</a></span></dt>
+<dd><p>原谅我，我真的喜欢叫它积分序列，因为这就是离散版本的微积分基本定理嘛……叫前缀和的话要想一下才能知道是什么意思，叫积分的话，立马就能想到是什么意思。</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">前缀和太好用了</a><ul>
+<li><a class="reference internal" href="#id5">典型题</a><ul>
+<li><a class="reference internal" href="#substring-sum">Substring sum</a></li>
+<li><a class="reference internal" href="#k-substring">多少个和是 <span class="math notranslate nohighlight">\(k\)</span> 的substring</a></li>
+<li><a class="reference internal" href="#substring">多少个和在区间内的substring</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id6">需要转个弯的问题</a><ul>
+<li><a class="reference internal" href="#id7">是否能拆成三个和相等的substring</a></li>
+<li><a class="reference internal" href="#id9">含有等量0和1的最长substring的长度</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id10">二维前缀和</a><ul>
+<li><a class="reference internal" href="#k">和不超过 <span class="math notranslate nohighlight">\(k\)</span> 的子方阵的最大边长</a></li>
+<li><a class="reference internal" href="#submatrix-sum">Submatrix sum</a></li>
+<li><a class="reference internal" href="#k-1-times-2k-1"><span class="math notranslate nohighlight">\((2K + 1) \times (2K + 1)\)</span> 子方阵的和</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id11">随便说两句</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="../uncertainty-principle-fourier.html"
+                        title="上一章">&lt;no title&gt;</a></p>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/posts/prefix-sum/index.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../uncertainty-principle-fourier.html" title="&lt;no title&gt;"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">blog  文档</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; 版权所有 2019, aiifabbf.
+      由 <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.2 创建。
+    </div>
+  </body>
+</html>

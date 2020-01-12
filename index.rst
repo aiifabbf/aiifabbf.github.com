@@ -25,6 +25,7 @@
 最近
 =====
 
+-   :doc:`posts/prefix-sum/index`
 -   :doc:`posts/mathworks-interview/index`
 -   :doc:`posts/amazon-interview/index`
 -   :doc:`归约和NP问题 <posts/reduction-np>`
@@ -42,6 +43,7 @@
 .. toctree::
     :maxdepth: 1
 
+    posts/prefix-sum/index.rst
     posts/reduction-np.rst
 
 流水账
