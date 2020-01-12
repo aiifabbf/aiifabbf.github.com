@@ -39,6 +39,7 @@
     <div tabindex="-1" id="notebook" class="border-box-sizing">
         <blog-progress :active="loading"></blog-progress>
         <blog-notebook :post-url="route" :ctx="ctx" v-on:loading="loading = true" v-on:loaded="loading = false"></blog-notebook>
+        <div style="text-align: center; font-weight: bolder;"><a href="/"><code style="background-color: transparent; color: rgba(0, 0, 0, 0.5);">Canon & Baroque</code></a></div>
     </div>
 
     <template id="blog-progress">
