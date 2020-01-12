@@ -47,10 +47,12 @@ blockquote::after {
 /* fix sphinx toctree */
 ul {
     margin-top: 1em!important;
+    margin-bottom: 1em!important;
 }
 
 /* display equation gaps */
-.rendered_html * + p {
+div.math {
+    margin-top: 1em;
     margin-bottom: 1em;
 }
 
@@ -102,6 +104,7 @@ ul.auto-toc, ul.auto-toc ul {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 1em;
 }
 
 img {
@@ -118,6 +121,23 @@ img {
     float: right;
     margin-left: 2rem;
     max-width: 40%;
+}
+
+.contents {
+    margin: 2em 0;
+    padding: 1em 0;
+    border-top: 0.1rem solid black;
+    border-bottom: 0.1rem solid black;
+}
+
+.contents ul {
+    list-style: none;
+}
+
+.contents ul ul,
+.contents ul ul ul,
+.contents ul ul ul ul {
+    list-style: inherit;
 }
 
 /* pre.code, code {
