@@ -94,6 +94,7 @@
 -   `Ivy End <http://ivy-end.com>`_
 -   `MP <https://mpraiser.github.io>`_
 -   `Eden Chen <https://vendredii.github.io>`_
+-   `Litchi <https://liyc.pub/>`_
 
 你是谁啊/这是什么破网站啊
 ==============================
