@@ -24,6 +24,7 @@ a {
 blockquote {
     border: none;
     position: relative;
+    margin: 1em 0!important;
 }
 
 blockquote::before {
@@ -78,19 +79,37 @@ ul.auto-toc, ul.auto-toc ul {
     font-weight: bolder;
 }
 
+.label {
+    font-size: 0.8em;
+    color: black;
+    padding-right: 1em;
+}
+
 .footnote-reference {
     position: relative;
     top: -0.5rem;
     font-size: smaller;
 }
 
-.footnote {
-    margin: 2rem 0;
+.footnote,
+.citation {
     padding: 1em 0 0 0;
     position: relative;
     display: grid;
-    grid-template-columns: 3em 1fr;
+    grid-template-columns: auto 1fr;
     align-items: baseline;
+}
+
+.citation .label::before {
+    content: "[";
+}
+
+.citation .label::after {
+    content: "]";
+}
+
+.footnote {
+    margin: 2rem 0;
 }
 
 .footnote::before {
@@ -170,4 +189,21 @@ pre.code .deleted, code .deleted {
 
 pre.code .inserted, code .inserted {
     background-color: #A3D289;
+}
+
+/* 14px is probably too small? */
+.inner_cell {
+    font-size: 15px;
+    line-height: 1.43em;
+    /* font-family: 'source han serif sc', serif; */
+    /* maybe later... */
+}
+
+/* remove paper edge on mobile */
+body {
+    padding: 5px 0;
+}
+
+::selection {
+    background: #337ab730;
 }
