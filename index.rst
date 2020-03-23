@@ -25,6 +25,7 @@
 最近
 =====
 
+-   :doc:`posts/paypal-interview/index`
 -   :doc:`posts/prefix-sum/index`
 -   :doc:`posts/mathworks-interview/index`
 -   :doc:`posts/amazon-interview/index`
@@ -57,8 +58,12 @@
 上岸
 =====
 
--   :doc:`posts/mathworks-interview/index`
--   :doc:`posts/amazon-interview/index`
+.. toctree::
+    :maxdepth: 1
+
+    posts/paypal-interview/index
+    posts/mathworks-interview/index
+    posts/amazon-interview/index
 
 一些笔记
 ==========
