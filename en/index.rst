@@ -13,9 +13,9 @@ My resume/CV is `here <https://aiifabbf.github.io/resume/cv.html>`_. You can ope
 Experiences
 ===========
 
-I have no industry experience yet :(
+I was a full stack intern, writing CSS and doing UI tuning in a local data visualization company in 2019 summer.
 
-I am actively seeking a software engineering intern for 2020 summer. I have solved over 600 problems on `Leetcode <https://leetcode.com/aiifabbf>`_.
+I am actively seeking a software engineering intern for 2020 summer. I have solved `over 600 problems on Leetcode <https://leetcode.com/aiifabbf>`_.
 
 Projects
 ========
