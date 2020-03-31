@@ -981,4 +981,8 @@ Python只提供了累加和的函数 ``itertools.accumulate()`` 没有提供累�
 
 2020/3/23
 
+今天下午告诉我一面挂了，也不告诉我原因是啥。好气啊。
+
+2020/3/30
+
 .. [#] 原来preorder里面，stack是先放right、再放left，改成先放left、再放right。
