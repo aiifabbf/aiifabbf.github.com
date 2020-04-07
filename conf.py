@@ -77,6 +77,7 @@ pygments_style = 'vs'
 #
 html_theme = 'basic'
 html_add_permalinks = ""
+html_search_language = "zh" # 需要装jieba才行
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
