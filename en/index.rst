@@ -1,6 +1,6 @@
-============================
-Yuchen SHI 施宇晨 [#chinese]_
-============================
+===================
+Yuchen SHI 施宇晨
+===================
 
 Greetings! I am currently a master student in Computer Engineering in `Northwestern University <https://northwestern.edu>`_.
 
@@ -15,7 +15,9 @@ Experiences
 
 I was a full stack intern, writing CSS and doing UI tuning in a local data visualization company in 2019 summer.
 
-I am actively seeking a software engineering intern for 2020 summer. I have solved `over 700 problems on Leetcode <https://leetcode.com/aiifabbf>`_.
+I wrote a `single-page web application <https://github.com/SicunStudio/aunet-flask>`_ that works as the administration dashboard for a campus organization during undergraduate. My main role was front-end, but I also worked with back-end teammates on RESTful API design.
+
+I am actively seeking a software engineering intern for 2020 summer. I have solved `over 700 problems on Leetcode <https://leetcode.com/aiifabbf>`_. Code and comments are `here <https://github.com/aiifabbf/leetcode-memo>`_.
 
 Projects
 ========
@@ -55,5 +57,32 @@ I wrote heat simulation in Python for paper [zhou2020]_.
 
 .. [zhou2020] Zhou, Ling, Yufei Zhou, **Yuchen Shi,** Tianwei Chen, Tenghao Zou, Dongxiang Zhou, and Qiuyun Fu. "Enhancing thermal stability of P (VDF-HFP) based nanocomposites with core-shell fillers for energy storage applications." Composites Science and Technology 186 (2020): 107934. `doi: 10.1016/j.compscitech.2019.107934 <https://doi.org/10.1016/j.compscitech.2019.107934>`_
 
-.. [#chinese] Pronounce like "shh-yuu-chan". Fine. Call me Benjamin or YC.
+Courses
+=======
+
+During master study, I have taken
+
+-   algorithms
+-   operating systems
+-   computer networking
+-   databases
+-   computer graphics
+-   machine learning
+-   deep learning
+-   compilers
+
+and is taking
+
+-   distributed systems
+-   scalable systems
+-   concurrent programming
+
+During undergraduate study, I have taken
+
+-   computer architecture
+-   analog circuits
+-   digital circuits
+-   signals and systems
+-   quantum mechanics
+
 .. [#paper-cv] Paper resume/CV looks better if you have `Latin Modern <http://www.gust.org.pl/projects/e-foundry/latin-modern/index_html>`_ fonts installed.
