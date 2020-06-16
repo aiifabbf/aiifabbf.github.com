@@ -1,0 +1,232 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>前缀和的推广 &#8212; blog  文档</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="泛型" href="generics.html" />
+    <link rel="prev" title="西北CE一学期体验" href="first-quarter-at-northwestern.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="generics.html" title="泛型"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="first-quarter-at-northwestern.html" title="西北CE一学期体验"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">blog  文档</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>前缀和的推广</h1>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>前情提要</p>
+<p>最近终于刷到了700题，终于有那么点赶上通货膨胀的希望了。做到现在有两个感受最明显</p>
+<ul class="simple">
+<li><p>题目真的是有套路的</p></li>
+<li><p>我太缺乏想象力了</p></li>
+</ul>
+</div>
+<p>上一篇前缀和技巧的总结写了没过多久，我又陆续发现了一些其他的题目也能套这个思路，但是它们又不是前缀“和”，而是累积最大值、前缀异或。</p>
+<div class="section" id="id2">
+<h2>前缀异或</h2>
+<p>还记得前缀和里面我们是怎么做的吗？我们先定义了</p>
+<div class="math notranslate nohighlight">
+\[A_j = a_0 + a_1 + \cdots + a_{j - 1}\]</div>
+<p>然后每次需要计算substring累加和的时候，比如需要计算 <span class="math notranslate nohighlight">\(a_i + a_{i + 1} + \cdots + a_{j - 1}\)</span> 的时候，只需要 <span class="math notranslate nohighlight">\(A_j - A_i\)</span> 就可以了。</p>
+<p>其实这个结论可以推广一下。有没有发现 <span class="math notranslate nohighlight">\(+\)</span> 和 <span class="math notranslate nohighlight">\(-\)</span> 是一对逆运算？不如大胆假设，对于任何互为逆运算 <a class="footnote-reference brackets" href="#properties" id="id3">1</a> 的 <span class="math notranslate nohighlight">\(\bullet\)</span> 和 <span class="math notranslate nohighlight">\(\circ\)</span> ，都可以这么做</p>
+<div class="math notranslate nohighlight">
+\[A_j \circ A_i = a_i \bullet a_{i + 1} \bullet \cdots \bullet a_{j - 1}\]</div>
+<p>比如 <span class="math notranslate nohighlight">\(\times\)</span> 和 <span class="math notranslate nohighlight">\(\div\)</span> 是互逆的，那可以出道题</p>
+<blockquote>
+<div><p>给一个不含0的array，计算任意substring（要连续）的累乘。</p>
+</div></blockquote>
+<p>是不是直接定义</p>
+<div class="math notranslate nohighlight">
+\[A_j = a_0 \times a_1 \times \cdots \times a_{j - 1}\]</div>
+<p>然后</p>
+<div class="math notranslate nohighlight">
+\[A_j \div A_i\]</div>
+<p>就好了？</p>
+<p>顺便 <a class="reference external" href="https://leetcode.com/problems/xor-queries-of-a-subarray/">1310</a> 也能做了。题目是</p>
+<blockquote>
+<div><p>给一个array，计算任意substring（要连续）的累积异或。</p>
+</div></blockquote>
+<p>也就是要算 <span class="math notranslate nohighlight">\(a_i \oplus a_{i + 1} \oplus \cdots \oplus a_{j - 1}\)</span> 。</p>
+<p>那异或的逆运算是啥呢？似乎就是它本身……因为</p>
+<div class="math notranslate nohighlight">
+\[a \oplus b \oplus b = a \oplus (b \oplus b) = a \oplus 0 = a\]</div>
+<p>所以大胆定义</p>
+<div class="math notranslate nohighlight">
+\[A_j = a_0 \oplus a_1 \oplus \cdots \oplus a_{j - 1}\]</div>
+<p>然后</p>
+<div class="math notranslate nohighlight">
+\[A_j \oplus A_i = a_i \oplus a_{i + 1} \oplus \cdots \oplus a_{j - 1}\]</div>
+<p>就完事儿了。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>Rust里面要算这种累积和、累积乘之类的非常方便，直接用 <code class="docutils literal notranslate"><span class="pre">Iterator</span></code> 的 <code class="docutils literal notranslate"><span class="pre">scan()</span></code> 方法就可以了。上面的累积xor可以写成</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="n">integrals</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec</span><span class="o">!</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="p">.</span><span class="n">into_iter</span><span class="p">()</span><span class="w"></span>
+<span class="w">    </span><span class="p">.</span><span class="n">chain</span><span class="p">(</span><span class="n">array</span><span class="p">.</span><span class="n">into_iter</span><span class="p">().</span><span class="n">scan</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">|</span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="o">*</span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="n">state</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"> </span><span class="c1">// 要存的东西</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="o">*</span><span class="n">state</span><span class="p">);</span><span class="w"> </span><span class="c1">// 要吐的东西</span>
+<span class="w">    </span><span class="p">}))</span><span class="w"></span>
+<span class="w">    </span><span class="p">.</span><span class="n">collect</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+<p>出来之后 <code class="docutils literal notranslate"><span class="pre">integrals[j]</span> <span class="pre">^</span> <span class="pre">integrals[i]</span></code> 就是 <code class="docutils literal notranslate"><span class="pre">array[i..j]</span></code> 的累积xor了。</p>
+<p>Python的话，虽然有 <code class="docutils literal notranslate"><span class="pre">itertools.accumulate()</span></code> ，但是没有 <code class="docutils literal notranslate"><span class="pre">itertools.accumulative_xor()</span></code> （废话）。至今没有找到很好的写法，可能只能for了。</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>累积最大值</h2>
+<p>说的就是 <a class="reference external" href="https://leetcode.com/problems/trapping-rain-water/">42接雨水</a> 这道题。题目大概是</p>
+<blockquote>
+<div><p>给一个全是自然数的array， <code class="docutils literal notranslate"><span class="pre">array[i]</span></code> 表示第 <span class="math notranslate nohighlight">\(i\)</span> 格上有多少块石头。现在下雨了，这堆石头能接多少格水。</p>
+</div></blockquote>
+<p>比如给</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>表示这堆石头大概长这样</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>       <span class="n">o</span>
+   <span class="n">o</span>   <span class="n">oo</span> <span class="n">o</span>
+ <span class="n">o</span> <span class="n">oo</span> <span class="n">oooooo</span>
+<span class="o">------------</span>
+</pre></div>
+</div>
+<p>盛满雨水的话，就变成了</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>       <span class="n">o</span>
+   <span class="n">o</span><span class="o">~~~</span><span class="n">oo</span><span class="o">~</span><span class="n">o</span>
+ <span class="n">o</span><span class="o">~</span><span class="n">oo</span><span class="o">~</span><span class="n">oooooo</span>
+<span class="o">------------</span>
+</pre></div>
+</div>
+<p>能接6格雨水。官网的示意图更清楚。</p>
+<p>第 <span class="math notranslate nohighlight">\(i\)</span> 格能接多少水取决于啥呢？假如你是水（误），如果你滴到一块凹的地方，就不会从两边流下去。怎么体现凹这件事情呢？其实就是从第 <span class="math notranslate nohighlight">\(i\)</span> 格比左右两边最高的石头要矮。严谨点说就是第 <span class="math notranslate nohighlight">\(i\)</span> 格的高度小于 <span class="math notranslate nohighlight">\(\min\{x, y\}\)</span> ，其中 <span class="math notranslate nohighlight">\(x\)</span> 是往左边看过去最高的石头的高度， <span class="math notranslate nohighlight">\(y\)</span> 是往右边看过去最高的石头的高度。</p>
+<p>比如</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>       <span class="n">o</span>
+   <span class="n">o</span><span class="o">~~~</span><span class="n">oo</span><span class="o">~</span><span class="n">o</span>
+ <span class="n">o</span><span class="o">~</span><span class="n">oo</span><span class="o">~</span><span class="n">oooooo</span>
+<span class="o">------------</span>
+ <span class="o">&lt;--</span> <span class="o">|</span> <span class="o">--&gt;</span>
+</pre></div>
+</div>
+<p>看第4格，从第4格往左边看，最高的是2，往右边看，最高的是3。第4格本身高度是0，所以能接的水就是 <span class="math notranslate nohighlight">\(\min\{2, 3\} - 0 = 2\)</span> 。</p>
+<p>再比如</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>       <span class="n">o</span>
+   <span class="n">o</span><span class="o">~~~</span><span class="n">oo</span><span class="o">~</span><span class="n">o</span>
+ <span class="n">o</span><span class="o">~</span><span class="n">oo</span><span class="o">~</span><span class="n">oooooo</span>
+<span class="o">------------</span>
+      <span class="o">&lt;--</span> <span class="o">|</span> <span class="o">--&gt;</span>
+</pre></div>
+</div>
+<p>看这一格，往左边看，最高的就是左边紧邻的3，往右边看过去，最高的是1。可是这一格本身的高度就是2，所以接不到水。</p>
+<p>写严谨一点，第 <span class="math notranslate nohighlight">\(i\)</span> 格能接的水是</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\max\left\{
+    \min\left\{\begin{aligned}
+        &amp; \max\{a_j | j &lt; i\} \\
+        &amp; \max\{a_j | j &gt; i + 1\} \\
+    \end{aligned}\right\} - a_i,
+    0
+\right\}\end{split}\]</div>
+<p>那每到第 <span class="math notranslate nohighlight">\(i\)</span> 格，都要往前扫描一遍、往后扫描一遍，得到往两边看过去的最大值，就不太合算。不如把这个信息事先缓存起来。比如整一个 <code class="docutils literal notranslate"><span class="pre">maximumBefore[i]</span></code> 表示 <code class="docutils literal notranslate"><span class="pre">max(array[:</span> <span class="pre">i])</span></code> 、 <code class="docutils literal notranslate"><span class="pre">maximumAfter[i]</span></code> 表示 <code class="docutils literal notranslate"><span class="pre">max(array[i:</span> <span class="pre">])</span></code> 。这样就能做到 <span class="math notranslate nohighlight">\(O(n)\)</span> 复杂度了。</p>
+<p><a class="reference external" href="https://leetcode.com/problems/min-stack/">155 stack的最小值</a> 也是类似的做法。</p>
+<p>2020/4/15</p>
+<dl class="footnote brackets">
+<dt class="label" id="properties"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
+<dd><p>似乎还需要其他的性质，比如交换律。但是也不一定，可以巧妙规定 <span class="math notranslate nohighlight">\(\circ\)</span> 的规则，比如如果 <span class="math notranslate nohighlight">\(A_j\)</span> 是前 <span class="math notranslate nohighlight">\(j\)</span> 个矩阵的乘积，即 <span class="math notranslate nohighlight">\(A_j = \mathbf{A}_0 \mathbf{A}_1 \cdots \mathbf{A}_{j - 1}\)</span> ，定义 <span class="math notranslate nohighlight">\(A_i \circ A_j = A_i^{-1} A_j\)</span> ，那么 <span class="math notranslate nohighlight">\(A_j \circ A_i\)</span> 就能得到 <span class="math notranslate nohighlight">\(\mathbf{A}_i \mathbf{A}_{i + 1} \cdots \mathbf{A}_{j - 1}\)</span> 了。</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">前缀和的推广</a><ul>
+<li><a class="reference internal" href="#id2">前缀异或</a></li>
+<li><a class="reference internal" href="#id5">累积最大值</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="first-quarter-at-northwestern.html"
+                        title="上一章">西北CE一学期体验</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="generics.html"
+                        title="下一章">泛型</a></p>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/posts/generic-prefix-sum.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="generics.html" title="泛型"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="first-quarter-at-northwestern.html" title="西北CE一学期体验"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">blog  文档</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; 版权所有 2019, aiifabbf.
+      由 <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 创建。
+    </div>
+  </body>
+</html>
