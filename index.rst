@@ -2,19 +2,22 @@
 ``Canon & Baroque``
 ====================
 
-    突然发现（你又突然发现了）很久没有更新了……我还以为换了清新可爱的reStructuredText我就会有写东西的动力、常更博客，原来自己只是喜欢调样式而已（前端真爱粉？）
+实习估计是没了（叹气），PayPal本来挺有希望的，不知道为什么挂了。在投PayPal之前就已经开始投国内公司了，tx面了7面、3个团队，面得快吐了，最后还是没成功；头条挺顺利的，可是一开始明明说可以远程实习，现在又说不能了；微软也是一开始说远程远程，现在也改口说不行。
 
-我果然就是喜欢调样式，哈哈。你有没有发现这个博客现在变成Sphinx编译的了？Sphinx是我到目前为止见过的最完美的文本编译工具。想想我从Jupyter notebook、变成reStructuredText、再到现在的Sphinx经历了多少坎坷（坑）。这样子的话，一段时间内我就不会再改博客的外在了，该好好写内容了。
+最近在听
 
-    电脑还是13年买的yoga，但是装上ubuntu用着真的太顺手了。我最喜欢的地方是它的键盘实在是太合理了，最右边有home, end, page up, page down键。不知道这种键盘布局叫什么名字，反正我至今都没有找到这种键盘布局的机械键盘（求告知）。毕业之后思考了很久要不要换电脑，最终还是没换。现在外壳早就刮花了，屏幕周围一圈的橡胶圈也开始老化脱落了，去年还坏了一个USB口（总共就两个）。但我觉得还能再战十年嘻嘻。
+-   `哥德堡变奏曲 <https://imslp.org/wiki/Goldberg-Variationen,_BWV_988_(Bach,_Johann_Sebastian)>`_ ，很喜欢 `Andras Schiff的版本 <https://www.bilibili.com/video/av20198748>`_
+-   `帕蒂塔 <https://imslp.org/wiki/6_Partitas,_BWV_825-830_(Bach,_Johann_Sebastian)>`_ ，还是推荐 `Andras Schiff的版本 <https://www.bilibili.com/video/BV1aC4y1H7uj>`_ ，还听了 `Ton Koopman的羽管键琴的版本 <https://music.163.com/#/album?id=38625698>`_
+-   弥赛亚，只听过 `Neville Marriner的 <https://www.bilibili.com/video/BV1fx411K7KS>`_
 
-我知道这种键盘布局叫什么了，叫84键，很少有厂家做这种布局的键盘。淘宝上我只找到了一家。
+照着神书 `Ray Tracing in One Weekend <https://raytracing.github.io>`_ ，用Rust写了个 `光线追踪渲染器 <https://github.com/aiifabbf/ray-tracer>`_ 。书里面是C++的，我寻思着Rust看了这么久，该拿个东西练练手了。
 
-最近很喜欢听 `哥德堡变奏曲 <https://imslp.org/wiki/Goldberg-Variationen,_BWV_988_(Bach,_Johann_Sebastian)>`_ ，好像已经到了每天至少循环两遍的程度了。
+.. figure:: https://github.com/aiifabbf/ray-tracer/raw/master/cover.png
+    :width: 100%
 
-新学期开始了，开始肝操作系统、编译器、网络、深度学习了。
+    书同款封面图。效果还不错吧。
 
-我怎么还没找到实习啊……
+立个flag：暑假写完第二本。
 
 .. toctree::
     :hidden:
@@ -25,14 +28,16 @@
 最近
 =====
 
--   :doc:`posts/paypal-interview/index`
+-   未解之谜 :doc:`posts/multivariate-recurrence-equation`
+-   :doc:`posts/generic-prefix-sum`
+-   :doc:`posts/paypal-interview/index` 一面挂了
 -   :doc:`posts/prefix-sum/index`
--   :doc:`posts/mathworks-interview/index`
--   :doc:`posts/amazon-interview/index`
+-   :doc:`posts/mathworks-interview/index` 三面挂了
+-   :doc:`posts/amazon-interview/index` 根本不给我OA
 -   :doc:`归约和NP问题 <posts/reduction-np>`
 -   去米国了
 -   :doc:`毕业了 <posts/after-graduation>`
--   刷Leetcode。现在刷了 **600道** 了。嘻嘻
+-   刷Leetcode。现在刷了 **700道** 了。嘻嘻
 
     -   `新仓库 <https://github.com/aiifabbf/leetcode-memo>`_
     -   `旧仓库 <jupyter/leetcode中的算法.html>`_
@@ -44,6 +49,8 @@
 .. toctree::
     :maxdepth: 1
 
+    posts/generic-prefix-sum.rst
+    posts/is-substring
     posts/prefix-sum/index.rst
     posts/reduction-np.rst
 
@@ -65,8 +72,8 @@
     posts/mathworks-interview/index
     posts/amazon-interview/index
 
-一些笔记
-==========
+笔记
+=====
 
 -   `离散数学 <jupyter/notes-discrete-mathematics.html>`_
 -   `算法 <jupyter/notes-introduction-to-algorithms.html>`_
@@ -82,7 +89,7 @@
 还没学的东西怎么可能有链接嘛(～￣▽￣)～
 
 -   N1
--   CS全家桶
+-   CS全家桶（快了在学了）
 -   控制原理
 -   复分析
 -   实分析
@@ -91,15 +98,20 @@
 -   微观经济学
 -   乐理
 
+未解之谜
+========
+
+-   :doc:`posts/multivariate-recurrence-equation`
+
 友情链接
 ==========
 
 下面是大佬时间。
 
--   `Ivy End <http://ivy-end.com>`_
--   `MP <https://mpraiser.github.io>`_
--   `Eden Chen <https://vendredii.github.io>`_
--   `Litchi <https://liyc.pub/>`_
+-   `Ivy End <http://ivy-end.com>`_ 竞赛选手，文言大家，最近好像在做芯片方面的事情
+-   `MP <https://mpraiser.github.io>`_ 萌萌的MP子，微电子
+-   `Eden Chen <https://vendredii.github.io>`_ 可恶的资本家，生态学
+-   `Litchi <https://litchi-li.github.io>`_ 可爱的学弟，超级喜欢他的文笔
 
 你是谁啊/这是什么破网站啊
 ==============================
