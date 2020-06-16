@@ -7,16 +7,17 @@
     <title>归约和NP问题 &#8212; blog  文档</title>
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script type="text/javascript" src="../_static/translations.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="prev" title="前缀和太好用了" href="prefix-sum.html" /> 
+    <link rel="next" title="双指针就是动态规划？" href="two-pointers-is-dp.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="network-security.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>导航</h3>
@@ -25,7 +26,10 @@
           <a href="../genindex.html" title="总目录"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="prefix-sum.html" title="前缀和太好用了"
+          <a href="two-pointers-is-dp.html" title="双指针就是动态规划？"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="network-security.html" title="&lt;no title&gt;"
              accesskey="P">上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">blog  文档</a> &#187;</li> 
       </ul>
@@ -168,7 +172,7 @@ P_1 \leq_p P_3\end{split}\]</div>
 <p>其实也是可以转化成多个内层问题实例、让内层机器跑多次才能得到答案的。只要让内层机器跑的次数也是多项式阶次数就好了。</p>
 <p>这里要说明一下，所谓的多项式阶数复杂度，是指复杂度的表达式只和输入的 <strong>规模</strong> 有关，而不是和输入的 <strong>值</strong> 有关。比如假设 <span class="math notranslate nohighlight">\(n\)</span> 是物品的个数、 <span class="math notranslate nohighlight">\(M\)</span> 是背包最大承重， <span class="math notranslate nohighlight">\(O(n)\)</span> 就是多项式阶的，但是 <span class="math notranslate nohighlight">\(O(n M)\)</span> 不是多项式阶，而是 <strong>伪多项式阶</strong> ，因为复杂度里出现了输入的值 <span class="math notranslate nohighlight">\(M\)</span> 。</p>
 <p>然而，如果是 <span class="math notranslate nohighlight">\(O(n \ln M)\)</span> 的话，那么这个又确实是多项式阶了。这是怎么回事呢？是因为虽然 <span class="math notranslate nohighlight">\(M\)</span> 不是输入规模，是输入的值，但是 <span class="math notranslate nohighlight">\(\ln M\)</span> 确实是输入规模。先别打我，这是千真万确的事情，我第一次知道的时候也很惊讶，但是随后一想，发现真的是这么回事。想一想，电脑要存储 <span class="math notranslate nohighlight">\(M\)</span> 这个数字需要多少空间？就假设 <span class="math notranslate nohighlight">\(M\)</span> 是个整数，在现在的二进制电脑里，需要 <span class="math notranslate nohighlight">\(\log_2 M\)</span> 个bit来存储，这是不是一种输入 <strong>规模</strong> 呢？</p>
-<p>那假设问题A归约到问题B只要单次归约、问题C归约到问题B却需要多次归约，是否说明问题C比问题B更难呢？不一定，有可能问题A、B、C的难度是相等的。比如刚才找最值规约到判定的那个例子，是多次归约，但是这两个问题（或者版本/表象吧）难度相等。</p>
+<p>那假设问题A归约到问题B只要单次归约、问题C归约到问题B却需要多次归约，是否说明问题C比问题A <a class="footnote-reference brackets" href="#error1" id="id10">7</a> 更难呢？不一定，有可能问题A、B、C的难度是相等的。比如刚才找最值规约到判定的那个例子，是多次归约，但是这两个问题（或者版本/表象吧）难度相等。</p>
 </div>
 <div class="section" id="npnp-hardnp-complete">
 <h2>NP、NP-hard、NP-complete</h2>
@@ -227,7 +231,7 @@ P_1 \leq_p P_3\end{split}\]</div>
 <div class="section" id="np-complete">
 <h2>对付NP-complete问题</h2>
 <p>既然找NP-complete问题的精确解很难、找不到，那不如退而求其次，找到相对来说不那么坏的解也不错。这就是很多近似算法的思路：我不去追求最优解了，但我能在多项式阶时间里，给你 <strong>保证</strong> 一个不差于最优解多少倍的近似最优解。</p>
-<p>这个系数可以是常数，比如2（出现在欧几里得空间 <a class="footnote-reference brackets" href="#metric-tsp" id="id11">6</a> 中的旅行商人问题里）；还可以是 <span class="math notranslate nohighlight">\(1 + \epsilon\)</span> 这种可以任意逼近的（出现在实数背包问题里），叫 <a class="reference external" href="https://en.wikipedia.org/wiki/Polynomial-time_approximation_scheme">PTAS</a> 。 <span class="math notranslate nohighlight">\(\epsilon\)</span> 有点像是你可以任意选择的精度， <span class="math notranslate nohighlight">\(\epsilon\)</span> 越接近0，近似解越好、越接近全局最优解。当然可想而知这肯定是有代价的，代价就是 <span class="math notranslate nohighlight">\(\epsilon\)</span> 越小，时间复杂度越高。但不管 <span class="math notranslate nohighlight">\(\epsilon\)</span> 是多少，算法都是多项式阶的，当然 <span class="math notranslate nohighlight">\(n^{1000}\)</span> 也是多项式阶的，但在 <span class="math notranslate nohighlight">\(n\)</span> 很小的时候，不见得比 <span class="math notranslate nohighlight">\(2^n\)</span> 快。这其中的利弊就需要你自己去权衡啦。</p>
+<p>这个系数可以是常数，比如2（出现在欧几里得空间 <a class="footnote-reference brackets" href="#metric-tsp" id="id12">6</a> 中的旅行商人问题里）；还可以是 <span class="math notranslate nohighlight">\(1 + \epsilon\)</span> 这种可以任意逼近的（出现在实数背包问题里），叫 <a class="reference external" href="https://en.wikipedia.org/wiki/Polynomial-time_approximation_scheme">PTAS</a> 。 <span class="math notranslate nohighlight">\(\epsilon\)</span> 有点像是你可以任意选择的精度， <span class="math notranslate nohighlight">\(\epsilon\)</span> 越接近0，近似解越好、越接近全局最优解。当然可想而知这肯定是有代价的，代价就是 <span class="math notranslate nohighlight">\(\epsilon\)</span> 越小，时间复杂度越高。但不管 <span class="math notranslate nohighlight">\(\epsilon\)</span> 是多少，算法都是多项式阶的，当然 <span class="math notranslate nohighlight">\(n^{1000}\)</span> 也是多项式阶的，但在 <span class="math notranslate nohighlight">\(n\)</span> 很小的时候，不见得比 <span class="math notranslate nohighlight">\(2^n\)</span> 快。这其中的利弊就需要你自己去权衡啦。</p>
 <p>近似算法我不谈了……自己学的也不好。_(:з」∠)_</p>
 <p>这里真的还有巨多我不明白的问题。比如算法课最后还讲到了NP-complete问题之间也有区别，有些NP-complete能够有任意逼近算法（比如欧几里得空间中的旅行商人问题），但有些NP-complete问题没有任意逼近算法（一般图中的旅行商人问题）。没有任意逼近算法的NP-complete是否能说是难度更大呢？还是说没有任意逼近算法的揭示了难度的另一个维度、另一种难度？可能这就是没有发明 <span class="math notranslate nohighlight">\(=_p\)</span> 记号的原因？</p>
 <p>不管了，下午出分了，好像运气好的话还能拿个A，嘻嘻。</p>
@@ -251,8 +255,11 @@ P_1 \leq_p P_3\end{split}\]</div>
 <dt class="label" id="obvious"><span class="brackets"><a class="fn-backref" href="#id6">5</a></span></dt>
 <dd><p>每次听别人说显然，我都想打他。</p>
 </dd>
-<dt class="label" id="metric-tsp"><span class="brackets"><a class="fn-backref" href="#id11">6</a></span></dt>
+<dt class="label" id="metric-tsp"><span class="brackets"><a class="fn-backref" href="#id12">6</a></span></dt>
 <dd><p>欧几里得空间指的就是真实世界，满足三角形规则，图中的任意一个三角形都满足两条短边之和大于等于最长边。</p>
+</dd>
+<dt class="label" id="error1"><span class="brackets"><a class="fn-backref" href="#id10">7</a></span></dt>
+<dd><p>这里我一开始写错了。</p>
 </dd>
 </dl>
 </div>
@@ -279,8 +286,11 @@ P_1 \leq_p P_3\end{split}\]</div>
 </ul>
 
   <h4>上一个主题</h4>
-  <p class="topless"><a href="prefix-sum.html"
-                        title="上一章">前缀和太好用了</a></p>
+  <p class="topless"><a href="network-security.html"
+                        title="上一章">&lt;no title&gt;</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="two-pointers-is-dp.html"
+                        title="下一章">双指针就是动态规划？</a></p>
   <div role="note" aria-label="source link">
     <h3>本页</h3>
     <ul class="this-page-menu">
@@ -297,7 +307,7 @@ P_1 \leq_p P_3\end{split}\]</div>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -309,14 +319,17 @@ P_1 \leq_p P_3\end{split}\]</div>
           <a href="../genindex.html" title="总目录"
              >索引</a></li>
         <li class="right" >
-          <a href="prefix-sum.html" title="前缀和太好用了"
+          <a href="two-pointers-is-dp.html" title="双指针就是动态规划？"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="network-security.html" title="&lt;no title&gt;"
              >上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">blog  文档</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; 版权所有 2019, aiifabbf.
-      由 <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.2 创建。
+      由 <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 创建。
     </div>
   </body>
 </html>
