@@ -43,6 +43,21 @@ A computer networking project. I implemented a simple TCP-like protocol on top o
 
 Learn more `here <https://github.com/aiifabbf/simple-tcp>`_.
 
+``ray-tracer``
+--------------
+
+A toy ray-tracing renderer in Rust, inspired by `Ray Tracing in One Weekend <https://raytracing.github.io/>`_ series. The book uses C++, but I thought it would be nice to do it in Rust. Features I implemented include:
+
+-   `bounding volume hierarchy <https://en.wikipedia.org/wiki/Bounding_volume_hierarchy>`_ (which you can think of as a 3D binary search tree) to accelerate ray-object intersection
+-   multi-thread rendering
+-   arbitrary transform to objects
+-   diffusive, reflective, refractive materials
+-   isotropic volume (like smoke and fog)
+
+I also ported it to WebAssembly and made a `live demo <https://aiifabbf.github.io/ray-tracer-wasm/www/dist/index.html>`_, so you can run it in your browser!
+
+Learn more `here <https://github.com/aiifabbf/ray-tracer>`_.
+
 This blog
 ---------
 
@@ -70,9 +85,6 @@ During master study, I have taken
 -   machine learning
 -   deep learning
 -   compilers
-
-and is taking
-
 -   distributed systems
 -   scalable systems
 -   concurrent programming
