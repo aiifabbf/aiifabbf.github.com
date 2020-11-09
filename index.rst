@@ -2,22 +2,24 @@
 ``Canon & Baroque``
 ====================
 
-实习估计是没了（叹气），PayPal本来挺有希望的，不知道为什么挂了。在投PayPal之前就已经开始投国内公司了，tx面了7面、3个团队，面得快吐了，最后还是没成功；头条挺顺利的，可是一开始明明说可以远程实习，现在又说不能了；微软也是一开始说远程远程，现在也改口说不行。
+面试了好多家国内的公司，终于收到offer啦！有游戏的、互联网的还有做EDA的。开心了几天之后又陷入纠结，“你到时候肯定又会纠结”，不幸被朋友言中。
 
-最近在听
+我不想早早地选择某个方向一头走到黑，不想把自己和某个领域、某种技术绑定在一起，想做全才（菜），不管是做图形、做后端还是做电路我都觉得好有意思啊，都想去尝试一下。当然这种兴趣我不确定是真的感兴趣、还是仅仅是因为了解不够深入而产生的神秘感。有点后悔本科的时候没有做几份实习，这样现在选择可能会少一点纠结。
 
--   `哥德堡变奏曲 <https://imslp.org/wiki/Goldberg-Variationen,_BWV_988_(Bach,_Johann_Sebastian)>`_ ，很喜欢 `Andras Schiff的版本 <https://www.bilibili.com/video/av20198748>`_
--   `帕蒂塔 <https://imslp.org/wiki/6_Partitas,_BWV_825-830_(Bach,_Johann_Sebastian)>`_ ，还是推荐 `Andras Schiff的版本 <https://www.bilibili.com/video/BV1aC4y1H7uj>`_ ，还听了 `Ton Koopman的羽管键琴的版本 <https://music.163.com/#/album?id=38625698>`_
--   弥赛亚，只听过 `Neville Marriner的 <https://www.bilibili.com/video/BV1fx411K7KS>`_
+我更担心的事情是，现在的offer我毕竟只能选一个，如果我这次选择了互联网（比如说，其实我到现在也还没想好到底接哪个），将来想去做EDA或者图形或者其他突然又感兴趣的领域会不会很难……
 
-照着神书 `Ray Tracing in One Weekend <https://raytracing.github.io>`_ ，用Rust写了个 `光线追踪渲染器 <https://github.com/aiifabbf/ray-tracer>`_ 。书里面是C++的，我寻思着Rust看了这么久，该拿个东西练练手了。
+米国的工作太难找了，做了很多笔试，之后要么是拒要么是再也没消息了。可能因为我没有实习。
 
-.. figure:: https://github.com/aiifabbf/ray-tracer/raw/master/cover.png
-    :width: 100%
+听了亨德尔的弥赛亚之后突然觉得声乐作品也好好听啊，于是最近开始听巴赫的声乐作品了
 
-    书同款封面图。效果还不错吧。
+-   B小调弥撒，听过 `Ton Koopman的 <https://www.bilibili.com/video/BV1ds411K7W9>`_ 和 `荷兰巴赫协会的 <https://www.bilibili.com/video/BV1E4411A7xu?t=19>`_
+-   马太受难曲，听过 `Georg Christoph Biller的 <https://www.bilibili.com/video/BV1E4411A7xu>`_ ，他录这个的时候好像是圣托马斯教堂的音乐指导 aka. Thomaskantor，巴赫之前也担任过这个职位
 
-立个flag：暑假写完第二本。
+一开始听这些声乐作品觉得很怪很难受，因为都是宗教题材的作品，特别是那个弥赛亚的歌词还是英文的，有的地方还能听懂。听得我那叫一个尬啊，感觉就像是熊氏老方的狂热粉丝用极其华丽的辞藻、优美的语调来歌颂熊氏老方。
+
+突然又想到了无神论应该如何辩证看待宗教的问题。我觉得这些宗教音乐作品大概能算是宗教存在的积极意义。我猜巴赫和亨德尔写这些作品的时候，可能是确实相信有一个至高无上的主宰、是确实在发自内心歌颂那个虚拟偶像，否则很难相信他们能写出这么崇高庄严的作品。
+
+器乐作品听了巴赫的六首小提琴键盘奏鸣曲，听过Ton Koopman的，用的是羽管键琴，还听过Keith Jarrett在现代钢琴上的版本。
 
 .. toctree::
     :hidden:
@@ -28,6 +30,13 @@
 最近
 =====
 
+-   :doc:`posts/binary-search-ptsd`
+-   刷Leetcode。现在刷了 **900道** 了！而且今年周赛终于上了一次2100分！虽然没几天就降下去了……
+
+    -   `超级详细的代码注释 <https://github.com/aiifabbf/leetcode-memo>`_ 保准你一看就会
+    -   `Leetcode个人主页 <https://leetcode.com/aiifabbf>`_ 哪天看我没做题请打我嘤嘤嘤
+
+-   照着神书 `Ray Tracing in One Weekend <https://raytracing.github.io>`_ ，用Rust写了个 `光线追踪渲染器 <https://github.com/aiifabbf/ray-tracer>`_
 -   未解之谜 :doc:`posts/multivariate-recurrence-equation`
 -   :doc:`posts/generic-prefix-sum`
 -   :doc:`posts/paypal-interview/index` 一面挂了
@@ -37,11 +46,6 @@
 -   :doc:`归约和NP问题 <posts/reduction-np>`
 -   去米国了
 -   :doc:`毕业了 <posts/after-graduation>`
--   刷Leetcode。现在刷了 **700道** 了。嘻嘻
-
-    -   `新仓库 <https://github.com/aiifabbf/leetcode-memo>`_
-    -   `旧仓库 <jupyter/leetcode中的算法.html>`_
-    -   `Leetcode个人主页 <https://leetcode.com/aiifabbf>`_
 
 略懂
 ====
@@ -49,8 +53,8 @@
 .. toctree::
     :maxdepth: 1
 
+    posts/binary-search-ptsd.rst
     posts/generic-prefix-sum.rst
-    posts/is-substring
     posts/prefix-sum/index.rst
     posts/reduction-np.rst
 
@@ -111,7 +115,7 @@
 -   `Ivy End <http://ivy-end.com>`_ 竞赛选手，文言大家，最近好像在做芯片方面的事情
 -   `MP <https://mpraiser.github.io>`_ 萌萌的MP子，微电子
 -   `Eden Chen <https://vendredii.github.io>`_ 可恶的资本家，生态学
--   `Bob <https://litchi-li.github.io>`_ 可爱的学弟，超级喜欢他的文笔
+-   `Bob <https://yyccli.github.io/>`_ 可爱的学弟，超级喜欢他的文笔
 
 你是谁啊/这是什么破网站啊
 ==============================
