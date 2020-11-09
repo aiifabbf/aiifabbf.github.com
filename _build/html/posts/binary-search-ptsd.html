@@ -1,0 +1,504 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>我快要二分搜索PTSD了 &#8212; blog  文档</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="计算机网络" href="computer-networking.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="awesome-data-structures.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="computer-networking.html" title="计算机网络"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="awesome-data-structures.html" title="&lt;no title&gt;"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">blog  文档</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ptsd">
+<h1>我快要二分搜索PTSD了</h1>
+<p>最近遇到了好多看上去和二分搜索完全没关系的题目，一看提示竟然是二分搜索。我目前做过的这类题有</p>
+<ul class="simple">
+<li><p>278 找到第一个bad version</p></li>
+<li><p>1011 最少要多少天运完货</p></li>
+<li><p>1552 尽可能稀疏放球</p></li>
+<li><p>1283 找到最小的 <span class="math notranslate nohighlight">\(n\)</span> 使得数组每个元素除以 <span class="math notranslate nohighlight">\(n\)</span> 之后向上取整的累加和大于等于 <span class="math notranslate nohighlight">\(t\)</span></p></li>
+<li><p>1631 最省力的爬山路径</p></li>
+</ul>
+<p>痛定思痛，决定稍微研究一下这个问题，以后遇到类似的坑能及时发现。稍微研究过后发现，背后的本质是归约（所以标题其实不太贴切，二分只是实现两种表述之间转换的overhead最小、最高效的方法），竟然在上学期的算法课里重点讲过，之前自己总结NP和归约的文章里也提过，没几天居然就忘了，真是学艺不精啊……</p>
+<div class="section" id="id1">
+<h2>字面意思的二分搜索</h2>
+<p>先来回顾一下普通的二分搜索的目的是啥。简单来说是给一个排好序的array，这里就假设是从小到大排好序的，比如</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span>
+</pre></div>
+</div>
+<p>现在要插入一个新的数字，假设就是3，要把这个3插入到某个位置之后，原array仍然保持有序。二分搜索就是寻找这样一个位置、使得元素 <strong>插入</strong> 到这个位置之后、array仍然保持有序的过程。</p>
+<p>在上面这个例子里面，3可以插入的位置有4个</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span>
+    <span class="o">^</span>  <span class="o">^</span>  <span class="o">^</span>  <span class="o">^</span>
+</pre></div>
+</div>
+<p>在这几个位置插入3，都可以使得array保持有序。</p>
+<p>注意二分搜索并不一定是找到某个元素的位置，因为array里可能根本不存在这个元素。</p>
+<p>比如如果换成2.5，原array根本就不存在2.5，可插入的位置只有</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span>
+    <span class="o">^</span>
+</pre></div>
+</div>
+<p>既然有时候可插入的位置不止一个，那么我们最关心哪个位置呢？通常最关心最靠左和最靠右的两个位置。最左和最右在代码里的差别很小，区别在于相等的时候收紧左边界还是收紧右边界。</p>
+<p>不管有的没的了，先来看怎么找到最左插入位置。首先我们有两个指针 <code class="docutils literal notranslate"><span class="pre">left,</span> <span class="pre">right</span></code> 表示当前我们的搜索范围是 <code class="docutils literal notranslate"><span class="pre">array[left..right]</span></code> 。注意左闭右开。也就是说我们现在想在 <code class="docutils literal notranslate"><span class="pre">array[left..right]</span></code> 里找一个最靠左的位置插入数字 <code class="docutils literal notranslate"><span class="pre">target</span></code> 。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">l</span>                   <span class="n">r</span>
+<span class="mi">0</span>                   <span class="mi">7</span>
+</pre></div>
+</div>
+<p>现在取 <code class="docutils literal notranslate"><span class="pre">left,</span> <span class="pre">right</span></code> 的平均数 <span class="math notranslate nohighlight">\(\left\lfloor {l + r \over 2} \right\rfloor\)</span> 记为 <code class="docutils literal notranslate"><span class="pre">middle</span></code> 。</p>
+<p>这样一来，我们把 <code class="docutils literal notranslate"><span class="pre">array[left..right]</span></code> 拆成了 <code class="docutils literal notranslate"><span class="pre">array[left..middle],</span> <span class="pre">array[middle..middle</span> <span class="pre">+</span> <span class="pre">1],</span> <span class="pre">array[middle</span> <span class="pre">+</span> <span class="pre">1..right]</span></code> 三部分。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)[</span><span class="mi">3</span><span class="p">)[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">l</span>       <span class="n">m</span>  <span class="n">m</span><span class="o">+</span><span class="mi">1</span>      <span class="n">r</span>
+<span class="mi">0</span>       <span class="mi">3</span>  <span class="mi">4</span>        <span class="mi">7</span>
+</pre></div>
+</div>
+<p>并且因为有序的性质， <code class="docutils literal notranslate"><span class="pre">array[left..middle]</span></code> 里任意一个元素都小于等于 <code class="docutils literal notranslate"><span class="pre">array[middle]</span></code> ， <code class="docutils literal notranslate"><span class="pre">array[middle</span> <span class="pre">+</span> <span class="pre">1..right]</span></code> 里任意一个元素都大于等于 <code class="docutils literal notranslate"><span class="pre">array[middle]</span></code> 。</p>
+<p>所以如果 <code class="docutils literal notranslate"><span class="pre">target</span></code> 小于 <code class="docutils literal notranslate"><span class="pre">array[middle]</span></code> 的话，把它插入 <code class="docutils literal notranslate"><span class="pre">array[left..middle]</span></code> 里的某个位置才能维持有序；如果 <code class="docutils literal notranslate"><span class="pre">target</span></code> 大于 <code class="docutils literal notranslate"><span class="pre">array[middle]</span></code> 的话，把它插入 <code class="docutils literal notranslate"><span class="pre">array[middle</span> <span class="pre">+</span> <span class="pre">1..right]</span></code> 里的某个位置才能维持有序。</p>
+<p>比如现在要插入2.5，它比当前 <code class="docutils literal notranslate"><span class="pre">array[middle]</span> <span class="pre">==</span> <span class="pre">3</span></code> 要小，所以目前来说，它只可能被插入到这4个位置</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                    2.5?
+v v  v  v
+[1, 2, 3)[3)[3, 4, 5)
+l       m  m+1      r
+0       3  4        7
+</pre></div>
+</div>
+<p>然后继续锁定左半部分搜索就可以了，右边比它大的数都不用管了，因为根本不可能。这下子少了一半的搜索范围，非常爽。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>有没有一点递归的感觉了？当前层只要考虑继续搜索左边还是右边就可以了，确定好之后交给下层处理。</p>
+</div>
+<p>如果是插入5，它比当前 <code class="docutils literal notranslate"><span class="pre">array[middle]</span> <span class="pre">==</span> <span class="pre">3</span></code> 要大，目前来说，它只可能被插入到这4个位置</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>5?
+           v  v  v  v
+[1, 2, 3)[3)[3, 4, 5)
+l       m  m+1      r
+0       3  4        7
+</pre></div>
+</div>
+<p>同样整个左半边直接不用管了。</p>
+<p>所谓二分，分的是搜索范围。每次搜索范围减半，才使得复杂度变成 <span class="math notranslate nohighlight">\(O(\ln n)\)</span> 。</p>
+<p>以2.5为例，整个搜索过程是这样的</p>
+<ol class="arabic">
+<li><p>和 <code class="docutils literal notranslate"><span class="pre">array[3]</span> <span class="pre">==</span> <span class="pre">3</span></code> 比较，发现比3小，所以搜索范围坍塌到左半边</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                    2.5?
+v v  v  v
+[1, 2, 3)[3)[3, 4, 5)
+l       m  m+1      r
+0       3  4        7
+</pre></div>
+</div>
+</li>
+<li><p>和 <code class="docutils literal notranslate"><span class="pre">array[1]</span> <span class="pre">==</span> <span class="pre">2</span></code> 比较，发现比2大，搜索范围坍缩到右半边</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                    2.5?
+     v  v
+[1)[2)[3) 3, 3, 4, 5
+l m     r
+0 1  2  3
+</pre></div>
+</div>
+</li>
+<li><p>和 <code class="docutils literal notranslate"><span class="pre">array[2]</span> <span class="pre">==</span> <span class="pre">3</span></code> 比较，发现比3小，搜索范围坍缩到左半边</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                    2.5?
+    v
+1, 2[)3[)3, 3, 4, 5
+    [   )
+    l   r
+    m
+    2   3
+</pre></div>
+</div>
+</li>
+<li><p>搜索范围现在是 <code class="docutils literal notranslate"><span class="pre">array[2..2]</span></code> ，这已经是个空区间了，所以结果是2</p></li>
+</ol>
+<p>再来说最左和最右的事情。比如现在要插入3，发现竟然和 <code class="docutils literal notranslate"><span class="pre">array[middle]</span> <span class="pre">==</span> <span class="pre">3</span></code> 相等，怎么办？这样不是没办法确定继续搜左边还是右边了吗？很简单，如果想要找最靠左的插入位置，在 <code class="docutils literal notranslate"><span class="pre">target</span> <span class="pre">==</span> <span class="pre">array[middle]</span></code> 的时候，当做 <code class="docutils literal notranslate"><span class="pre">target</span> <span class="pre">&lt;</span> <span class="pre">array[middle]</span></code> 一样、继续往左半边搜索就可以了；同样如果想要找最靠右的插入位置，往右半边搜索就可以了。</p>
+<p>以插入3为例，如果要找最靠左插入位置，过程是这样的：</p>
+<ol class="arabic">
+<li><p>和 <code class="docutils literal notranslate"><span class="pre">array[3]</span> <span class="pre">==</span> <span class="pre">3</span></code> 比较，发现和3一样大，搜索范围坍塌到左半边</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                    3?
+v v  v  v
+[1, 2, 3)[3)[3, 4, 5)
+l       m  m+1      r
+0       3  4        7
+</pre></div>
+</div>
+</li>
+<li><p>和 <code class="docutils literal notranslate"><span class="pre">array[1]</span> <span class="pre">==</span> <span class="pre">2</span></code> 比较，发现比2大，搜索范围坍缩到右半边</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                    3?
+     v  v
+[1)[2)[3) 3, 3, 4, 5
+l m     r
+0 1  2  3
+</pre></div>
+</div>
+</li>
+<li><p>和 <code class="docutils literal notranslate"><span class="pre">array[2]</span> <span class="pre">==</span> <span class="pre">3</span></code> 比较，发现和3一样大，搜索范围坍缩到左半边</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                    2.5?
+    v
+1, 2[)3[)3, 3, 4, 5
+    [   )
+    l   r
+    m
+    2   3
+</pre></div>
+</div>
+</li>
+<li><p>搜索范围现在是 <code class="docutils literal notranslate"><span class="pre">array[2..2]</span></code> ，这已经是个空区间了，所以结果是2</p></li>
+</ol>
+<p>如果要找最右插入位置，过程是这样的</p>
+<ol class="arabic">
+<li><p>和 <code class="docutils literal notranslate"><span class="pre">array[3]</span> <span class="pre">==</span> <span class="pre">3</span></code> 比较，发现和3一样大，所以搜索范围坍塌到右半边</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                    3?
+           v  v  v  v
+[1, 2, 3)[3)[3, 4, 5)
+l       m  m+1      r
+0       3  4        7
+</pre></div>
+</div>
+</li>
+<li><p>和 <code class="docutils literal notranslate"><span class="pre">array[1]</span> <span class="pre">==</span> <span class="pre">4</span></code> 比较，发现比4小，搜索范围坍缩到左半边</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                   3?
+          v  v
+1, 2, 3, 3 [3)[4)[5)
+          l  m     r
+          4  5  6  7
+</pre></div>
+</div>
+</li>
+<li><p>和 <code class="docutils literal notranslate"><span class="pre">array[4]</span> <span class="pre">==</span> <span class="pre">3</span></code> 比较，发现和3一样大，搜索范围坍缩到右半边</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                    3?
+             v
+1, 2, 3, 3[)3[)4, 5
+          [  )
+          l  r
+          m
+          4  5
+</pre></div>
+</div>
+</li>
+<li><p>搜索范围现在是 <code class="docutils literal notranslate"><span class="pre">array[5..5]</span></code> ，这已经是个空区间了，所以结果是5</p></li>
+</ol>
+<p>代码怎么写呢？有递归式和迭代式两种写法。</p>
+<p>先来说极为先进的递归式写法，配合Rust非常优雅，几乎就是刚才文字分析的直接翻译</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">binary_search_left</span><span class="p">(</span><span class="n">array</span>: <span class="kp">&amp;</span><span class="p">[</span><span class="kt">i32</span><span class="p">],</span><span class="w"> </span><span class="n">target</span>: <span class="kt">i32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">usize</span> <span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">middle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">array</span><span class="p">.</span><span class="n">len</span><span class="p">())</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">match</span><span class="w"> </span><span class="n">array</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">middle</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nb">Some</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="n">target</span><span class="p">.</span><span class="n">cmp</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">Ordering</span>::<span class="n">Equal</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">binary_search_left</span><span class="p">(</span><span class="o">&amp;</span><span class="n">array</span><span class="p">[</span><span class="o">..</span><span class="n">middle</span><span class="p">],</span><span class="w"> </span><span class="n">target</span><span class="p">),</span><span class="w"> </span><span class="c1">// 相等的时候和小于处理方法相同，搜索范围缩小到左半边</span>
+<span class="w">            </span><span class="n">Ordering</span>::<span class="n">Less</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">binary_search_left</span><span class="p">(</span><span class="o">&amp;</span><span class="n">array</span><span class="p">[</span><span class="o">..</span><span class="n">middle</span><span class="p">],</span><span class="w"> </span><span class="n">target</span><span class="p">),</span><span class="w"> </span><span class="c1">// 小于的时候，搜索范围缩小到左半边</span>
+<span class="w">            </span><span class="n">Ordering</span>::<span class="n">Greater</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="n">middle</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">binary_search_left</span><span class="p">(</span><span class="o">&amp;</span><span class="n">array</span><span class="p">[</span><span class="n">middle</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="o">..</span><span class="p">],</span><span class="w"> </span><span class="n">target</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="c1">// 大于的时候，搜索范围缩小到右半边。注意要加middle + 1偏移</span>
+<span class="w">        </span><span class="p">},</span><span class="w"></span>
+<span class="w">        </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="c1">// 空区间</span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>迭代法也很简单，把缩小范围这个操作从递归里面的取slice，变成动 <code class="docutils literal notranslate"><span class="pre">left,</span> <span class="pre">right</span></code> 指针</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">binary_search_left</span><span class="p">(</span><span class="n">array</span>: <span class="kp">&amp;</span><span class="p">[</span><span class="kt">i32</span><span class="p">],</span><span class="w"> </span><span class="n">target</span>: <span class="kt">i32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">usize</span> <span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">array</span><span class="p">.</span><span class="n">len</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">middle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">left</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">right</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">array</span><span class="p">[</span><span class="n">middle</span><span class="p">]</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">middle</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="c1">// 下一次搜索array[middle + 1..right]</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">array</span><span class="p">[</span><span class="n">middle</span><span class="p">]</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">middle</span><span class="p">;</span><span class="w"> </span><span class="c1">// 下一次搜索array[left..middle]</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">middle</span><span class="p">;</span><span class="w"> </span><span class="c1">// 下一次搜索array[left..middle]</span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">left</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>看到这里可以做704了。</p>
+</div>
+<div class="section" id="id2">
+<h2>求极值表述和判定表述</h2>
+<p>重头戏来了，除了704这种直勾勾的叫你写二分，其他的题目都会把二分隐藏起来。拙劣一点的隐藏方法像是278，稍微分析下，把问题转化成单调递增数列就可以解决。</p>
+<p>278题目给了个非常有意思的背景：有版本号从1到 <span class="math notranslate nohighlight">\(n\)</span> ，某个版本不小心写了个bug，导致这个版本及后面的版本都存在bug，要找到这个bug第一次出现的版本号。</p>
+<p>抽象一下</p>
+<blockquote>
+<div><p>给个 <span class="math notranslate nohighlight">\(f\)</span> 函数，定义域是 <span class="math notranslate nohighlight">\([1, 2, 3, ..., n]\)</span> ，存在一个 <span class="math notranslate nohighlight">\(j \in [1, n]\)</span> ，有</p>
+<div class="math notranslate nohighlight">
+\[\forall i \in [1, j): \quad f(i) = 0\]</div>
+<p>和</p>
+<div class="math notranslate nohighlight">
+\[\forall i \in [j, n]: \quad f(i) = 1\]</div>
+<p>找到这个 <span class="math notranslate nohighlight">\(j\)</span> 。</p>
+</div></blockquote>
+<p>把 <span class="math notranslate nohighlight">\(f\)</span> 写成数列的样子大概是这样的</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{matrix}
+    1 &amp; 2 &amp; 3 &amp; \cdots &amp; j - 1 &amp; j &amp; j + 1 &amp; \cdots &amp; n - 1 &amp; n &amp; \quad i \\
+    0 &amp; 0 &amp; 0 &amp; \cdots &amp; 0 &amp; 1 &amp; 1 &amp; \cdots &amp; 1 &amp; 1 &amp; \quad f(i)
+\end{matrix}\end{split}\]</div>
+<p><span class="math notranslate nohighlight">\(f\)</span> 的取值长得像个 <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">...,</span> <span class="pre">0,</span> <span class="pre">1,</span> <span class="pre">1,</span> <span class="pre">...,</span> <span class="pre">1]</span></code> 这样的array，这个array虽然都是0和1，可是也是单调递增的，所以一样可以用二分。问题马上转化成了“如果插入1，最靠左的插入位置是哪里”。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">firstBadVersion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">right</span> <span class="o">=</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="k">while</span> <span class="n">left</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">:</span>
+            <span class="n">middle</span> <span class="o">=</span> <span class="p">(</span><span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="n">test</span> <span class="o">=</span> <span class="n">isBadVersion</span><span class="p">(</span><span class="n">middle</span><span class="p">)</span> <span class="c1"># 如果在array里二分，这里是array[middle]，这里只不过改成了f(middle)</span>
+            <span class="k">if</span> <span class="n">target</span> <span class="o">&lt;</span> <span class="n">test</span><span class="p">:</span>
+                <span class="n">right</span> <span class="o">=</span> <span class="n">middle</span>
+            <span class="k">elif</span> <span class="n">target</span> <span class="o">&gt;</span> <span class="n">test</span><span class="p">:</span>
+                <span class="n">left</span> <span class="o">=</span> <span class="n">middle</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">right</span> <span class="o">=</span> <span class="n">middle</span>
+
+        <span class="k">return</span> <span class="n">left</span>
+</pre></div>
+</div>
+<p>对于最前面列出的其他问题就没那么容易看出来。1011、1552、1631等题目的题面是找某个满足条件的极值。</p>
+<p>比如1011是关于运货的题目</p>
+<blockquote>
+<div><p>一批货要按顺序依次发出，你只有一艘船，一天只能来回一趟，要在 <span class="math notranslate nohighlight">\(d\)</span> 天内运完，那么这艘船的载重量最小必须是多少，才能让所有的货物在 <span class="math notranslate nohighlight">\(d\)</span> 天内运完？</p>
+</div></blockquote>
+<p>比如这批货的重量是 <code class="docutils literal notranslate"><span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">7,</span> <span class="pre">8,</span> <span class="pre">9,</span> <span class="pre">10</span></code> ，要在5天内运完，一艘载重量是15的船是足够的</p>
+<ol class="arabic simple">
+<li><p>第1天运 <code class="docutils literal notranslate"><span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5</span></code></p></li>
+<li><p>第2天运 <code class="docutils literal notranslate"><span class="pre">6,</span> <span class="pre">7</span></code></p></li>
+<li><p>第3天运 <code class="docutils literal notranslate"><span class="pre">8</span></code></p></li>
+<li><p>第4天运 <code class="docutils literal notranslate"><span class="pre">9</span></code></p></li>
+<li><p>第5天运 <code class="docutils literal notranslate"><span class="pre">10</span></code></p></li>
+</ol>
+<p>但是一艘载重量是14的船就不行</p>
+<ol class="arabic simple">
+<li><p>第1天运 <code class="docutils literal notranslate"><span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4</span></code></p></li>
+<li><p>第2天运 <code class="docutils literal notranslate"><span class="pre">5,</span> <span class="pre">6</span></code></p></li>
+<li><p>第3天运 <code class="docutils literal notranslate"><span class="pre">7</span></code></p></li>
+<li><p>第4天运 <code class="docutils literal notranslate"><span class="pre">8</span></code></p></li>
+<li><p>第5天运 <code class="docutils literal notranslate"><span class="pre">9</span></code></p></li>
+<li><p>第6天运 <code class="docutils literal notranslate"><span class="pre">10</span></code></p></li>
+</ol>
+<p>要6天。</p>
+<p>比如1283是找最小除数的问题</p>
+<blockquote>
+<div><p>给个array，找到一个数字 <span class="math notranslate nohighlight">\(k\)</span> ，使得array里面每个数字 <span class="math notranslate nohighlight">\(a_i\)</span> 除以 <span class="math notranslate nohighlight">\(k\)</span> 并且向上取整之后的累加和 <span class="math notranslate nohighlight">\(\sum_{a_i} \lceil a_i / k \rceil\)</span> 小于等于 <span class="math notranslate nohighlight">\(t\)</span> 。</p>
+</div></blockquote>
+<p>比如假设array是 <code class="docutils literal notranslate"><span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4</span></code> ， <span class="math notranslate nohighlight">\(t = 5\)</span> ，如果所有的数字都先除以3、向上取整</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span>
+<span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>累加和是5。</p>
+<p>如果所有数字都先除以2、向上取整</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span>
+<span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>累加和是6。</p>
+<p>用通常的方法一点办法都没有（也可能是我太菜），然而观察这些问题之后可以找到两个重要性质</p>
+<ul>
+<li><p>验证“某个具体的值能不能满足要求”很容易写出来</p>
+<p>比如1011运货的题目，如果直接告诉你货船的载重量是多少，很容易算出最少需要几天才能运完，每天尽量多装货、尽量装满货船肯定是最省时间的。</p>
+<p>比如1283，如果直接给 <span class="math notranslate nohighlight">\(k\)</span> ，遍历array一遍，算出 <span class="math notranslate nohighlight">\(\sum_{a_i} \lceil a_i / k \rceil\)</span> 是多少，和 <span class="math notranslate nohighlight">\(t\)</span> 比较一下，看看累加和是不是小于等于 <span class="math notranslate nohighlight">\(t\)</span> 就行了。</p>
+<p>最丧心病狂的是1631，要用BFS才能验证花费那么多力气能不能到山顶。但其实也还好，能写。</p>
+</li>
+<li><p>一旦找到了某个值 <span class="math notranslate nohighlight">\(k\)</span> 满足要求，那么 <span class="math notranslate nohighlight">\(k + 1, k + 2, ...\)</span> 只要是大于等于 <span class="math notranslate nohighlight">\(k\)</span> 的值都满足要求</p>
+<p>比如1011，如果载重量是5的货船能在10天内运完，更大的、载货量是6的货船也一定至少能在10天内运完。没道理载货量更大结果花费时间更长。</p>
+<p>比如1283，如果 <span class="math notranslate nohighlight">\(k = 3\)</span> 能让累加和等于5，那么 <span class="math notranslate nohighlight">\(k = 4\)</span> 的时候，每个数字被除以了更大的数，整个累加和肯定小于等于 <span class="math notranslate nohighlight">\(k = 3\)</span> 的时候的累加和。</p>
+<p>比如1631，如果找到了一条花费6能量的上山路径，那么最多花费7能量也一定能上山，因为你走那条花费6能量的上山路就好了，走完还有1能量结余。</p>
+</li>
+</ul>
+<p>换言之，这几个问题的题面虽然是找满足条件的最小值，但是如果我们不停地询问“50行不行”、“25行不行”、“17行不行”，最终竟然也是可以间接问出最小值的！</p>
+<p>举个例子，有个资本家在上海有5套房子，你想知道他在上海有多少套房子，但是他不想直接告诉你他在上海有5套房子，怕你直接喊“打倒资本家”，他说“当你猜的数额大于等于我实际拥有的房子的数量时，我会点头，否则我会摇头”。</p>
+<p>这个问题里面，你猜了一个 <span class="math notranslate nohighlight">\(k\)</span> 并且资本家点头可以看成是函数 <span class="math notranslate nohighlight">\(f(k) = 1\)</span> ，所以满足第一个性质；同时，一旦你猜了某个 <span class="math notranslate nohighlight">\(k\)</span> 并且资本家点头了，你可以百分百确定，当你猜 <span class="math notranslate nohighlight">\(k + 1\)</span> 的时候，资本家还是会点头，所以第二个性质也满足。</p>
+<p>这时候你就可以这么猜了。首先你调查了一番全上海总共有多少套房子，假设是 <span class="math notranslate nohighlight">\(100\)</span> 吧，这个资本家可能超级有钱，上海所有的房子都是他的；资本家也有可能在上海一套房子都没有，他可能在北京有房子。</p>
+<p>所以一开始你认为资本家的房产数量是 <span class="math notranslate nohighlight">\([0, 100]\)</span> 区间里面的某个数字。于是你</p>
+<ol class="arabic simple">
+<li><p>猜了 <span class="math notranslate nohighlight">\(\lfloor (0 + 100) / 2 \rfloor = 50\)</span>，资本家点头了，于是你确定资本家的房产数量是 <span class="math notranslate nohighlight">\([0, 500]\)</span> 里的某个数字</p></li>
+<li><p>猜了 <span class="math notranslate nohighlight">\(\lfloor (0 + 50) / 2 \rfloor = 25\)</span> ，资本家也点头了，于是你进一步缩小范围到 <span class="math notranslate nohighlight">\([0, 250]\)</span></p></li>
+<li><p>猜了 <span class="math notranslate nohighlight">\(\lfloor (0 + 25) / 2 \rfloor = 17\)</span> ，资本家点头了，于是缩小范围到 <span class="math notranslate nohighlight">\([0, 17]\)</span></p></li>
+<li><p>猜了 <span class="math notranslate nohighlight">\(\lfloor (0 + 17) / 2 \rfloor = 8\)</span> ，资本家点头了，范围缩小到 <span class="math notranslate nohighlight">\([0, 8]\)</span></p></li>
+<li><p>猜了 <span class="math notranslate nohighlight">\(\lfloor (0 + 8) / 2 \rfloor = 4\)</span> ，资本家摇头了！范围缩小到 <span class="math notranslate nohighlight">\([5, 8]\)</span></p></li>
+<li><p>猜了 <span class="math notranslate nohighlight">\(\lfloor (5 + 8) / 2 \rfloor = 6\)</span> ，资本家点头了，范围缩小到 <span class="math notranslate nohighlight">\([5, 6]\)</span></p></li>
+<li><p>猜了 <span class="math notranslate nohighlight">\(\lfloor (5 + 6) / 2 \rfloor = 5\)</span> ，资本家点头了，范围缩小到 <span class="math notranslate nohighlight">\([5, 5]\)</span> ，此时区间里只有一个数字了，所以资本家在上海有5套房子</p></li>
+</ol>
+<p>这个例子里，虽然我们没法直接从资本家那里知道他到底有多少套房子，但是我们可以通过问他这种是或者否的判定问题，来间接得到想要的答案。或者说，如果能解决判定问题，就能解决找极值的问题。</p>
+<p>我们问了多少次判定问题呢？刚才的范围是 <span class="math notranslate nohighlight">\([0, 100]\)</span> ，只问了7次就得到了答案，虽然不如只问1次来的爽快，不过也非常节能了。你可以试试，范围是 <span class="math notranslate nohighlight">\([0, 1000]\)</span> 的时候，只需要问10次；范围是 <span class="math notranslate nohighlight">\([0, 10000]\)</span> 的时候，只要问13次……范围是 <span class="math notranslate nohighlight">\([0, 10^9]\)</span> 的时候，也只需要问30次。太节能了。</p>
+<p>如果范围是 <span class="math notranslate nohighlight">\([0, n]\)</span> ，那么需要问 <span class="math notranslate nohighlight">\(O(\ln n)\)</span> 次 <a class="footnote-reference brackets" href="#id5" id="id3">1</a> 判定问题。如果判定问题本身的复杂度是 <span class="math notranslate nohighlight">\(p(n)\)</span> ， <span class="math notranslate nohighlight">\(p(n)\)</span> 可能是 <span class="math notranslate nohighlight">\(O(2^n), O(n), O(n!)\)</span> 什么都有可能。那么通过问判定问题来解决原问题的总的复杂度是 <span class="math notranslate nohighlight">\(p(n) \ln n\)</span> ，比 <span class="math notranslate nohighlight">\(p(n)\)</span> 慢一点点。</p>
+<p>根据定义，如果某个算法关于输入规模 <a class="footnote-reference brackets" href="#id6" id="id4">2</a> 的复杂度上界是多项式阶，即使它是 <span class="math notranslate nohighlight">\(O(n^{99999})\)</span> ，也认为是 <strong>能够高效解决的</strong> 。因为对于任意 <span class="math notranslate nohighlight">\(n &gt; 1\)</span> ，都有 <span class="math notranslate nohighlight">\(\ln n &lt; n\)</span> ，所以 <span class="math notranslate nohighlight">\(p(n) \ln n &lt; p(n) \cdot n\)</span> 。如果 <span class="math notranslate nohighlight">\(p(n)\)</span> 上界是多项式阶的，那么 <span class="math notranslate nohighlight">\(p(n) \ln n\)</span> 的上界仍然是多项式阶的。</p>
+<p>比如假设 <span class="math notranslate nohighlight">\(p(n) = n^2 \in O(n^2)\)</span> ，那么 <span class="math notranslate nohighlight">\(p(n) \ln n = n^2 \ln n &lt; n^2 \cdot n = n^3\)</span> ，所以 <span class="math notranslate nohighlight">\(p(n) \ln n \in O(n^3)\)</span> 。</p>
+<p>因此我更愿意认为，找极值和判定完全是同一个问题的两种不同的表述、两种不同的表象。两个表象之间用二分联系在一起。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>当然你也可以选择不用二分，暴力搜索 <span class="math notranslate nohighlight">\([0, n]\)</span> 完全可以。只不过二分是沟通两个表象overhead最小的方式。在理论上、从复杂度上界的角度看，大家都是高效的，没有谁比谁更高贵。在实际应用里， <span class="math notranslate nohighlight">\(O(n^2 \ln n)\)</span> 和 <span class="math notranslate nohighlight">\(O(n^3)\)</span> 差别还是挺大的……我感觉 <span class="math notranslate nohighlight">\(O(n^2 \ln n)\)</span> 和 <span class="math notranslate nohighlight">\(O(n^2)\)</span> 几乎没有差别。</p>
+</div>
+<p>所以如果能解决判定问题、并且还能高效解决判定问题的话，那么不仅能解决极值问题、还能高效解决极值问题。判定问题的代码又只是验证，通常很好写，一来一去简直赚大了，建议全宇宙推广。</p>
+<p>比如1011的代码</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">shipWithinDays</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weights</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">D</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">feasible</span><span class="p">(</span><span class="n">capacity</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># 运了多少天了</span>
+            <span class="n">loaded</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># 现在即将出发的货船上已经装了多少货</span>
+
+            <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">weights</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">loaded</span> <span class="o">+</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="n">capacity</span><span class="p">:</span> <span class="c1"># 如果现在这艘船装不下这个货物</span>
+                    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span> <span class="c1"># 那这个箱子只能赶明天的趟了</span>
+                    <span class="n">loaded</span> <span class="o">=</span> <span class="n">v</span>
+                <span class="k">else</span><span class="p">:</span> <span class="c1"># 还好能装下</span>
+                    <span class="n">loaded</span> <span class="o">+=</span> <span class="n">v</span>
+
+            <span class="k">if</span> <span class="n">loaded</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># 最后一批货也得运一天</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="k">return</span> <span class="n">count</span> <span class="o">&lt;=</span> <span class="n">D</span> <span class="c1"># 能不能在D天内运完呢？</span>
+
+        <span class="n">target</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
+        <span class="n">right</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="k">while</span> <span class="n">left</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">:</span>
+            <span class="n">middle</span> <span class="o">=</span> <span class="p">(</span><span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="n">test</span> <span class="o">=</span> <span class="n">feasible</span><span class="p">(</span><span class="n">middle</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">target</span> <span class="o">&lt;</span> <span class="n">test</span><span class="p">:</span>
+                <span class="n">right</span> <span class="o">=</span> <span class="n">middle</span>
+            <span class="k">elif</span> <span class="n">target</span> <span class="o">&gt;</span> <span class="n">test</span><span class="p">:</span>
+                <span class="n">left</span> <span class="o">=</span> <span class="n">middle</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">right</span> <span class="o">=</span> <span class="n">middle</span>
+
+        <span class="k">return</span> <span class="n">left</span>
+</pre></div>
+</div>
+<p>比如1283的代码</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">smallestDivisor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">feasible</span><span class="p">(</span><span class="n">divisor</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">v</span> <span class="o">/</span> <span class="n">divisor</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">threshold</span> <span class="c1"># 累加和能不能小于等于threshold呢？</span>
+
+        <span class="n">target</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">right</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="k">while</span> <span class="n">left</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">:</span>
+            <span class="n">middle</span> <span class="o">=</span> <span class="p">(</span><span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="n">test</span> <span class="o">=</span> <span class="n">feasible</span><span class="p">(</span><span class="n">middle</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">target</span> <span class="o">&lt;</span> <span class="n">test</span><span class="p">:</span>
+                <span class="n">right</span> <span class="o">=</span> <span class="n">middle</span>
+            <span class="k">elif</span> <span class="n">target</span> <span class="o">&gt;</span> <span class="n">test</span><span class="p">:</span>
+                <span class="n">left</span> <span class="o">=</span> <span class="n">middle</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">right</span> <span class="o">=</span> <span class="n">middle</span>
+
+        <span class="k">return</span> <span class="n">left</span>
+</pre></div>
+</div>
+<p>极其相似，只是变了一下判定函数 <span class="math notranslate nohighlight">\(f\)</span> 的定义、初始 <code class="docutils literal notranslate"><span class="pre">left,</span> <span class="pre">right</span></code> 而已。判定函数写起来毫无技术含量。</p>
+<p><code class="docutils literal notranslate"><span class="pre">left</span></code> 一般是判定函数 <span class="math notranslate nohighlight">\(f\)</span> 定义域的最小值， <code class="docutils literal notranslate"><span class="pre">right</span></code> 是 <span class="math notranslate nohighlight">\(f\)</span> 定义域的最大值加上1。加上1是为了和二分一开始的定义“找插入位置”和谐，例如 <span class="math notranslate nohighlight">\(f\)</span> 在定义域上所有的输出都是0，没有1，这时候二分会得到 <span class="math notranslate nohighlight">\(n + 1\)</span> ，表示如果要插入1，应该插入到 <span class="math notranslate nohighlight">\(n + 1\)</span> 的位置上。</p>
+<p>2020/11/9</p>
+<dl class="footnote brackets">
+<dt class="label" id="id5"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
+<dd><p>这里的 <span class="math notranslate nohighlight">\(O\)</span> 都是同阶无穷大的意思。</p>
+</dd>
+<dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id4">2</a></span></dt>
+<dd><p>一定一定要注意，是输入规模，不是输入的值。如果某个算法的复杂度与输入的值 <span class="math notranslate nohighlight">\(n\)</span> 有关，比如 <span class="math notranslate nohighlight">\(O(n)\)</span> ，那么实际上这个算法不是多项式阶的，为什么呢？因为输入的值 <span class="math notranslate nohighlight">\(n\)</span> 可以认为是一个 <span class="math notranslate nohighlight">\(\log_2 n\)</span> 位的二进制数，所以输入规模实际上是 <span class="math notranslate nohighlight">\(\log_2 n\)</span> ，记为 <span class="math notranslate nohighlight">\(m\)</span> ，那么 <span class="math notranslate nohighlight">\(n = 2^m\)</span> ，算法关于输入规模的复杂度一下变成了 <span class="math notranslate nohighlight">\(O(2^m)\)</span> 。</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">我快要二分搜索PTSD了</a><ul>
+<li><a class="reference internal" href="#id1">字面意思的二分搜索</a></li>
+<li><a class="reference internal" href="#id2">求极值表述和判定表述</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="awesome-data-structures.html"
+                        title="上一章">&lt;no title&gt;</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="computer-networking.html"
+                        title="下一章">计算机网络</a></p>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/posts/binary-search-ptsd.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="computer-networking.html" title="计算机网络"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="awesome-data-structures.html" title="&lt;no title&gt;"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">blog  文档</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; 版权所有 2019, aiifabbf.
+      由 <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4 创建。
+    </div>
+  </body>
+</html>
