@@ -17,6 +17,14 @@
     animation: progress-running linear 1.2s infinite;
 }
 
+body {
+    font-family: "Fira Code", Arial, Helvetica, sans-serif;
+}
+
+code, pre {
+    font-family: "Fira Code", monospace, sans-serif;
+}
+
 a {
     text-decoration: none!important;
 }
@@ -87,8 +95,11 @@ ul.auto-toc, ul.auto-toc ul {
 
 .footnote-reference {
     position: relative;
-    top: -0.5rem;
+    top: -0.5em;
+    margin-left: -0.5em;
+    margin-right: -0.5em;
     font-size: smaller;
+    font-weight: bold;
 }
 
 .footnote,
