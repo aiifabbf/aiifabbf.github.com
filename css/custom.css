@@ -203,9 +203,9 @@ pre.code .inserted, code .inserted {
 }
 
 /* 14px is probably too small? */
-.inner_cell {
-    font-size: 15px;
-    line-height: 1.43em;
+div#notebook {
+    font-size: 16px;
+    line-height: 1.6em;
     /* font-family: 'source han serif sc', serif; */
     /* maybe later... */
 }
