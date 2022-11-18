@@ -2,11 +2,9 @@
 ``Canon & Baroque``
 ====================
 
-谢邀，人在上海，刚出小区。
+换手机了， :doc:`数据迁移把我折腾了半死 <posts/backup-iphone-photos>` 。
 
-这4个月我最大的体会是，人真的得多说话、多交流。我感觉我现在已经丧失了说长难句的能力。有时候说不出是不知道怎么说，有时候是完全没有想法，没什么可说的。被封在家里的时候还想着等这一切都结束之后，要好好写一写这4个月见过的听过的光怪陆离、群魔乱舞；现在我好像也没什么想说的了。就连在博客这个新闻板上也不知道写点什么。只是觉得半年多没有新闻，“是时候该写点什么了”，不至于什么都没有发生吧。
-
-最近开始看 `Programming Language Foundations in Agda <https://agda-zh.github.io/PLFA-zh/>`_ ，感觉能理解所谓的propositions as types是什么意思了，有空会写一篇博文记录一下。
+最近在看 `Programming Language Foundations in Agda <https://agda-zh.github.io/PLFA-zh/>`_ ，感觉能理解所谓的propositions as types是什么意思了，并且感觉这是今年学会的最重要的知识之一。有空会写一篇博文记录一下。
 
 最近在听Andrei Gavrilov的法国组曲。发现了一个叫索尼精选的网站，提供付费高码率音乐下载；还有一个叫Presto music的网站，可以买到CD和无损音乐。
 
@@ -19,6 +17,7 @@
 最近
 =====
 
+-   :doc:`posts/backup-iphone-photos`
 -   :doc:`posts/lambda-calculus`
 -   :doc:`posts/binary-search-ptsd`
 -   刷Leetcode。现在刷了 **1100道** 了！人生巅峰上了一次2100分！虽然没几天就降下去了……
