@@ -76,7 +76,7 @@ pygments_style = 'vs'
 # a list of builtin themes.
 #
 html_theme = 'basic'
-html_add_permalinks = ""
+html_permalinks = False
 html_search_language = "zh" # 需要装jieba才行
 
 # Theme options are theme-specific and customize the look and feel of a theme
