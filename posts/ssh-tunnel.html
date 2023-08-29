@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用SSH隧道开心上网 - Benjamin Shi's Blog</title>
+    <link rel="icon" href="/_static/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css">
+    <link rel="stylesheet" href="/_static/css/notebook.css">
+    <link rel="stylesheet" href="/_static/css/custom.css">
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+
+<body>
+    <div tabindex="-1" id="notebook" class="border-box-sizing">
+        <div id="notebook-container" class="container">
+            <div class="cell border-box-sizing text_cell rendered">
+                <div class="prompt input_prompt">
+                </div>
+                <div class="inner_cell">
+                    <div class="text_cell_render border-box-sizing rendered_html">
+                        
+  <section id="ssh">
+<h1>用SSH隧道开心上网</h1>
+<ol class="arabic">
+<li><p>获得一个国外的VPS</p>
+<p>简单来说就是买了一台在国外的电脑，这台电脑有一个公网IP地址。</p>
+<p>可以去 <a class="reference external" href="https://www.vultr.com/">vultr</a> 或者 <a class="reference external" href="https://bandwagonhost.com/cn2gia-vps.php">bandwagon</a> 买一个服务器，算下来大概每个月5 usd。</p>
+<p>或者蹭朋友的。</p>
+</li>
+<li><p>用</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh<span class="w"> </span>-D<span class="w"> </span><span class="m">1080</span><span class="w"> </span>-g<span class="w"> </span>-C<span class="w"> </span>&lt;用户名&gt;@&lt;VPS的IP地址&gt;
+</pre></div>
+</div>
+<p>建立到VPS的隧道</p>
+<p>假设你买的VPS的地址是 <code class="docutils literal notranslate"><span class="pre">123.321.123.321</span></code> ，用户名是 <code class="docutils literal notranslate"><span class="pre">benja</span></code> ，那么</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh<span class="w"> </span>-D<span class="w"> </span><span class="m">1080</span><span class="w"> </span>-g<span class="w"> </span>-C<span class="w"> </span>benja@123.321.123.321
+</pre></div>
+</div>
+<p>就可以登录到这台VPS上，并且打开了电脑到VPS的隧道。</p>
+<p>解释下</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-D</span> <span class="pre">1080</span></code> 的作用是在你电脑的本地打开1080端口，用于监听代理请求，马上我们会在本地配置，让流量都发送到本地的1080端口，这样流量就能通过隧道到达VPS了</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-g</span></code> 是监听本地所有的IP地址，这样局域网上其他电脑（比如你的手机）也可以通过连接到你电脑的1080端口来开心上网</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-C</span></code> 是打开你到VPS之间通信的压缩，可以节约VPS的流量。</p></li>
+</ul>
+</li>
+<li><p>设置浏览器代理</p>
+<p>有2种方法</p>
+<ul>
+<li><p>设置windows的全局代理</p>
+<p>以windows 10为例</p>
+<ol class="arabic simple">
+<li><p>打开设置</p></li>
+<li><p>网络和internet</p></li>
+<li><p>网络和共享中心</p></li>
+<li><p>internet选项</p></li>
+<li><p>连接</p></li>
+<li><p>局域网设置</p></li>
+<li><p>打开“为LAN使用代理服务器”</p></li>
+<li><p>高级</p></li>
+<li><p>套接字里面，代理服务器地址写 <code class="docutils literal notranslate"><span class="pre">127.0.0.1</span></code> 、端口写 <code class="docutils literal notranslate"><span class="pre">1080</span></code></p></li>
+<li><p>确定</p></li>
+</ol>
+<p>就好了，windows上所有的软件都会走代理。</p>
+</li>
+<li><p>或者可以装一个叫做SwitchyOmega的插件，在chrome和firefox上都有</p>
+<p>装好之后，在auto switch情景模式下，填入</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">raw</span><span class="o">.</span><span class="n">githubusercontent</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">gfwlist</span><span class="o">/</span><span class="n">gfwlist</span><span class="o">/</span><span class="n">master</span><span class="o">/</span><span class="n">gfwlist</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>规则列表格式是 <code class="docutils literal notranslate"><span class="pre">AutoProxy</span></code> 。</p>
+<p>这样就能做到对于需要开心的网站，自动走隧道；对于不需要开心的网站，不走隧道。</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>2022/7/2</p>
+</section>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; font-weight: bolder;"><a href="/"><code
+                    style="background-color: transparent; color: rgba(0, 0, 0, 0.5);">Canon &amp; Baroque</code></a>
+        </div>
+    </div>
+</body>
+
+</html>
