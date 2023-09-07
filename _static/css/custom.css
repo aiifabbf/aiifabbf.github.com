@@ -2,6 +2,7 @@
     0% {
         transform: translate(-300vw);
     }
+
     100% {
         transform: translate(300vw);
     }
@@ -21,18 +22,27 @@ body {
     font-family: "Fira Code", Arial, Helvetica, sans-serif;
 }
 
-code, pre {
+code,
+pre {
     font-family: "Fira Code", monospace, sans-serif;
 }
 
 a {
-    text-decoration: none!important;
+    text-decoration: none !important;
+}
+
+p {
+    margin: 1em 0;
+}
+
+li > p:only-child {
+    margin: 0;
 }
 
 blockquote {
     border: none;
     position: relative;
-    margin: 1em 0!important;
+    margin: 1em 0 !important;
 }
 
 blockquote::before {
@@ -55,14 +65,14 @@ blockquote::after {
 
 /* fix sphinx toctree */
 ul {
-    margin-top: 1em!important;
-    margin-bottom: 1em!important;
+    margin: 1em 0 1em 1em !important;
 }
 
 /* display equation gaps */
 div.math {
     margin-top: 1em;
     margin-bottom: 1em;
+    overflow-y: auto;
 }
 
 /* inline literals */
@@ -71,16 +81,17 @@ span.docutils.literal {
     white-space: pre-wrap;
 }
 
-ul.auto-toc, ul.auto-toc ul {
+ul.auto-toc,
+ul.auto-toc ul {
     list-style-type: none;
 }
 
 .admonition {
-    border-right: 2rem solid rgba(0, 0, 0, 0.05);
+    border-bottom: 0.2em solid rgba(0, 0, 0, 0.05);
     border-radius: 4px;
     background: rgba(0, 0, 0, 0.05);
-    padding: 2rem;
-    margin: 2rem 0;
+    padding: 0.01em 1em;
+    margin: 1em 0;
 }
 
 .admonition-title {
@@ -135,7 +146,7 @@ ul.auto-toc, ul.auto-toc ul {
 .footnote-list::before {
     content: "";
     width: 10rem;
-    border-top: 0.1rem solid black;
+    border-top: 0.05em solid black;
     position: absolute;
     top: 0em;
 }
@@ -148,7 +159,7 @@ ul.auto-toc, ul.auto-toc ul {
 }
 
 img {
-    display: inline!important;
+    display: inline !important;
 }
 
 .figure.align-left {
@@ -166,8 +177,8 @@ img {
 .contents {
     margin: 2em 0;
     padding: 1em 0;
-    border-top: 0.1rem solid black;
-    border-bottom: 0.1rem solid black;
+    border-top: 0.05em solid black;
+    border-bottom: 0.05em solid black;
 }
 
 .contents ul {
@@ -186,29 +197,39 @@ img {
 
 pre.code .ln {
     color: gray;
-} /* line numbers */
+}
+
+/* line numbers */
 /* basic highlighting: for a complete scheme, see */
 /* http://docutils.sourceforge.net/sandbox/stylesheets/ */
-pre.code .comment, code .comment {
+pre.code .comment,
+code .comment {
     color: #408080;
 }
 
-pre.code .keyword, code .keyword {
-    color: #008000; font-weight: bold;
+pre.code .keyword,
+code .keyword {
+    color: #008000;
+    font-weight: bold;
 }
-pre.code .literal.string, code .literal.string {
+
+pre.code .literal.string,
+code .literal.string {
     color: #BA2121;
 }
 
-pre.code .name.builtin, code .name.builtin {
+pre.code .name.builtin,
+code .name.builtin {
     color: #008000;
 }
 
-pre.code .deleted, code .deleted {
+pre.code .deleted,
+code .deleted {
     background-color: #DEB0A1;
 }
 
-pre.code .inserted, code .inserted {
+pre.code .inserted,
+code .inserted {
     background-color: #A3D289;
 }
 
@@ -218,12 +239,22 @@ pre.code .inserted, code .inserted {
     background: white;
 }
 
+.highlight pre {
+    margin: 0.5em 1em;
+    word-break: break-word;
+}
+
 /* 14px is probably too small? */
 div#notebook {
-    font-size: 16px;
+    font-size: 22px;
     line-height: 1.6em;
     /* font-family: 'source han serif sc', serif; */
     /* maybe later... */
+}
+
+div.rendered_html {
+    padding-left: 0;
+    padding-right: 0;
 }
 
 /* remove paper edge on mobile */
