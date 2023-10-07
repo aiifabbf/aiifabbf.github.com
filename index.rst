@@ -107,9 +107,10 @@
 下面是大佬时间。
 
 -   `Ivy End <https://ivy-end.github.io>`_ 竞赛选手，文言大家，最近好像在做芯片方面的事情
--   `MP <https://mpraiser.github.io>`_ 萌萌的MP子，微电子
--   `Eden Chen <https://vendredii.github.io>`_ 可恶的资本家，生态学
+-   `MP <https://mpraiser.github.io>`_ 萌萌的MP子，微电子，但是软件
+-   `Eden Chen <https://vendredii.github.io>`_ 可恶的资本家，生态学，最近在荷兰读博
 -   `Bob <https://yyccli.github.io>`_ 可爱的学弟，超级喜欢他的文笔
+-   `Dudu <https://star-du.github.io>`_ 爱思考的纯文学爱好者，阅读量浩如烟海，自学转码，最近被我安利了Rust
 
 你是谁啊/这是什么破网站啊
 ==============================
