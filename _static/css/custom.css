@@ -35,7 +35,7 @@ p {
     margin: 1em 0;
 }
 
-li > p:only-child {
+li > p:first-child {
     margin: 0;
 }
 
@@ -237,6 +237,7 @@ code .inserted {
     border: 1px solid rgba(0, 0, 0, 0.05);
     border-radius: 4px;
     background: white;
+    margin: 1em 0;
 }
 
 .highlight pre {
