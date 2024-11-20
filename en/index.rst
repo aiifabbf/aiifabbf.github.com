@@ -2,7 +2,11 @@
 Yuchen SHI 施宇晨
 ===================
 
-Greetings! I am currently a master student in Computer Engineering in `Northwestern University <https://northwestern.edu>`_.
+.. default-role:: literal
+
+Greetings! I am currently working as an R&D engineer at `Synopsys VCS <https://www.synopsys.com/verification/simulation/vcs.html>`_ constraint team, focusing on enhancing VCS's constrained random test case generation.
+
+I was a master student in Computer Engineering in `Northwestern University <https://northwestern.edu>`_.
 
 I received my bachelor degree in Integrated Circuit Design in `Huazhong University of Science and Technology <https://english.hust.edu.cn>`_. I wrote a `small tool <https://github.com/aiifabbf/sizer>`_ to compute optimal circuit parameters for analog amplifiers as `my undergraduate project <https://github.com/aiifabbf/undergraduate-thesis>`_.
 
@@ -13,11 +17,13 @@ My resume/CV is `here <https://aiifabbf.github.io/resume/cv.html>`_. You can ope
 Experiences
 ===========
 
+I am currently working full-time at Synopsys VCS constraint team in Shanghai, building and enhancing solvers that help customers generate huge number of test cases to quickly meet their verification sign-off goals. I write mostly C and C++ in production, sometimes Python and Rust to prototype.
+
 I was a full stack intern, writing CSS and doing UI tuning in a local data visualization company in 2019 summer.
 
 I wrote a `single-page web application <https://github.com/SicunStudio/aunet-flask>`_ that works as the administration dashboard for a campus organization during undergraduate. My main role was front-end, but I also worked with back-end teammates on RESTful API design.
 
-I am actively seeking a software engineering intern for 2020 summer. I have solved `over 700 problems on Leetcode <https://leetcode.com/aiifabbf>`_. Code and comments are `here <https://github.com/aiifabbf/leetcode-memo>`_.
+While I was seeking an intern position for 2020 summer, I solved `over 1000 problems on Leetcode <https://leetcode.com/aiifabbf>`_. My `code and comments <https://github.com/aiifabbf/leetcode-memo>`_ helped many friends learn algorithms and prepare for interviews.
 
 Projects
 ========
@@ -58,10 +64,19 @@ I also ported it to WebAssembly and made a `live demo <https://aiifabbf.github.i
 
 Learn more `here <https://github.com/aiifabbf/ray-tracer>`_.
 
+`parsec`
+--------
+
+A parser combinator framework in Rust, mimicing the famous Haskell library `parsec`. Parser combinator is a way to build complicated parsers by composing small parsers.
+
+This is where I grew interest in functional programming languages and all the amazing stuff behind!
+
+Learn more `here <https://github.com/aiifabbf/parsec>`_.
+
 This blog
 ---------
 
-My `blog <https://aiifabbf.github.io>`_. This blog is a hybrid structure. I write posts in `reStructuredText <http://docutils.sourceforge.net/docs/user/rst/quickref.html>`_ and Jupyter Notebook, then they are converted to HTML using `Sphinx <http://www.sphinx-doc.org/en/master/>`_. Those HTML are loaded dynamically using AJAX and injected into DOM using Vue.js.
+My `blog <https://aiifabbf.github.io>`_. This blog is a hybrid structure. I write posts in `reStructuredText <http://docutils.sourceforge.net/docs/user/rst/quickref.html>`_ and Jupyter Notebook, then they are converted to HTML using `Sphinx <http://www.sphinx-doc.org/en/master/>`_. Those HTML used to be loaded dynamically using AJAX and injected into DOM using Vue.js, but later I found static HTML works well enough for the purpose of a blog.
 
 See source `here <https://github.com/aiifabbf/aiifabbf.github.com>`_.
 
