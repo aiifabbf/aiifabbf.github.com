@@ -247,7 +247,7 @@ code .inserted {
 
 /* 14px is probably too small? */
 div#notebook {
-    font-size: 22px;
+    font-size: 19px;
     line-height: 1.6em;
     /* font-family: 'source han serif sc', serif; */
     /* maybe later... */
@@ -261,6 +261,18 @@ div.rendered_html {
 /* remove paper edge on mobile */
 body {
     padding: 5px 0;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 940px;
+    }
+}
+
+@media (max-width: 992px) {
+    div.text_cell > div.prompt {
+        display: none;
+    }
 }
 
 ::selection {
