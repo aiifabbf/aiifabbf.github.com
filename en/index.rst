@@ -6,13 +6,15 @@ Yuchen SHI 施宇晨
 
 Greetings! I am currently working as an R&D engineer at `Synopsys VCS <https://www.synopsys.com/verification/simulation/vcs.html>`_ constraint team, focusing on enhancing VCS's constrained random test case generation.
 
-I was a master student in Computer Engineering in `Northwestern University <https://northwestern.edu>`_.
+I was a master student in Computer Engineering in `Northwestern University <https://northwestern.edu>`_ from 2019/9 to 2020/12.
 
-I received my bachelor degree in Integrated Circuit Design in `Huazhong University of Science and Technology <https://english.hust.edu.cn>`_. I wrote a `small tool <https://github.com/aiifabbf/sizer>`_ to compute optimal circuit parameters for analog amplifiers as `my undergraduate project <https://github.com/aiifabbf/undergraduate-thesis>`_.
+I received my bachelor degree in Integrated Circuit Design in `Huazhong University of Science and Technology <https://english.hust.edu.cn>`_ in 2019/6. I wrote a `small tool <https://github.com/aiifabbf/sizer>`_ to compute optimal circuit parameters for analog amplifiers as `my undergraduate project <https://github.com/aiifabbf/undergraduate-thesis>`_.
 
 I enjoy coding and building. I also enjoy explaining what I know to people. I keep a `blog <https://aiifabbf.github.io>`_ written in Chinese. It mostly contains my personal thoughts about computers, physics and math. Someday I will write in English. I promise.
 
 My resume/CV is `here <https://aiifabbf.github.io/resume/cv.html>`_. You can open the link and print the web page in Firefox or Chrome to get a PDF version. [#paper-cv]_
+
+Feel free to contact me at aiifabbf@outlook.com .
 
 Experiences
 ===========
