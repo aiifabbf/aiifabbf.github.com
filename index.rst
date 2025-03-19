@@ -17,6 +17,7 @@
 最近
 =====
 
+-   :doc:`posts/break-indent`
 -   :doc:`posts/backup-iphone-photos`
 -   :doc:`posts/lambda-calculus`
 -   :doc:`posts/binary-search-ptsd`
@@ -96,6 +97,7 @@
 ========
 
 -   :doc:`posts/multivariate-recurrence-equation`
+-   :doc:`posts/break-indent`
 
 友情链接
 ==========
