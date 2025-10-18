@@ -1,0 +1,156 @@
+@import url(/_static/css/pygments-bw.css) (prefers-color-scheme: light);
+@import url(/_static/css/pygments-bw.css) (prefers-color-scheme: dark);
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    --line-width: 640px;
+    --toc-width: 240px;
+
+    --p-size: 20px;
+    --h1-size: 48px;
+    --toc-size: 16px;
+    --code-size: 20px;
+
+    --font-family: Literata, "SongTi SC", SimSun, serif;
+    --code-font-family: "Fira Code", Menlo, monospace;
+
+    --line-height: 1.5;
+    --code-line-height: 1.5;
+
+    --back-color: white;
+    --text-color: black;
+    --link-color: #337ab7;
+    --toc-color: gray;
+
+    background: var(--back-color);
+    color: var(--text-color);
+}
+
+@media (prefers-color-scheme: dark) {
+    html {
+        --back-color: black;
+        --text-color: hsl(275, 5%, 70%);
+    }
+
+    img[src$=".svg"] {
+        filter: invert(1) brightness(0.7);
+    }
+}
+
+body {
+    margin: auto;
+    font-size: var(--p-size);
+    line-height: 1.5;
+    font-family: var(--font-family);
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+h1 {
+    font-size: var(--h1-size);
+}
+
+pre,
+code {
+    font-family: var(--code-font-family);
+}
+
+/* mobile */
+@media screen and (max-width: 999px) {
+    body {
+        width: min(95vw, var(--line-width));
+    }
+
+    .contents {
+        position: initial;
+    }
+}
+
+/* desktop */
+@media screen and (min-width: 1000px) {
+    body {
+        width: var(--line-width);
+    }
+
+    .contents {
+        position: fixed;
+        left: 0;
+        top: 20vh;
+        margin-left: calc((100vw - var(--line-width)) / 2 - var(--toc-width));
+        width: var(--toc-width);
+        height: 60vh;
+        overflow-y: scroll;
+        scrollbar-width: none;
+    }
+}
+
+.contents {
+    font-size: var(--toc-size);
+    padding-right: 1em;
+}
+
+.contents ul {
+    padding-left: 1em;
+    list-style: none;
+}
+
+.contents ul.simple {
+    padding-left: 0;
+}
+
+.contents a {
+    text-decoration: none;
+    color: var(--toc-color);
+}
+
+.contents a:hover {
+    color: var(--text-color);
+}
+
+ul {
+    padding-left: 1em;
+}
+
+li > p:first-child {
+    margin: 0;
+}
+
+.highlight {
+    font-family: var(--code-font-family);
+    font-size: var(--code-size);
+    line-height: var(--code-line-height);
+}
+
+.admonition {
+    border: 1.5px solid var(--text-color);
+    padding: 0 0.5em;
+}
+
+.footnote,
+.citation {
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+}
+
+.footnote .label,
+.citation .label {
+    margin-right: 0.5em;
+}
+
+#epilogue {
+    font-size: var(--toc-size);
+    margin: 2em 0;
+}
+
+#epilogue p {
+    margin: 0;
+}

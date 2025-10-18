@@ -59,7 +59,7 @@ master_doc = 'index'
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = "zh_CN"
+language = "en_US"
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -77,7 +77,7 @@ pygments_style = 'vs'
 #
 html_theme = 'basic'
 html_permalinks = False
-html_search_language = "zh" # 需要装jieba才行
+html_search_language = "en" # 需要装jieba才行搜索中文
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
