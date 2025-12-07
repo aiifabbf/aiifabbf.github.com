@@ -2,11 +2,11 @@
 ``Canon & Baroque``
 ====================
 
-终于给博客上了自动构建！这下再也不用担心忘记上传本地构建的产物了，也再也不用为产物单独开分支了。Github Action用起来好方便，第一次就写对了。
+上次立下flag
 
-竟然已经两年多没有更新过博客了，硬要找借口的话，只能怪2年前的COVID给我带来的脑雾了吧……也确实感到COVID过后整个人的思维没有以前那么活跃了，经常话到嘴边说不出，对很多事情也不再喜怒分明，像以前一样随便写个长篇大论——是不是废话和无病呻吟另说——就更不可能了。不知道是因为COVID实实在在的病理影响，还是因为那段时间动不动隔离居家输出输入变少了。其实有几篇文章已经开始动笔，写着写着又觉得食之无味写不下去。我观察到，如果一篇文章无法在第一天动笔并且写完，它就再也写不完了。
+    我想到的解决方法是，不再刻意追求大而全，一个很小的话题也可以单独写一篇短文。
 
-我想到的解决方法是，不再刻意追求大而全，一个很小的话题也可以单独写一篇短文。
+这次就憋出了一篇超长文。是我一直想谈的话题，也是我最近最感兴趣、近几年了解的最重要的知识。
 
 .. toctree::
     :hidden:
@@ -17,6 +17,7 @@
 最近
 =====
 
+-   :doc:`posts/propositions-as-types`
 -   :doc:`posts/break-indent`
 -   :doc:`posts/backup-iphone-photos`
 -   :doc:`posts/lambda-calculus`
@@ -43,6 +44,7 @@
 .. toctree::
     :maxdepth: 1
 
+    posts/propositions-as-types.rst
     posts/lambda-calculus.rst
     posts/binary-search-ptsd.rst
     posts/generic-prefix-sum.rst
