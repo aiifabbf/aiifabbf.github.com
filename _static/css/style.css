@@ -14,13 +14,13 @@ html {
     --p-size: 20px;
     --h1-size: 48px;
     --toc-size: 16px;
-    --code-size: 20px;
+    --cb-size: 16px;
 
     --font-family: Literata, "SongTi SC", SimSun, serif;
     --code-font-family: "Fira Code", Menlo, monospace;
 
     --line-height: 1.5;
-    --code-line-height: 1.5;
+    --cb-line-height: 1.5;
 
     --back-color: white;
     --text-color: black;
@@ -45,7 +45,6 @@ html {
 body {
     margin: auto;
     font-size: var(--p-size);
-    line-height: 1.5;
     font-family: var(--font-family);
 }
 
@@ -123,10 +122,11 @@ li > p:first-child {
     margin: 0;
 }
 
-.highlight {
+.highlight * {
     font-family: var(--code-font-family);
-    font-size: var(--code-size);
-    line-height: var(--code-line-height);
+    font-size: var(--cb-size);
+    line-height: var(--cb-line-height);
+    font-style: normal;
 }
 
 .admonition {
