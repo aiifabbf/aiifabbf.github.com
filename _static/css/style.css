@@ -16,7 +16,7 @@ html {
     --toc-size: 16px;
     --cb-size: 16px;
 
-    --font-family: Literata, "SongTi SC", SimSun, serif;
+    --font-family: Literata, "Source Han Serif", ui-serif, serif;
     --code-font-family: "Fira Code", Menlo, monospace;
 
     --line-height: 1.5;
